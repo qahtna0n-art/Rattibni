@@ -149,7 +149,7 @@ h1.big em{color:var(--gold);font-style:normal}
 .lw{position:relative;overflow:hidden}
 .lo{position:absolute;bottom:0;left:0;right:0;height:190px;background:linear-gradient(to bottom,transparent,var(--bg) 65%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:1.2rem}
 .lb{padding:.78rem 2rem;background:var(--gold);color:#080c18;border:none;border-radius:8px;font-size:.88rem;font-weight:900;cursor:pointer;font-family:'Tajawal',sans-serif;box-shadow:0 0 40px rgba(212,175,55,0.4)}
-.blur{filter:blur(5px);pointer-events:none;user-select:none}
+.blur{display:none!important}
 @media(max-width:680px){.g2,.g3,.fg2,.ggrid{grid-template-columns:1fr}h1.big{font-size:2rem}}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XGXRB1LVFF"></script>
@@ -370,17 +370,20 @@ let P=false,ST=0,D={};
 const fmt=n=>new Intl.NumberFormat('ar-SA').format(Math.round(Math.abs(n)));
 const sim=(init,mo,rate,yrs)=>{let v=init;const r=rate/100/12,rows=[];for(let y=1;y<=yrs;y++){for(let m=0;m<12;m++)v=v*(1+r)+mo;rows.push({y,v:Math.round(v)})}return rows};
 function pg(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');const nb=document.getElementById('nb-'+id);if(nb)nb.classList.add('on');window.scrollTo(0,0)}
-function act(){
-  const pw = prompt('أدخل كود الاشتراك:');
-  if(pw === 'rattibni49'){
+function act(){document.getElementById('pw-modal').style.display='flex'}
+function checkpw(){
+  const pw=document.getElementById('pw-input').value;
+  if(pw==='rattibni49'){
     P=true;
-    alert('✅ مرحباً بك في الباقة المميزة!');
+    document.getElementById('pw-modal').style.display='none';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-msg').textContent='';
     pg('calc');
-  } else if(pw !== null) {
-    alert('❌ الكود غير صحيح
-للاشتراك راسلنا على تيك توك: @رتّبني');
+  } else {
+    document.getElementById('pw-msg').textContent='❌ الكود غير صحيح — للاشتراك راسلنا على تيك توك: @رتّبني';
   }
 }
+function closepw(){document.getElementById('pw-modal').style.display='none';document.getElementById('pw-input').value='';document.getElementById('pw-msg').textContent=''}
 function st(id,el){document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('t-'+id).classList.add('on');el.classList.add('on')}
 function gs(n){document.getElementById('s'+ST).classList.add('hidden');document.getElementById('sn'+ST).classList.remove('cur','done');document.getElementById('sn'+ST).classList.add('done');ST=n;document.getElementById('s'+n).classList.remove('hidden');document.getElementById('sn'+n).classList.remove('done');document.getElementById('sn'+n).classList.add('cur');window.scrollTo(0,0)}
 function th(){const v=document.getElementById('fh').value;document.getElementById('rs').classList.toggle('hidden',v!=='rent');document.getElementById('ms').classList.toggle('hidden',v!=='mortgage')}
@@ -555,11 +558,20 @@ function ul(){
     P=true;
     build();
   } else if(pw !== null) {
-    alert('❌ الكود غير صحيح
-للاشتراك راسلنا على تيك توك: @رتّبني');
+    alert('❌ الكود غير صحيح — للاشتراك راسلنا على تيك توك: @رتّبني');
   }
 }
 </script>
 
+<div id="pw-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:1.5rem">
+  <div style="background:#141d35;border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:2rem;max-width:380px;width:100%;text-align:center">
+    <div style="font-size:1.2rem;font-weight:900;color:#d4af37;margin-bottom:.5rem">🔐 الباقة المميزة</div>
+    <div style="font-size:.82rem;color:#8892a4;margin-bottom:1.25rem;line-height:1.6">أدخل كود الاشتراك<br>للحصول على الكود راسلنا على تيك توك: <b style="color:#d4af37">@رتّبني</b></div>
+    <input id="pw-input" type="text" placeholder="أدخل الكود هنا" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(212,175,55,0.2);border-radius:8px;padding:.75rem 1rem;color:#f0ead8;font-size:1rem;text-align:center;margin-bottom:.75rem;font-family:monospace">
+    <div id="pw-msg" style="font-size:.75rem;color:#ef4444;margin-bottom:.75rem;min-height:1rem"></div>
+    <button onclick="checkpw()" style="width:100%;padding:.85rem;background:#d4af37;color:#080c18;border:none;border-radius:8px;font-size:1rem;font-weight:900;cursor:pointer;font-family:Tajawal,sans-serif;margin-bottom:.5rem">تفعيل الباقة ←</button>
+    <button onclick="closepw()" style="width:100%;padding:.7rem;background:transparent;color:#8892a4;border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:.85rem;cursor:pointer;font-family:Tajawal,sans-serif">إلغاء</button>
+  </div>
+</div>
 </body>
 </html>
