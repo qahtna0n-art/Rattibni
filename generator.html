@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رتّبني — مولّد روابط الدفع</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:linear-gradient(160deg,#0a0f1e,#0d1b2a);font-family:'Cairo',sans-serif;color:#e8edf5;display:flex;flex-direction:column;align-items:center;padding:32px 16px}
+h1{font-size:26px;font-weight:800;margin-bottom:6px}
+h1 span{color:#3b82f6}
+.sub{font-size:13px;color:#677898;margin-bottom:28px;text-align:center}
+.box{width:100%;max-width:420px;display:flex;flex-direction:column;gap:16px}
+.presets{display:flex;gap:12px}
+.pb{flex:1;padding:16px 12px;border-radius:14px;cursor:pointer;background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.07);color:#8899bb;font-family:'Cairo',sans-serif;transition:all .15s;text-align:center}
+.pb.on{background:rgba(59,130,246,0.15);border-color:#3b82f6;color:#93c5fd}
+.pn{font-size:18px;font-weight:800}
+.pp{font-size:26px;font-weight:800;margin:6px 0 2px;color:#fff}
+.pb:not(.on) .pp{color:#8899bb}
+.per{font-size:12px;color:#4a5a78}
+.pb.on .per{color:#60a5fa}
+.sel{display:inline-block;margin-top:8px;font-size:11px;color:#86efac;background:rgba(34,197,94,0.1);border-radius:20px;padding:2px 10px}
+.methods{display:flex;gap:8px;flex-wrap:wrap}
+.mb{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#677898}
+.gbtn{width:100%;padding:18px;border-radius:14px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border:none;color:#fff;font-size:18px;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;box-shadow:0 6px 28px rgba(59,130,246,0.4);transition:all .2s}
+.gbtn:disabled{background:rgba(59,130,246,0.3);box-shadow:none;cursor:not-allowed}
+.err{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:12px 16px;font-size:13px;color:#fca5a5;text-align:center;display:none}
+.res{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:16px;display:none}
+.rt{font-weight:700;color:#86efac;font-size:14px;margin-bottom:12px}
+.lr{background:rgba(0,0,0,0.3);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid rgba(255,255,255,0.06)}
+.lt{font-size:12px;color:#60a5fa;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;direction:ltr}
+.cbtn{background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.3);border-radius:6px;padding:6px 12px;cursor:pointer;color:#93c5fd;font-size:12px;font-weight:700;font-family:'Cairo',sans-serif;flex-shrink:0;white-space:nowrap}
+.cbtn.ok{background:rgba(34,197,94,0.2);border-color:rgba(34,197,94,0.4);color:#86efac}
+.ol{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:8px 14px;color:#93c5fd;text-decoration:none;font-size:13px;font-weight:600}
+.ht{font-size:12px;color:#4a5a78;font-weight:700;margin-bottom:8px}
+.hi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.hb{font-size:11px;font-weight:700;color:#93c5fd;background:rgba(59,130,246,0.15);border-radius:20px;padding:2px 8px;margin-left:6px}
+.hm{font-size:11px;color:#4a5a78}
+.hu{font-size:11px;color:#60a5fa;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;margin-top:2px}
+</style>
+</head>
+<body>
+<div style="text-align:center;margin-bottom:24px">
+<h1>🔗 <span>رتّبني</span> — روابط الدفع</h1>
+<p class="sub">اختر الباقة واضغط — العميل يدفع مباشرة بـ Apple Pay أو STC Pay</p>
+</div>
+<div class="box">
+<div class="presets">
+<button class="pb on" onclick="sel(0,this)"><div class="pn">بريميوم</div><div class="pp">49.00</div><div class="per">ريال / شهر</div><div class="sel">✓ محدد</div></button>
+<button class="pb" onclick="sel(1,this)"><div class="pn">في آي بي</div><div class="pp">149.00</div><div class="per">ريال / شهر</div></button>
+</div>
+<div class="methods">
+<span class="mb">💳 كريدت كارد</span>
+<span class="mb"> Apple Pay</span>
+<span class="mb">📱 STC Pay</span>
+<span class="mb">🏦 مدى</span>
+</div>
+<button class="gbtn" id="gb" onclick="gen()">🔗 أنشئ رابط بريميوم</button>
+<div class="err" id="eb"></div>
+<div class="res" id="rb"><div class="rt">✅ تم إنشاء الرابط بنجاح!</div><div class="lr"><span class="lt" id="lt"></span><button class="cbtn" id="cb" onclick="cp()">نسخ</button></div><a class="ol" id="ol" href="#" target="_blank">🔗 فتح الرابط</a></div>
+<div id="hs" style="display:none"><div class="ht" id="htt"></div><div id="hl"></div></div>
+</div>
+<script>
+const P=[{n:"بريميوم",a:4900,d:"Rattibni Premium Subscription"},{n:"في آي بي",a:14900,d:"Rattibni VIP Subscription"}];
+const M=["creditcard","applepay","stcpay","mada"];
+let si=0,hist=[],cu="";
+function sel(i,el){
+si=i;
+document.querySelectorAll('.pb').forEach((b,x)=>{b.classList.toggle('on',x===i);const s=b.querySelector('.sel');if(s)s.remove()});
+const s=document.createElement('div');s.className='sel';s.textContent='✓ محدد';el.appendChild(s);
+document.getElementById('gb').textContent='🔗 أنشئ رابط '+P[i].n;
+document.getElementById('eb').style.display='none';
+document.getElementById('rb').style.display='none';
+}
+async function gen(){
+const btn=document.getElementById('gb');
+btn.disabled=true;btn.textContent='⏳ جارٍ الإنشاء...';
+document.getElementById('eb').style.display='none';
+document.getElementById('rb').style.display='none';
+try{
+const r=await fetch('/api/payment-link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:P[si].a,description:P[si].d,methods:M})});
+const d=await r.json();
+if(!r.ok){err(d.message||d.error||'فشل في إنشاء الرابط')}
+else{cu=d.url;document.getElementById('lt').textContent=d.url;document.getElementById('ol').href=d.url;document.getElementById('rb').style.display='block';addH(P[si].n,P[si].a,d.url)}
+}catch(e){err('خطأ: '+e.message)}
+finally{btn.disabled=false;btn.textContent='🔗 أنشئ رابط '+P[si].n}
+}
+function err(m){const b=document.getElementById('eb');b.textContent='⚠️ '+m;b.style.display='block'}
+function cp(){navigator.clipboard.writeText(cu);const b=document.getElementById('cb');b.textContent='✓ تم';b.classList.add('ok');setTimeout(()=>{b.textContent='نسخ';b.classList.remove('ok')},2000)}
+function addH(n,a,u){hist.unshift({n,a,u,t:new Date().toLocaleTimeString('ar-SA')});renderH()}
+function renderH(){
+document.getElementById('hs').style.display='block';
+document.getElementById('htt').textContent='الروابط المُنشأة ('+hist.length+')';
+document.getElementById('hl').innerHTML=hist.map((h,i)=>`<div class="hi"><div style="flex:1;overflow:hidden"><div><span class="hb">${h.n}</span><span class="hm">${(h.a/100).toFixed(2)} ريال · ${h.t}</span></div><div class="hu">${h.u}</div></div><button class="cbtn" onclick="navigator.clipboard.writeText(hist[${i}].u)">نسخ</button></div>`).join('');
+}
+</script>
+</body>
+</html>
