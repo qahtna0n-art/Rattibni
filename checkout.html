@@ -420,34 +420,6 @@
   </div>
 
   <script>
-    // ========= Apple Pay Debug =========
-    window.onerror = function(msg, src, line, col, err) {
-      var d = document.getElementById('ap-debug');
-      d.innerHTML += '<b>❌ JS Error:</b> ' + msg + ' (line ' + line + ')<br>';
-      d.style.display = 'block';
-    };
-
-    const origFetch = window.fetch;
-    window.fetch = function(...args) {
-      var url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url) || '';
-      return origFetch.apply(this, args).then(res => {
-        if (url.includes('applepay') || url.includes('moyasar')) {
-          res.clone().text().then(txt => {
-            var d = document.getElementById('ap-debug');
-            d.innerHTML += '<b>✅ Fetch OK [' + url.split('/').pop() + ']:</b> ' + txt.substring(0, 300) + '<br><br>';
-            d.style.display = 'block';
-          }).catch(() => {});
-        }
-        return res;
-      }).catch(err => {
-        var d = document.getElementById('ap-debug');
-        d.innerHTML += '<b>❌ Fetch Failed [' + url.split('/').pop() + ']:</b> ' + err.message + '<br>';
-        d.style.display = 'block';
-        throw err;
-      });
-    };
-    // ====================================
-
     const PK = 'pk_live_yhyfSD33cQnHyvNNjFHN5Cy6kRXYa3TPdy4mT78U';
     const BASE_URL = 'https://rattibni.vercel.app';
     let currentPlan = null;
@@ -516,10 +488,6 @@
       });
     }
   </script>
-
-  <!-- Apple Pay Debug Panel -->
-
-  <div id="ap-debug" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a0a0a;border-top:2px solid #ef4444;color:#fca5a5;padding:16px;z-index:9999;font-size:12px;word-break:break-all;max-height:40vh;overflow-y:auto"></div>
 
 </body>
 </html>
