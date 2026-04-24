@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>رتّبني — تأكيد الدفع</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080b12;
+      --card: #111827;
+      --border: #1f2d47;
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.2);
+      --gold: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #64748b;
+      --danger: #ef4444;
+      --danger-glow: rgba(239, 68, 68, 0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+    }
+
+```
+.card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 48px 36px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--border);
+  animation: fadeUp 0.5s ease;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Success State */
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--green-glow);
+  border: 2px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+  animation: pop 0.4s ease 0.2s both;
+}
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Failed State */
+.failed-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--danger-glow);
+  border: 2px solid var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+}
+
+/* Loading State */
+.loading-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--green);
+  margin: 0 auto 24px;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* Plan chip */
+.plan-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 100px;
+  padding: 8px 20px;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+.plan-chip.vip {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: var(--gold);
+}
+
+/* Payment ID */
+.payment-id {
+  background: #0e1420;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 28px;
+  text-align: left;
+  direction: ltr;
+}
+.payment-id .label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.payment-id .value {
+  font-size: 12px;
+  color: var(--muted);
+  word-break: break-all;
+  font-family: monospace;
+}
+
+/* Redirect progress */
+.redirect-bar-wrap {
+  background: #0e1420;
+  border-radius: 100px;
+  height: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.redirect-bar {
+  height: 100%;
+  background: var(--green);
+  border-radius: 100px;
+  width: 0%;
+  transition: width 4s linear;
+}
+.redirect-text {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: var(--green);
+  color: #000;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  margin-bottom: 12px;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Cairo', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { color: var(--text); border-color: #3a4a60; }
+
+.logo {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--green);
+  margin-bottom: 32px;
+}
+```
+
+  </style>
+</head>
+<body>
+
+  <div class="card" id="main-card">
+    <a href="https://qahtna0n-art.github.io/Rattibni/" class="logo">رتّبني</a>
+    <!-- Content injected by JS -->
+    <div class="loading-icon"></div>
+    <h1>جارٍ التحقق...</h1>
+    <p class="subtitle">يرجى الانتظار</p>
+  </div>
+
+  <script>
+    const MAIN_URL = 'https://qahtna0n-art.github.io/Rattibni/';
+
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+
+    const status = getParam('status');
+    const paymentId = getParam('id');
+    const plan = getParam('plan') || 'premium';
+    const amount = getParam('amount');
+    const message = getParam('message');
+
+    const planNames = {
+      premium: 'الباقة المميزة',
+      vip: 'باقة VIP'
+    };
+    const planEmojis = { premium: '⚡', vip: '👑' };
+
+    function showSuccess() {
+      // Save subscription to localStorage
+      const subscription = {
+        plan,
+        planName: planNames[plan] || plan,
+        paymentId,
+        amount: parseInt(amount) / 100,
+        activatedAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      };
+      localStorage.setItem('rattibni_subscription', JSON.stringify(subscription));
+      localStorage.removeItem('rattibni_pending_payment');
+
+      const card = document.getElementById('main-card');
+      card.innerHTML = `
+        <a href="${MAIN_URL}" class="logo">رتّبني</a>
+        <div class="success-icon">✓</div>
+        <h1>تم الدفع بنجاح! 🎉</h1>
+        <p class="subtitle">مرحباً بك في رتّبني — اشتراكك فعّال الآن</p>
+
+        <div class="plan-chip ${plan === 'vip' ? 'vip' : ''}">
+          ${planEmojis[plan] || '✨'} ${planNames[plan] || plan}
+          &nbsp;|&nbsp; ${parseInt(amount) / 100} ريال/شهر
+        </div>
+
+        ${paymentId ? `
+        <div class="payment-id">
+          <div class="label">رقم الدفع</div>
+          <div class="value">${paymentId}</div>
+        </div>` : ''}
+
+        <div class="redirect-bar-wrap">
+          <div class="redirect-bar" id="redirect-bar"></div>
+        </div>
+        <p class="redirect-text">جارٍ تحويلك للموقع تلقائياً...</p>
+
+        <a href="${MAIN_URL}" class="btn-primary">ابدأ الآن ←</a>
+      `;
+
+      // Trigger redirect bar animation
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.getElementById('redirect-bar').style.width = '100%';
+        });
+      });
+
+      // Auto redirect after 4 seconds
+      setTimeout(() => {
+        window.location.href = MAIN_URL;
+      }, 4200);
+    }
+
+    function showFailed() {
+      const card = document.getElementById('main-card');
+      card.innerHTML = `
+        <a href="${MAIN_URL}" class="logo">رتّبني</a>
+        <div class="failed-icon">✗</div>
+        <h1>لم يتم إتمام الدفع</h1>
+        <p class="subtitle">${message ? decodeURIComponent(message) : 'حدث خطأ أثناء الدفع. يمكنك المحاولة مرة أخرى.'}</p>
+
+        <a href="checkout.html?plan=${plan}" class="btn-primary">حاول مرة أخرى ←</a>
+        <a href="${MAIN_URL}" class="btn-secondary">العودة للموقع</a>
+      `;
+    }
+
+    function showLoading() {
+      // Already showing loading state
+    }
+
+    // Main logic
+    if (status === 'paid') {
+      showSuccess();
+    } else if (status === 'failed' || status === 'expired') {
+      showFailed();
+    } else if (!status) {
+      // No status param — show friendly message
+      const card = document.getElementById('main-card');
+      card.innerHTML = `
+        <a href="${MAIN_URL}" class="logo">رتّبني</a>
+        <div style="font-size:48px;margin-bottom:20px;">🔗</div>
+        <h1>صفحة التأكيد</h1>
+        <p class="subtitle">هذه الصفحة تُستخدم لتأكيد الدفع بعد إتمام الاشتراك.</p>
+        <a href="checkout.html" class="btn-primary">اشترك الآن ←</a>
+        <a href="${MAIN_URL}" class="btn-secondary">العودة للموقع</a>
+      `;
+    } else {
+      showFailed();
+    }
+  </script>
+
+</body>
+</html>
