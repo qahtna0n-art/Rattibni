@@ -454,13 +454,18 @@
       const container = document.getElementById('moyasar-container');
       container.innerHTML = '<div class="mysr-form"></div>';
 
+      // Save plan before payment (required for Apple Pay redirect)
+      localStorage.setItem('rattibni_pending_plan', planId);
+      localStorage.setItem('rattibni_pending_amount', String(amountHalalas));
+      localStorage.setItem('rattibni_pending_name', planName);
+
       Moyasar.init({
         element: '.mysr-form',
         amount: amountHalalas,
         currency: 'SAR',
         description: 'رتّبني - ' + planName,
         publishable_api_key: PK,
-        callback_url: BASE_URL + '/payment-success.html?plan=' + planId + '&amount=' + amountHalalas,
+        callback_url: BASE_URL + '/payment-success.html',
         methods: ['creditcard', 'applepay'],
         supported_networks: ['mada', 'visa', 'mastercard', 'amex'],
         apple_pay: {
@@ -469,7 +474,6 @@
           validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate',
         },
         on_completed: function(payment) {
-          // Save payment info to localStorage for the callback page to read
           localStorage.setItem('rattibni_pending_payment', JSON.stringify({
             id: payment.id,
             plan: planId,
