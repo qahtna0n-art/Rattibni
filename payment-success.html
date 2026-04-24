@@ -231,7 +231,7 @@ h1 {
   </div>
 
   <script>
-    const MAIN_URL = 'https://qahtna0n-art.github.io/Rattibni/';
+    const MAIN_URL = 'https://rattibni.vercel.app/';
 
     function getParam(name) {
       return new URLSearchParams(window.location.search).get(name);
@@ -239,9 +239,10 @@ h1 {
 
     const status = getParam('status');
     const paymentId = getParam('id');
-    const plan = getParam('plan') || 'premium';
-    const amount = getParam('amount');
     const message = getParam('message');
+    // Plan info from localStorage (works for Apple Pay which strips query params)
+    const plan = getParam('plan') || localStorage.getItem('rattibni_pending_plan') || 'premium';
+    const amount = getParam('amount') || localStorage.getItem('rattibni_pending_amount') || '4900';
 
     const planNames = {
       premium: 'الباقة المميزة',
