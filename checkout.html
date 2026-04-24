@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>رتّبني — إتمام الاشتراك</title>
+
+  <!-- Moyasar -->
+
+  <link rel="stylesheet" href="https://cdn.moyasar.com/mpf/1.7.3/moyasar.css">
+  <script src="https://cdn.moyasar.com/mpf/1.7.3/moyasar.js"></script>
+
+  <!-- Google Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080b12;
+      --bg2: #0e1420;
+      --card: #111827;
+      --card2: #1a2235;
+      --border: #1f2d47;
+      --green: #10b981;
+      --green-dim: #065f46;
+      --green-glow: rgba(16, 185, 129, 0.15);
+      --gold: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #64748b;
+      --danger: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 11, 18, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--green);
+      text-decoration: none;
+    }
+    .back-btn {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--text); }
+    .back-btn svg { transform: rotate(180deg); }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .page-title h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .page-title p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* ── Plan Cards ── */
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    @media (max-width: 600px) {
+      .plans { grid-template-columns: 1fr; }
+    }
+
+    .plan-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .plan-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: var(--card2);
+    }
+    .plan-card.selected {
+      border-color: var(--green);
+      background: var(--card2);
+      box-shadow: 0 0 0 1px var(--green), 0 0 30px var(--green-glow);
+    }
+    .plan-card.selected::before {
+      content: '✓';
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 26px;
+      height: 26px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: white;
+      font-weight: 700;
+      line-height: 26px;
+      text-align: center;
+    }
+
+    .plan-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .plan-badge.popular {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .plan-badge.vip {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .plan-name {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .plan-price {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 2px;
+    }
+    .plan-price span {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .plan-vip .plan-price { color: var(--gold); }
+
+    .plan-desc {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .plan-features li {
+      font-size: 13px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .plan-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .plan-vip .plan-features li::before { color: var(--gold); }
+
+    /* ── Payment Section ── */
+    .payment-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .payment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .payment-header h2 {
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .payment-summary {
+      text-align: left;
+    }
+    .payment-summary .amount {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--green);
+    }
+    .payment-summary .plan-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .select-plan-msg {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--muted);
+    }
+    .select-plan-msg .icon { font-size: 40px; margin-bottom: 12px; }
+    .select-plan-msg p { font-size: 15px; }
+
+    /* ── Moyasar Overrides ── */
+    .mysr-form {
+      direction: ltr;
+    }
+    .mysr-form .mysr-field label {
+      font-family: 'Cairo', sans-serif !important;
+    }
+
+    /* ── Security Badge ── */
+    .security-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .security-badge svg { color: var(--green); }
+
+    .payment-methods-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .method-icon {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .method-icon.mada { color: #4a90d9; }
+    .method-icon.apple { color: #f1f5f9; }
+
+    /* ── Empty state ── */
+    .no-plan {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .arrow-up {
+      font-size: 28px;
+      animation: bounce 1.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+
+  <div class="header">
+    <a href="https://qahtna0n-art.github.io/Rattibni/" class="logo">رتّبني</a>
+    <a href="https://qahtna0n-art.github.io/Rattibni/" class="back-btn">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+      العودة للموقع
+    </a>
+  </div>
+
+  <!-- Main -->
+
+  <div class="container">
+
+```
+<div class="page-title">
+  <h1>اختر باقتك</h1>
+  <p>اشتراك شهري — ألغِ في أي وقت</p>
+</div>
+
+<!-- Plan Cards -->
+<div class="plans">
+  <!-- Premium -->
+  <div class="plan-card" id="plan-premium" onclick="selectPlan('premium', 4900, 'الباقة المميزة', '49 ريال/شهر')">
+    <span class="plan-badge popular">⚡ الأكثر طلباً</span>
+    <div class="plan-name">المميزة</div>
+    <div class="plan-price">49 <span>ريال/شهر</span></div>
+    <div class="plan-desc">مستشار مالي شخصي يتابعك أسبوعياً</div>
+    <ul class="plan-features">
+      <li>نقاط الصحة المالية</li>
+      <li>مقارنة بالمتوسط السعودي</li>
+      <li>خطة الـ 90 يوم</li>
+      <li>محاكاة 20 سنة</li>
+      <li>52 رسالة أسبوعية</li>
+    </ul>
+  </div>
+
+  <!-- VIP -->
+  <div class="plan-card plan-vip" id="plan-vip" onclick="selectPlan('vip', 14900, 'باقة VIP', '149 ريال/شهر')">
+    <span class="plan-badge vip">👑 VIP</span>
+    <div class="plan-name">VIP</div>
+    <div class="plan-price">149 <span>ريال/شهر</span></div>
+    <div class="plan-desc">كل المميزة + مستشارك الشخصي</div>
+    <ul class="plan-features">
+      <li>كل مميزات الباقة المميزة</li>
+      <li>جلسة استشارة ربع سنوية</li>
+      <li>مراجعة المحفظة شهرياً</li>
+      <li>تنبيهات فرص استثمارية</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Payment Form -->
+<div class="payment-section" id="payment-section">
+
+  <!-- No plan selected state -->
+  <div class="no-plan" id="no-plan-msg">
+    <div class="arrow-up">↑</div>
+    <p>اختر الباقة المناسبة لك من الأعلى</p>
+  </div>
+
+  <!-- Payment form (hidden until plan selected) -->
+  <div id="payment-form-area" style="display:none;">
+    <div class="payment-header">
+      <h2>تفاصيل الدفع</h2>
+      <div class="payment-summary">
+        <div class="amount" id="summary-amount">—</div>
+        <div class="plan-label" id="summary-label">—</div>
+      </div>
+    </div>
+
+    <div class="payment-methods-icons">
+      <span class="method-icon mada">mada</span>
+      <span class="method-icon">Visa</span>
+      <span class="method-icon">Mastercard</span>
+      <span class="method-icon">Amex</span>
+      <span class="method-icon apple"> Apple Pay</span>
+    </div>
+
+    <!-- Moyasar renders here -->
+    <div id="moyasar-container">
+      <div class="mysr-form"></div>
+    </div>
+
+    <div class="security-badge">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      الدفع مشفر وآمن بواسطة Moyasar — مرخص من ساما
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <script>
+    const PK = 'pk_live_yhyfSD33cQnHyvNNjFHN5Cy6kRXYa3TPdy4mT78U';
+    const BASE_URL = 'https://qahtna0n-art.github.io/Rattibni';
+    let currentPlan = null;
+
+    // Auto-select plan from URL param
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get('plan');
+      if (plan === 'premium') {
+        selectPlan('premium', 4900, 'الباقة المميزة', '49 ريال/شهر');
+      } else if (plan === 'vip') {
+        selectPlan('vip', 14900, 'باقة VIP', '149 ريال/شهر');
+      }
+    });
+
+    function selectPlan(planId, amountHalalas, planName, priceLabel) {
+      // Update UI
+      document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+      document.getElementById('plan-' + planId).classList.add('selected');
+
+      // Update summary
+      document.getElementById('summary-amount').textContent = (amountHalalas / 100) + ' ريال/شهر';
+      document.getElementById('summary-label').textContent = planName;
+
+      // Show payment area
+      document.getElementById('no-plan-msg').style.display = 'none';
+      document.getElementById('payment-form-area').style.display = 'block';
+
+      currentPlan = { id: planId, amount: amountHalalas, name: planName };
+
+      // Reset and re-init Moyasar
+      const container = document.getElementById('moyasar-container');
+      container.innerHTML = '<div class="mysr-form"></div>';
+
+      Moyasar.init({
+        element: '.mysr-form',
+        amount: amountHalalas,
+        currency: 'SAR',
+        description: 'رتّبني - ' + planName,
+        publishable_api_key: PK,
+        callback_url: BASE_URL + '/payment-success.html?plan=' + planId + '&amount=' + amountHalalas,
+        methods: ['creditcard', 'applepay'],
+        supported_networks: ['mada', 'visa', 'mastercard', 'amex'],
+        apple_pay: {
+          country: 'SA',
+          label: 'رتّبني — ' + planName,
+          validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate',
+        },
+        on_completed: function(payment) {
+          // Save payment info to localStorage for the callback page to read
+          localStorage.setItem('rattibni_pending_payment', JSON.stringify({
+            id: payment.id,
+            plan: planId,
+            planName: planName,
+            amount: amountHalalas,
+            timestamp: Date.now()
+          }));
+        },
+        on_failure: function(error) {
+          console.error('Payment failed:', error);
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
