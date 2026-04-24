@@ -43,7 +43,6 @@ h1.big em{color:var(--gold);font-style:normal}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .3s}
 .card:hover{border-color:rgba(212,175,55,0.3);transform:translateY(-3px)}
-/* PRICING */
 .pkg{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2rem;position:relative;transition:all .3s}
 .pkg:hover{transform:translateY(-5px)}
 .pkg.star{border-color:var(--gold);background:linear-gradient(160deg,rgba(212,175,55,0.08),var(--card))}
@@ -63,7 +62,6 @@ h1.big em{color:var(--gold);font-style:normal}
 .pbg:hover{background:var(--gold2)}
 .pbo{background:transparent;color:var(--text);border:1px solid var(--border)}
 .pbo:hover{border-color:var(--gold);color:var(--gold)}
-/* FORM */
 .cw{padding:80px 1.5rem 4rem;max-width:840px;margin:0 auto}
 .snav{display:flex;justify-content:center;gap:.35rem;margin-bottom:2rem;flex-wrap:wrap}
 .sn2{padding:.32rem .85rem;border-radius:100px;font-size:.74rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;transition:all .2s;white-space:nowrap}
@@ -83,7 +81,6 @@ h1.big em{color:var(--gold);font-style:normal}
 .bprev{padding:.78rem 1.4rem;background:var(--surface);color:var(--muted);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.85rem}
 .bnext{flex:1;padding:.78rem;background:var(--gold);color:#080c18;border:none;border-radius:8px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:900;font-size:.92rem;transition:all .2s}
 .bnext:hover{background:var(--gold2)}
-/* RESULTS */
 .rw{padding:80px 1.5rem 4rem;max-width:1100px;margin:0 auto}
 .panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
 .psec{font-size:.78rem;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:.4rem;margin-bottom:.75rem}
@@ -204,25 +201,40 @@ gtag('config','G-XGXRB1LVFF');
     <div class="sec" style="padding:0">
       <div class="sec-tag">الباقات</div><h2 class="sec-h">غيّر مستقبلك المالي</h2><p class="sec-s">ابدأ مجاناً — ادفع فقط لما تريد التفاصيل</p>
       <div class="g3">
-        <div class="pkg"><div style="font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:.4rem">المجانية</div><div class="pprice">0<sub> ريال</sub></div><div class="ptag">💡 اعرف أين تقف</div><div class="pp">فجوتك المالية الحقيقية ورقم واضح.</div>
+        <div class="pkg">
+          <div style="font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:.4rem">المجانية</div>
+          <div class="pprice">0<sub> ريال</sub></div>
+          <div class="ptag">💡 اعرف أين تقف</div>
+          <div class="pp">فجوتك المالية الحقيقية ورقم واضح.</div>
           <ul class="pf"><li><span class="ck">✓</span> فجوة التقاعد</li><li><span class="ck">✓</span> تقييم السيارة</li><li><span class="ck">✓</span> حاسبة التأمينات</li><li><span class="xk">✗</span> <span style="opacity:.5">نقاط الصحة المالية</span></li><li><span class="xk">✗</span> <span style="opacity:.5">محاكاة 20 سنة</span></li><li><span class="xk">✗</span> <span style="opacity:.5">خطة الـ 90 يوم</span></li><li><span class="xk">✗</span> <span style="opacity:.5">رسائل أسبوعية</span></li></ul>
           <button class="pbtn pbo" onclick="pg('calc')">ابدأ مجاناً</button>
         </div>
-        <div class="pkg star"><div class="pbadge">⚡ الأكثر طلباً</div>
-          <div style="font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:.4rem">المميزة</div><div class="pprice">49<sub> ريال/شهر</sub></div><div class="ptag">🚀 غيّر مسار حياتك</div><div class="pp">مستشار مالي شخصي يتابعك أسبوعياً بخطة مبنية على أرقامك الحقيقية.</div>
+        <div class="pkg star">
+          <div class="pbadge">⚡ الأكثر طلباً</div>
+          <div style="font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:.4rem">المميزة</div>
+          <div class="pprice">49<sub> ريال/شهر</sub></div>
+          <div class="ptag">🚀 غيّر مسار حياتك</div>
+          <div class="pp">مستشار مالي شخصي يتابعك أسبوعياً بخطة مبنية على أرقامك الحقيقية.</div>
           <ul class="pf"><li><span class="ck">✓</span> كل ما في المجانية</li><li><span class="ck">✓</span> <b>نقاط الصحة المالية</b></li><li><span class="ck">✓</span> <b>مقارنة بالمتوسط السعودي</b></li><li><span class="ck">✓</span> <b>خطة الـ 90 يوم</b></li><li><span class="ck">✓</span> <b>محاكاة 20 سنة</b></li><li><span class="ck">✓</span> <b>خارطة طريق التقاعد</b></li><li><span class="ck">✓</span> <b>حاسبة التأجيل</b></li><li><span class="ck">✓</span> <b>52 رسالة أسبوعية</b></li></ul>
-          <button class="pbtn pbg" onclick="act()">اشترك الآن — 49 ريال</button>
+          <!-- ✅ تغيير: يحول لصفحة الدفع الإلكتروني -->
+          <button class="pbtn pbg" onclick="act('premium')">اشترك الآن — 49 ريال</button>
         </div>
-        <div class="pkg"><div style="font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:.4rem">VIP</div><div class="pprice">149<sub> ريال/شهر</sub></div><div class="ptag">👑 مستشارك الشخصي</div><div class="pp">كل المميزة + جلسة استشارة ربع سنوية بشرية.</div>
+        <div class="pkg">
+          <div style="font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:.4rem">VIP</div>
+          <div class="pprice">149<sub> ريال/شهر</sub></div>
+          <div class="ptag">👑 مستشارك الشخصي</div>
+          <div class="pp">كل المميزة + جلسة استشارة ربع سنوية بشرية.</div>
           <ul class="pf"><li><span class="ck">✓</span> كل ما في المميزة</li><li><span class="ck">✓</span> <b>جلسة استشارة ربع سنوية</b></li><li><span class="ck">✓</span> <b>مراجعة المحفظة شهرياً</b></li><li><span class="ck">✓</span> <b>تنبيهات فرص استثمارية</b></li></ul>
-          <button class="pbtn pbo" onclick="act()">احجز مكانك</button>
+          <!-- ✅ تغيير: يحول لصفحة الدفع الإلكتروني -->
+          <button class="pbtn pbo" onclick="act('vip')">احجز مكانك</button>
         </div>
       </div>
     </div>
   </div>
   <footer style="background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center">
     <div class="logo" style="margin-bottom:.4rem">رتّبني</div>
-    <div style="font-size:.7rem;color:var(--muted)">أداة تثقيف مالي — لا تُعد استشارة مالية مرخصة • rattibni.netlify.app</div>
+    <!-- ✅ تغيير: تحديث رابط الموقع -->
+    <div style="font-size:.7rem;color:var(--muted)">أداة تثقيف مالي — لا تُعد استشارة مالية مرخصة • rattibni.vercel.app</div>
   </footer>
 </div>
 
@@ -369,21 +381,27 @@ gtag('config','G-XGXRB1LVFF');
 let P=false,ST=0,D={};
 const fmt=n=>new Intl.NumberFormat('ar-SA').format(Math.round(Math.abs(n)));
 const sim=(init,mo,rate,yrs)=>{let v=init;const r=rate/100/12,rows=[];for(let y=1;y<=yrs;y++){for(let m=0;m<12;m++)v=v*(1+r)+mo;rows.push({y,v:Math.round(v)})}return rows};
-function pg(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');const nb=document.getElementById('nb-'+id);if(nb)nb.classList.add('on');window.scrollTo(0,0)}
-function act(){document.getElementById('pw-modal').style.display='flex'}
-function checkpw(){
-  const pw=document.getElementById('pw-input').value;
-  if(pw==='rattibni49'){
-    P=true;
-    document.getElementById('pw-modal').style.display='none';
-    document.getElementById('pw-input').value='';
-    document.getElementById('pw-msg').textContent='';
-    pg('calc');
-  } else {
-    document.getElementById('pw-msg').textContent='❌ الكود غير صحيح — للاشتراك راسلنا على تيك توك: @رتّبني';
-  }
+
+// ✅ تحقق من الاشتراك المدفوع عبر Moyasar
+function checkSubscription(){
+  try{
+    const sub=localStorage.getItem('rattibni_subscription');
+    if(sub){
+      const s=JSON.parse(sub);
+      if(new Date(s.expiresAt)>new Date()){P=true;}
+    }
+  }catch(e){}
 }
-function closepw(){document.getElementById('pw-modal').style.display='none';document.getElementById('pw-input').value='';document.getElementById('pw-msg').textContent=''}
+checkSubscription();
+
+function pg(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');const nb=document.getElementById('nb-'+id);if(nb)nb.classList.add('on');window.scrollTo(0,0)}
+
+// ✅ تغيير: يحول لصفحة الدفع الإلكتروني
+function act(plan){
+  plan=plan||'premium';
+  window.location.href='checkout.html?plan='+plan;
+}
+
 function st(id,el){document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('t-'+id).classList.add('on');el.classList.add('on')}
 function gs(n){document.getElementById('s'+ST).classList.add('hidden');document.getElementById('sn'+ST).classList.remove('cur','done');document.getElementById('sn'+ST).classList.add('done');ST=n;document.getElementById('s'+n).classList.remove('hidden');document.getElementById('sn'+n).classList.remove('done');document.getElementById('sn'+n).classList.add('cur');window.scrollTo(0,0)}
 function th(){const v=document.getElementById('fh').value;document.getElementById('rs').classList.toggle('hidden',v!=='rent');document.getElementById('ms').classList.toggle('hidden',v!=='mortgage')}
@@ -404,19 +422,8 @@ function cg(){
   document.getElementById('gp').textContent=fmt(pension)+' ريال';
   document.getElementById('gpct').textContent=Math.round(pension/sal*100)+'% من راتبك الحالي';
   document.getElementById('gn').textContent=fmt(needed)+' ريال';
-  document.getElementById('grows').innerHTML=[
-    ['سنوات الخدمة المتوقعة عند التقاعد',total+' سنة','o'],
-    ['إجمالي اشتراكاتك التراكمية حتى التقاعد',fmt(contrib*12*total)+' ريال','o'],
-    ['نسبة المعاش من الراتب',Math.round(pension/sal*100)+'%',pension/sal>=0.7?'g':pension/sal>=0.5?'w':'r'],
-    ['الحد الأقصى للمعاش (80%)',fmt(base*0.8)+' ريال','g'],
-  ].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('');
-  document.getElementById('ggap').innerHTML=[
-    ['معاشك المتوقع',fmt(pension)+' ريال',pension>=needed?'g':'r'],
-    ['ما تحتاجه شهرياً',fmt(needed)+' ريال','w'],
-    ['الفجوة الشهرية',gap>0?fmt(gap)+' ريال':'لا توجد فجوة ✅',gap>0?'r':'g'],
-    ['ادخر شهرياً لإغلاق الفجوة',gap>0?fmt(gap*12*20/(remain*12))+' ريال':'—','o'],
-    ['إجمالي الاشتراكات في حياتك العملية',fmt(contrib*2*12*(total))+' ريال (أنت + صاحب العمل)','g'],
-  ].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')
+  document.getElementById('grows').innerHTML=[['سنوات الخدمة المتوقعة عند التقاعد',total+' سنة','o'],['إجمالي اشتراكاتك التراكمية حتى التقاعد',fmt(contrib*12*total)+' ريال','o'],['نسبة المعاش من الراتب',Math.round(pension/sal*100)+'%',pension/sal>=0.7?'g':pension/sal>=0.5?'w':'r'],['الحد الأقصى للمعاش (80%)',fmt(base*0.8)+' ريال','g']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('');
+  document.getElementById('ggap').innerHTML=[['معاشك المتوقع',fmt(pension)+' ريال',pension>=needed?'g':'r'],['ما تحتاجه شهرياً',fmt(needed)+' ريال','w'],['الفجوة الشهرية',gap>0?fmt(gap)+' ريال':'لا توجد فجوة ✅',gap>0?'r':'g'],['ادخر شهرياً لإغلاق الفجوة',gap>0?fmt(gap*12*20/(remain*12))+' ريال':'—','o'],['إجمالي الاشتراكات في حياتك العملية',fmt(contrib*2*12*(total))+' ريال (أنت + صاحب العمل)','g']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')
 }
 cg();
 
@@ -435,143 +442,23 @@ function build(){
   document.getElementById('rname').textContent=`تقريرك المالي — ${D.name}`;
   document.getElementById('rdate').textContent=`مبني على بياناتك الحقيقية • ${now}`;
   const sc=C.hs>=70?'#22c55e':C.hs>=50?'#f59e0b':'#ef4444';
-
-  // TAB OVERVIEW
-  document.getElementById('t-ov').innerHTML=`
-  <div class="g2">
-    <div class="panel">
-      <div class="psec">💰 نقاط صحتك المالية</div>
-      <div style="width:110px;height:110px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1rem;border:4px solid ${sc};color:${sc}">
-        <div style="font-size:1.9rem;font-weight:900;font-family:'IBM Plex Mono',monospace">${C.hs}</div>
-        <div style="font-size:.62rem;color:var(--muted)">/ 100</div>
-      </div>
-      ${[['المدخرات',C.sc.sav,'#22c55e'],['السيارة',Math.max(0,C.sc.car),'#d4af37'],['الاستثمار',C.sc.inv,'#3b82f6'],['التقاعد',Math.max(0,C.sc.ret),'#f59e0b'],['الديون',Math.max(0,C.sc.debt),'#22c55e']].map(([l,v,c])=>`<div style="margin-bottom:.5rem"><div style="display:flex;justify-content:space-between;font-size:.73rem;margin-bottom:.2rem"><span style="color:var(--muted)">${l}</span><span style="font-family:'IBM Plex Mono',monospace;color:${c}">${Math.round(v)}%</span></div><div class="score-bar"><div class="score-fill" style="width:${Math.min(100,v)}%;background:${c}"></div></div></div>`).join('')}
-    </div>
-    <div class="panel">
-      <div class="psec">📊 فجوة التقاعد</div>
-      <div class="alert ${C.tgap>0?'ar':'ag'}">
-        <div class="al">الفجوة الإجمالية</div>
-        <div class="av ${C.tgap>0?'r':'g'}">${C.tgap>0?fmt(C.tgap)+' ريال':'✅ على المسار'}</div>
-        <div class="ad">${C.tgap>0?`تحتاج ${fmt(C.mon)} ريال/شهر لإغلاقها`:'مدخراتك تغطي احتياجاتك'}</div>
-      </div>
-      ${[['المعاش المتوقع/شهر',fmt(C.pen)+' ريال',C.pen>=C.need?'g':'r'],['ما تحتاجه/شهر',fmt(C.need)+' ريال','w'],['نهاية الخدمة',fmt(C.grat)+' ريال','g'],['تعليم الأولاد',fmt(C.edu)+' ريال','r'],['صافي الثروة',(C.netw>=0?'+':'-')+fmt(C.netw)+' ريال',C.netw>=0?'g':'r']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')}
-    </div>
-    <div class="panel">
-      <div class="psec">📊 مقارنتك بالمتوسط السعودي</div>
-      ${[['المدخرات',D.sav,8200,'ريال',D.sav>=8200],['قيمة السيارة',D.car,95000,'ريال',D.car<=95000],['الاستثمار',D.inv,12000,'ريال',D.inv>=12000],['مصاريف المطاعم',D.rest,Math.round(D.sal*0.15),'ريال',D.rest<=D.sal*0.15]].map(([l,y,a,u,g])=>`<div class="rrow"><span class="rl">${l}</span><div style="display:flex;gap:.75rem;align-items:center"><span style="font-size:.78rem;font-family:'IBM Plex Mono',monospace;font-weight:700;color:${g?'#22c55e':'#ef4444'}">${fmt(y)}</span><span style="font-size:.72rem;color:var(--muted)">متوسط: ${fmt(a)}</span></div></div>`).join('')}
-    </div>
-    <div class="panel">
-      <div class="psec">⏰ ماذا تخسر لو انتظرت؟</div>
-      ${[['ابدأ اليوم',C.rows[19]?.v||0,true],['انتظرت سنة',sim(D.sav+D.inv,C.mon,C.rate,19)[18]?.v||0,false],['انتظرت 3 سنوات',sim(D.sav+D.inv,C.mon,C.rate,17)[16]?.v||0,false],['انتظرت 5 سنوات',sim(D.sav+D.inv,C.mon,C.rate,15)[14]?.v||0,false]].map(([l,v,g])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${g?'g':'r'}">${fmt(v)} ريال</span></div>`).join('')}
-      <div class="tip" style="margin-top:.75rem">الفرق بين البدء اليوم والانتظار 5 سنوات: <b style="color:#ef4444">${fmt((C.rows[19]?.v||0)-(sim(D.sav+D.inv,C.mon,C.rate,15)[14]?.v||0))} ريال</b> — هذا ثمن التأجيل.</div>
-    </div>
-  </div>`;
-
-  // TAB CAR
-  document.getElementById('t-car').innerHTML=`
-  <div class="g2">
-    <div class="panel">
-      <div class="psec">🚗 تقييم سيارتك</div>
-      <div class="alert ${C.cc>=1?'ar':C.cc>=0.6?'aw':'ag'}">
-        <div class="al">معامل السيارة</div>
-        <div class="av ${C.cc>=1?'r':C.cc>=0.6?'w':'g'}">${C.cc.toFixed(2)}x</div>
-        <div class="ad">${C.cc>=1?'🚨 سيارتك تضر بمستقبلك المالي':C.cc>=0.6?'⚠️ سيارتك مكلفة نسبياً':'✅ سيارتك مناسبة لدخلك'}</div>
-      </div>
-      ${[['قيمة سيارتك',fmt(D.car)+' ريال',C.cc>=1?'r':C.cc>=0.6?'w':'g'],['السيارة المثالية لراتبك','حتى '+fmt(C.ic)+' ريال','o'],['نسبة السيارة من دخلك السنوي',Math.round(C.cc*100)+'%',C.cc>=1?'r':C.cc>=0.6?'w':'g'],['قسط السيارة الشهري',fmt(D.carinst)+' ريال',D.carinst>D.sal*0.1?'r':'g']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')}
-    </div>
-    <div class="panel">
-      <div class="psec">💡 ماذا لو استبدلت سيارتك؟</div>
-      ${C.cs>0?`
-      <div class="alert ao">
-        <div class="al">لو بعت وأخذت بـ ${fmt(C.ic)} ريال</div>
-        <div class="av o">${fmt(C.cs)} ريال</div>
-        <div class="ad">هذا ما يمكن استثماره فوراً</div>
-      </div>
-      ${[['بعد 3 سنوات',fmt(C.cs*Math.pow(1+C.rate/100,3))+' ريال','g'],['بعد 5 سنوات',fmt(C.cs*Math.pow(1+C.rate/100,5))+' ريال','g'],['بعد 10 سنوات',fmt(C.cg)+' ريال','g'],['الفرق عن قيمة سيارتك',fmt(C.cg-D.car)+' ريال','o']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')}
-      `:`<div class="alert ag"><div class="al">وضع السيارة</div><div class="av g">✅ ممتاز</div><div class="ad">سيارتك لا تشكّل عبئاً — ركّز على الاستثمار</div></div>`}
-    </div>
-  </div>`;
-
-  // TAB INVEST
+  document.getElementById('t-ov').innerHTML=`<div class="g2"><div class="panel"><div class="psec">💰 نقاط صحتك المالية</div><div style="width:110px;height:110px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1rem;border:4px solid ${sc};color:${sc}"><div style="font-size:1.9rem;font-weight:900;font-family:'IBM Plex Mono',monospace">${C.hs}</div><div style="font-size:.62rem;color:var(--muted)">/ 100</div></div>${[['المدخرات',C.sc.sav,'#22c55e'],['السيارة',Math.max(0,C.sc.car),'#d4af37'],['الاستثمار',C.sc.inv,'#3b82f6'],['التقاعد',Math.max(0,C.sc.ret),'#f59e0b'],['الديون',Math.max(0,C.sc.debt),'#22c55e']].map(([l,v,c])=>`<div style="margin-bottom:.5rem"><div style="display:flex;justify-content:space-between;font-size:.73rem;margin-bottom:.2rem"><span style="color:var(--muted)">${l}</span><span style="font-family:'IBM Plex Mono',monospace;color:${c}">${Math.round(v)}%</span></div><div class="score-bar"><div class="score-fill" style="width:${Math.min(100,v)}%;background:${c}"></div></div></div>`).join('')}</div><div class="panel"><div class="psec">📊 فجوة التقاعد</div><div class="alert ${C.tgap>0?'ar':'ag'}"><div class="al">الفجوة الإجمالية</div><div class="av ${C.tgap>0?'r':'g'}">${C.tgap>0?fmt(C.tgap)+' ريال':'✅ على المسار'}</div><div class="ad">${C.tgap>0?`تحتاج ${fmt(C.mon)} ريال/شهر لإغلاقها`:'مدخراتك تغطي احتياجاتك'}</div></div>${[['المعاش المتوقع/شهر',fmt(C.pen)+' ريال',C.pen>=C.need?'g':'r'],['ما تحتاجه/شهر',fmt(C.need)+' ريال','w'],['نهاية الخدمة',fmt(C.grat)+' ريال','g'],['تعليم الأولاد',fmt(C.edu)+' ريال','r'],['صافي الثروة',(C.netw>=0?'+':'-')+fmt(C.netw)+' ريال',C.netw>=0?'g':'r']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')}</div><div class="panel"><div class="psec">📊 مقارنتك بالمتوسط السعودي</div>${[['المدخرات',D.sav,8200,'ريال',D.sav>=8200],['قيمة السيارة',D.car,95000,'ريال',D.car<=95000],['الاستثمار',D.inv,12000,'ريال',D.inv>=12000],['مصاريف المطاعم',D.rest,Math.round(D.sal*0.15),'ريال',D.rest<=D.sal*0.15]].map(([l,y,a,u,g])=>`<div class="rrow"><span class="rl">${l}</span><div style="display:flex;gap:.75rem;align-items:center"><span style="font-size:.78rem;font-family:'IBM Plex Mono',monospace;font-weight:700;color:${g?'#22c55e':'#ef4444'}">${fmt(y)}</span><span style="font-size:.72rem;color:var(--muted)">متوسط: ${fmt(a)}</span></div></div>`).join('')}</div><div class="panel"><div class="psec">⏰ ماذا تخسر لو انتظرت؟</div>${[['ابدأ اليوم',C.rows[19]?.v||0,true],['انتظرت سنة',sim(D.sav+D.inv,C.mon,C.rate,19)[18]?.v||0,false],['انتظرت 3 سنوات',sim(D.sav+D.inv,C.mon,C.rate,17)[16]?.v||0,false],['انتظرت 5 سنوات',sim(D.sav+D.inv,C.mon,C.rate,15)[14]?.v||0,false]].map(([l,v,g])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${g?'g':'r'}">${fmt(v)} ريال</span></div>`).join('')}<div class="tip" style="margin-top:.75rem">الفرق بين البدء اليوم والانتظار 5 سنوات: <b style="color:#ef4444">${fmt((C.rows[19]?.v||0)-(sim(D.sav+D.inv,C.mon,C.rate,15)[14]?.v||0))} ريال</b> — هذا ثمن التأجيل.</div></div></div>`;
+  document.getElementById('t-car').innerHTML=`<div class="g2"><div class="panel"><div class="psec">🚗 تقييم سيارتك</div><div class="alert ${C.cc>=1?'ar':C.cc>=0.6?'aw':'ag'}"><div class="al">معامل السيارة</div><div class="av ${C.cc>=1?'r':C.cc>=0.6?'w':'g'}">${C.cc.toFixed(2)}x</div><div class="ad">${C.cc>=1?'🚨 سيارتك تضر بمستقبلك المالي':C.cc>=0.6?'⚠️ سيارتك مكلفة نسبياً':'✅ سيارتك مناسبة لدخلك'}</div></div>${[['قيمة سيارتك',fmt(D.car)+' ريال',C.cc>=1?'r':C.cc>=0.6?'w':'g'],['السيارة المثالية لراتبك','حتى '+fmt(C.ic)+' ريال','o'],['نسبة السيارة من دخلك السنوي',Math.round(C.cc*100)+'%',C.cc>=1?'r':C.cc>=0.6?'w':'g'],['قسط السيارة الشهري',fmt(D.carinst)+' ريال',D.carinst>D.sal*0.1?'r':'g']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')}</div><div class="panel"><div class="psec">💡 ماذا لو استبدلت سيارتك؟</div>${C.cs>0?`<div class="alert ao"><div class="al">لو بعت وأخذت بـ ${fmt(C.ic)} ريال</div><div class="av o">${fmt(C.cs)} ريال</div><div class="ad">هذا ما يمكن استثماره فوراً</div></div>${[['بعد 3 سنوات',fmt(C.cs*Math.pow(1+C.rate/100,3))+' ريال','g'],['بعد 5 سنوات',fmt(C.cs*Math.pow(1+C.rate/100,5))+' ريال','g'],['بعد 10 سنوات',fmt(C.cg)+' ريال','g'],['الفرق عن قيمة سيارتك',fmt(C.cg-D.car)+' ريال','o']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')}`:`<div class="alert ag"><div class="al">وضع السيارة</div><div class="av g">✅ ممتاز</div><div class="ad">سيارتك لا تشكّل عبئاً — ركّز على الاستثمار</div></div>`}</div></div>`;
   const fds={conservative:[{n:'صندوق الراجحي للتوزيعات الشهرية',t:'دخل شهري ثابت',r:'منخفض',rt:8},{n:'صندوق الراجحي للعوائد',t:'أسواق نقد',r:'منخفض جداً',rt:5.88}],moderate:[{n:'صندوق الراجحي للانضمام للمؤشرات',t:'أسهم سعودية',r:'متوسط',rt:9},{n:'صندوق الراجحي النشط',t:'أسهم سعودية',r:'متوسط',rt:8.5}],aggressive:[{n:'صندوق الراجحي للشركات المتوسطة والصغيرة',t:'نمو مرتفع',r:'مرتفع',rt:12},{n:'صندوق الراجحي المرن للأسهم السعودية',t:'نمو مرتفع',r:'مرتفع',rt:11}]};
   const sf=fds[D.risk];
-  document.getElementById('t-inv').innerHTML=`
-  <div class="g2">
-    <div class="panel">
-      <div class="psec">📈 الصناديق المقترحة لك</div>
-      ${sf.map(f=>`<div class="fund"><div class="fn">${f.n}</div><div class="ftags"><span class="tag tg">${f.t}</span><span class="tag tgr">مخاطرة ${f.r}</span><span class="tag tb">عائد متوقع ${f.rt}%</span></div><div style="font-size:.72rem;color:var(--muted);margin-top:.35rem">ادخر ${fmt(C.mon)} ريال/شهر → بعد 10 سنوات: <span style="color:var(--success);font-family:'IBM Plex Mono',monospace;font-weight:700">${fmt(sim(0,C.mon,f.rt,10)[9]?.v||0)} ريال</span></div></div>`).join('')}
-      <div style="font-size:.66rem;color:var(--muted);margin-top:.5rem">* الراجحي المالية مرخصة من هيئة السوق المالية • العوائد تقديرية محافظة — لا تضمن المستقبل</div>
-    </div>
-    <div class="panel ${!P?'lw':''}">
-      <div class="psec">📅 محاكاة 20 سنة قادمة</div>
-      <div class="${!P?'blur':''}">
-        <table class="stbl"><thead><tr><th>السنة</th><th>ما ستودعه</th><th>قيمة محفظتك</th></tr></thead><tbody>
-          ${[1,3,5,10,15,20].map(y=>{const r=C.rows[y-1];return r?`<tr ${y>=10?'class="hl"':''}><td>سنة ${y}</td><td style="color:var(--muted)">${fmt(C.mon*12*y)} ريال</td><td>${fmt(r.v)} ريال</td></tr>`:''}).join('')}
-        </tbody></table>
-        <div class="alert ag" style="margin-top:.75rem"><div class="al">بعد 20 سنة محفظتك ستكون</div><div class="av g">${fmt(C.rows[19]?.v||0)} ريال</div><div class="ad">مقابل ${fmt(C.mon*12*20)} ريال ستودعها فقط</div></div>
-      </div>
-      ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>`:''}
-    </div>
-  </div>`;
-
-  // TAB PLAN
+  document.getElementById('t-inv').innerHTML=`<div class="g2"><div class="panel"><div class="psec">📈 الصناديق المقترحة لك</div>${sf.map(f=>`<div class="fund"><div class="fn">${f.n}</div><div class="ftags"><span class="tag tg">${f.t}</span><span class="tag tgr">مخاطرة ${f.r}</span><span class="tag tb">عائد متوقع ${f.rt}%</span></div><div style="font-size:.72rem;color:var(--muted);margin-top:.35rem">ادخر ${fmt(C.mon)} ريال/شهر → بعد 10 سنوات: <span style="color:var(--success);font-family:'IBM Plex Mono',monospace;font-weight:700">${fmt(sim(0,C.mon,f.rt,10)[9]?.v||0)} ريال</span></div></div>`).join('')}<div style="font-size:.66rem;color:var(--muted);margin-top:.5rem">* الراجحي المالية مرخصة من هيئة السوق المالية • العوائد تقديرية محافظة — لا تضمن المستقبل</div></div><div class="panel ${!P?'lw':''}"><div class="psec">📅 محاكاة 20 سنة قادمة</div><div class="${!P?'blur':''}"><table class="stbl"><thead><tr><th>السنة</th><th>ما ستودعه</th><th>قيمة محفظتك</th></tr></thead><tbody>${[1,3,5,10,15,20].map(y=>{const r=C.rows[y-1];return r?`<tr ${y>=10?'class="hl"':''}><td>سنة ${y}</td><td style="color:var(--muted)">${fmt(C.mon*12*y)} ريال</td><td>${fmt(r.v)} ريال</td></tr>`:''}).join('')}</tbody></table><div class="alert ag" style="margin-top:.75rem"><div class="al">بعد 20 سنة محفظتك ستكون</div><div class="av g">${fmt(C.rows[19]?.v||0)} ريال</div><div class="ad">مقابل ${fmt(C.mon*12*20)} ريال ستودعها فقط</div></div></div>${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>`:''}</div></div>`;
   const p9=[{d:'اليوم\n1',t:'افتح حساب استثمار',x:`افتح تطبيق الراجحي المالية وحوّل ${fmt(C.mon)} ريال هذا الشهر — الخطوة الأولى هي الأصعب`},{d:'يوم\n7',t:'راجع سيارتك',x:C.cc>=1?`سيارتك مكلفة — ابدأ البحث عن بديل بـ ${fmt(C.ic)} ريال وضع الفرق في الاستثمار`:'سيارتك مناسبة — ركّز على زيادة مدخراتك'},{d:'يوم\n14',t:'أغلق الاشتراكات غير الضرورية',x:`يمكنك توفير ${fmt(C.sw)} ريال/شهر من الاشتراكات — راجعها الآن`},{d:'يوم\n30',t:'راجع تقريرك الأول',x:'ادخل على رتّبني وتحقق من نقاط صحتك المالية — هل تحسّنت؟'},{d:'يوم\n60',t:'فكّر في خفض مصاريف المطاعم',x:`مصاريف مطاعمك ${fmt(D.rest)} ريال/شهر — التوفير الممكن: ${fmt(C.rw)} ريال/شهر`},{d:'يوم\n90',t:'قيّم تقدمك واحتفل',x:`3 أشهر التزمت — وفّرت ${fmt(C.mon*3)} ريال. معظم الناس يتوقفون قبل هذا. أنت فعلت الصح.`}];
-  document.getElementById('t-plan').innerHTML=`
-  <div class="g2">
-    <div class="panel ${!P?'lw':''}">
-      <div class="psec">📅 خطة الـ 90 يوم</div>
-      <div class="${!P?'blur':''}">
-        ${p9.map(p=>`<div class="p90"><div class="p90d">${p.d}</div><div><div class="p90t">${p.t}</div><div class="p90d2">${p.x}</div></div></div>`).join('')}
-      </div>
-      ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>`:''}
-    </div>
-    <div class="panel ${!P?'lw':''}">
-      <div class="psec">🗺️ خارطة طريق تقاعدك</div>
-      <div class="${!P?'blur':''}">
-        ${[{yr:yr(0),dot:'now',ico:'📍',t:'أنت هنا — ابدأ اليوم',d:`ادخر ${fmt(C.mon)} ريال/شهر من الآن`},{yr:yr(3),dot:'fut',ico:'💳',t:'أغلق الديون الصغيرة',d:'صفّر الديون قصيرة الأجل وحوّل القسط للاستثمار'},{yr:yr(5),dot:'fut',ico:'📈',t:'محفظتك تتجاوز 100,000 ريال',d:`مع الالتزام: ${fmt(C.rows[4]?.v||0)} ريال`},{yr:yr(10),dot:'fut',ico:'🏠',t:'مرحلة الاستقرار المالي',d:`محفظتك: ${fmt(C.rows[9]?.v||0)} ريال`},{yr:yr(15),dot:'fut',ico:'🌟',t:'الاستقلال المالي يقترب',d:`محفظتك: ${fmt(C.rows[14]?.v||0)} ريال`},{yr:yr(D.yrs),dot:'fut',ico:'🏖️',t:'التقاعد المريح',d:`محفظتك: ${fmt(C.rows[Math.min(19,D.yrs-1)]?.v||0)} ريال + المعاش + نهاية الخدمة`}].map(r=>`<div class="ri"><div class="rdot ${r.dot}">${r.ico}</div><div><div class="ryear">${r.yr}</div><div class="rtitle">${r.t}</div><div class="rdesc">${r.d}</div></div></div>`).join('')}
-      </div>
-      ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>`:''}
-    </div>
-  </div>`;
-
-  // TAB MSGS
+  document.getElementById('t-plan').innerHTML=`<div class="g2"><div class="panel ${!P?'lw':''}"><div class="psec">📅 خطة الـ 90 يوم</div><div class="${!P?'blur':''}">${p9.map(p=>`<div class="p90"><div class="p90d">${p.d}</div><div><div class="p90t">${p.t}</div><div class="p90d2">${p.x}</div></div></div>`).join('')}</div>${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>`:''}</div><div class="panel ${!P?'lw':''}"><div class="psec">🗺️ خارطة طريق تقاعدك</div><div class="${!P?'blur':''}">${[{yr:yr(0),dot:'now',ico:'📍',t:'أنت هنا — ابدأ اليوم',d:`ادخر ${fmt(C.mon)} ريال/شهر من الآن`},{yr:yr(3),dot:'fut',ico:'💳',t:'أغلق الديون الصغيرة',d:'صفّر الديون قصيرة الأجل وحوّل القسط للاستثمار'},{yr:yr(5),dot:'fut',ico:'📈',t:'محفظتك تتجاوز 100,000 ريال',d:`مع الالتزام: ${fmt(C.rows[4]?.v||0)} ريال`},{yr:yr(10),dot:'fut',ico:'🏠',t:'مرحلة الاستقرار المالي',d:`محفظتك: ${fmt(C.rows[9]?.v||0)} ريال`},{yr:yr(15),dot:'fut',ico:'🌟',t:'الاستقلال المالي يقترب',d:`محفظتك: ${fmt(C.rows[14]?.v||0)} ريال`},{yr:yr(D.yrs),dot:'fut',ico:'🏖️',t:'التقاعد المريح',d:`محفظتك: ${fmt(C.rows[Math.min(19,D.yrs-1)]?.v||0)} ريال + المعاش + نهاية الخدمة`}].map(r=>`<div class="ri"><div class="rdot ${r.dot}">${r.ico}</div><div><div class="ryear">${r.yr}</div><div class="rtitle">${r.t}</div><div class="rdesc">${r.d}</div></div></div>`).join('')}</div>${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>`:''}</div></div>`;
   const ms=[{w:'الأسبوع 1',t:`مرحباً ${D.name} — رحلتك بدأت`,b:`فجوتك المالية: <span class="hl">${fmt(C.tgap)} ريال</span>\n\nخطوتك الأولى الآن:\n→ افتح تطبيق الراجحي المالية\n→ حوّل <span class="hl">${fmt(C.mon)} ريال</span> هذا الشهر\n\nكل يوم تأجيل يكلفك <span class="hl">${fmt(C.mon*1.2/30)} ريال</span> من مستقبلك.`},{w:'الأسبوع 4',t:'شهر مضى — كيف حالك؟',b:`لو التزمت هذا الشهر:\n✅ وفّرت <span class="hl">${fmt(C.mon)} ريال</span>\n\nهذا المبلغ بعد 10 سنوات:\n→ <span class="hl">${fmt(C.mon*180)} ريال</span>\n\nاستمر — أصعب خطوة كانت الأولى.`},{w:'الأسبوع 8',t:C.cc>=1?'🚨 سيارتك تستنزفك':'💡 نصيحة هذا الأسبوع',b:C.cc>=1?`سيارتك <span class="hl">${fmt(D.car)} ريال</span> — بعد 5 سنوات ستساوي ${fmt(D.car*0.45)} ريال.\n\nلو باعتها وأخذت بـ <span class="hl">${fmt(C.ic)} ريال</span>:\nالفرق بعد 10 سنوات = <span class="hl">${fmt(C.cg)} ريال</span>`:'راجع مصاريف المطاعم والاشتراكات.\n\nكل ريال توفره الآن = <span class="hl">3 ريال</span> في المستقبل.'},{w:'الأسبوع 12',t:'السوق نزل — لا تبع!',b:`تاسي انخفض 📉\n\n• في 2020 نزل 30%\n• من صبر سنة ربح <span class="hl">60%</span>\n• من باع خسر مرتين\n\n🔒 لا تفعل شيئاً — خطتك صحيحة.`},{w:'الأسبوع 26',t:'نصف السنة — الأرقام لا تكذب',b:`6 أشهر من الالتزام 🏆\n\nما أودعته: <span class="hl">${fmt(C.mon*6)} ريال</span>\n\nأنت في أفضل <span class="hl">15%</span> من الموظفين السعوديين.\nاستمر.`},{w:'الأسبوع 52',t:`سنة كاملة — أنت غيّرت مسارك يا ${D.name}`,b:`سنة مضت 🎉\n\nما أودعته: <span class="hl">${fmt(C.mon*12)} ريال</span>\nمحفظتك الآن: <span class="hl">${fmt(C.rows[0]?.v||0)} ريال</span>\n\nمعظم الناس لا يصمدون سنة.\nأنت صمدت — وهذا يغيّر كل شيء.`}];
-  document.getElementById('t-msgs').innerHTML=`
-  <div class="panel ${!P?'lw':''}">
-    <div class="psec">💬 رسائلك الأسبوعية — 52 رسالة سنوياً مخصصة لوضعك تحديداً</div>
-    <div class="${!P?'blur':''}">
-      ${ms.map(m=>`<div class="msg"><div class="mw">${m.w}</div><div class="mt">${m.t}</div><div class="mb">${m.b.replace(/\n/g,'<br>')}</div></div>`).join('')}
-    </div>
-    ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 اشترك للحصول على 52 رسالة سنوياً — 49 ريال/شهر</button></div>`:''}
-  </div>`;
+  document.getElementById('t-msgs').innerHTML=`<div class="panel ${!P?'lw':''}"><div class="psec">💬 رسائلك الأسبوعية — 52 رسالة سنوياً مخصصة لوضعك تحديداً</div><div class="${!P?'blur':''}">${ms.map(m=>`<div class="msg"><div class="mw">${m.w}</div><div class="mt">${m.t}</div><div class="mb">${m.b.replace(/\n/g,'<br>')}</div></div>`).join('')}</div>${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 اشترك للحصول على 52 رسالة سنوياً — 49 ريال/شهر</button></div>`:''}</div>`;
+  document.getElementById('ups').innerHTML=!P?`<div style="background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:2rem;text-align:center;margin-top:1.25rem"><div style="font-size:1.3rem;font-weight:900;margin-bottom:.5rem">هل تريد الخطة الكاملة؟</div><div style="color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;line-height:1.7">نقاط الصحة المالية + محاكاة 20 سنة + خطة الـ 90 يوم + خارطة الطريق + 52 رسالة أسبوعية + مقارنة بالمتوسط السعودي</div><button class="btn bg" onclick="ul()">فعّل المميزة — 49 ريال/شهر</button><div style="font-size:.68rem;color:var(--muted);margin-top:.6rem">إلغاء في أي وقت بضغطة واحدة</div></div>`:''
+}
 
-  document.getElementById('ups').innerHTML=!P?`
-  <div style="background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:2rem;text-align:center;margin-top:1.25rem">
-    <div style="font-size:1.3rem;font-weight:900;margin-bottom:.5rem">هل تريد الخطة الكاملة؟</div>
-    <div style="color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;line-height:1.7">نقاط الصحة المالية + محاكاة 20 سنة + خطة الـ 90 يوم + خارطة الطريق + 52 رسالة أسبوعية + مقارنة بالمتوسط السعودي</div>
-    <button class="btn bg" onclick="ul()">فعّل المميزة — 49 ريال/شهر</button>
-    <div style="font-size:.68rem;color:var(--muted);margin-top:.6rem">إلغاء في أي وقت بضغطة واحدة</div>
-  </div>`:''}
+// ✅ تغيير: يحول لصفحة الدفع الإلكتروني بدل الكود اليدوي
 function ul(){
-  const pw = prompt('أدخل كود الاشتراك:');
-  if(pw === 'rattibni49'){
-    P=true;
-    build();
-  } else if(pw !== null) {
-    alert('❌ الكود غير صحيح — للاشتراك راسلنا على تيك توك: @رتّبني');
-  }
+  window.location.href='checkout.html?plan=premium';
 }
 </script>
 
-<div id="pw-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:1.5rem">
-  <div style="background:#141d35;border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:2rem;max-width:380px;width:100%;text-align:center">
-    <div style="font-size:1.2rem;font-weight:900;color:#d4af37;margin-bottom:.5rem">🔐 الباقة المميزة</div>
-    <div style="font-size:.82rem;color:#8892a4;margin-bottom:1.25rem;line-height:1.6">أدخل كود الاشتراك<br>للحصول على الكود راسلنا على تيك توك: <b style="color:#d4af37">@رتّبني</b></div>
-    <input id="pw-input" type="text" placeholder="أدخل الكود هنا" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(212,175,55,0.2);border-radius:8px;padding:.75rem 1rem;color:#f0ead8;font-size:1rem;text-align:center;margin-bottom:.75rem;font-family:monospace">
-    <div id="pw-msg" style="font-size:.75rem;color:#ef4444;margin-bottom:.75rem;min-height:1rem"></div>
-    <button onclick="checkpw()" style="width:100%;padding:.85rem;background:#d4af37;color:#080c18;border:none;border-radius:8px;font-size:1rem;font-weight:900;cursor:pointer;font-family:Tajawal,sans-serif;margin-bottom:.5rem">تفعيل الباقة ←</button>
-    <button onclick="closepw()" style="width:100%;padding:.7rem;background:transparent;color:#8892a4;border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:.85rem;cursor:pointer;font-family:Tajawal,sans-serif">إلغاء</button>
-  </div>
-</div>
 </body>
 </html>
