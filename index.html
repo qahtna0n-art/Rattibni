@@ -85,14 +85,15 @@ h1.big em{color:var(–gold);font-style:normal}
 .sn2{padding:.28rem .75rem;border-radius:100px;font-size:.72rem;font-weight:700;cursor:pointer;border:1px solid var(–border);background:transparent;color:var(–muted);font-family:‘Tajawal’,sans-serif;transition:all .2s;white-space:nowrap}
 .sn2.done{border-color:var(–green);color:var(–green);background:rgba(16,185,129,0.08)}
 .sn2.cur{border-color:var(–gold);color:var(–gold);background:var(–gold3)}
-.fc{background:var(–card);border:1px solid var(–border);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+.fc{background:var(–card);border:2px solid rgba(212,175,55,0.2);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
 .fst{font-size:.86rem;font-weight:700;color:var(–gold);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;padding-bottom:.6rem;border-bottom:1px solid var(–border)}
 .fg{margin-bottom:.8rem}
-.fl{font-size:.7rem;color:var(–muted);margin-bottom:.24rem;display:block;font-weight:600}
-.fi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:8px;padding:.56rem .9rem;color:var(–text);font-size:.85rem;font-family:‘IBM Plex Mono’,monospace;transition:all .2s;direction:ltr;text-align:right}
-.fi:focus{outline:none;border-color:var(–gold);background:var(–gold3)}
-.fs{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:8px;padding:.56rem .9rem;color:var(–text);font-size:.8rem;font-family:‘Tajawal’,sans-serif;cursor:pointer}
-.fs option{background:var(–card)}
+.fl{font-size:.7rem;color:var(–gold);margin-bottom:.24rem;display:block;font-weight:700}
+.fi{width:100%;background:#fff;border:2px solid #d4af37;border-radius:8px;padding:.56rem .9rem;color:#111;font-size:.85rem;font-family:‘IBM Plex Mono’,monospace;transition:all .2s;direction:ltr;text-align:right}
+.fi:focus{outline:none;border-color:#f0d060;box-shadow:0 0 0 3px rgba(212,175,55,0.2);background:#fffdf5}
+.fi::placeholder{color:#999}
+.fs{width:100%;background:#fff;border:2px solid #d4af37;border-radius:8px;padding:.56rem .9rem;color:#111;font-size:.8rem;font-family:‘Tajawal’,sans-serif;cursor:pointer}
+.fs option{background:#fff;color:#111}
 .fg2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
 .tip{background:var(–gold3);border:1px solid var(–border);border-radius:8px;padding:.65rem;font-size:.7rem;color:var(–muted);margin-top:.45rem;line-height:1.6}
 .cnav{display:flex;gap:.8rem;margin-top:.8rem}
@@ -174,12 +175,13 @@ h1.big em{color:var(–gold);font-style:normal}
 .apanel{background:var(–card);border:1px solid var(–border);border-radius:14px;padding:1.1rem;margin-bottom:12px}
 .apanel-t{font-size:.83rem;font-weight:700;color:var(–gold);margin-bottom:.9rem;padding-bottom:.6rem;border-bottom:1px solid var(–border)}
 .aform-g{margin-bottom:.7rem}
-.afl{font-size:.68rem;color:var(–muted);margin-bottom:.2rem;display:block;font-weight:600}
-.afi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:7px;padding:.5rem .8rem;color:var(–text);font-size:.82rem;font-family:‘IBM Plex Mono’,monospace;direction:rtl;text-align:right}
-.afi:focus{outline:none;border-color:var(–gold)}
+.afl{font-size:.68rem;color:var(–gold);margin-bottom:.2rem;display:block;font-weight:700}
+.afi{width:100%;background:#fff;border:2px solid #d4af37;border-radius:7px;padding:.5rem .8rem;color:#111;font-size:.82rem;font-family:‘IBM Plex Mono’,monospace;direction:rtl;text-align:right}
+.afi:focus{outline:none;border-color:#f0d060;box-shadow:0 0 0 3px rgba(212,175,55,0.15);background:#fffdf5}
+.afi::placeholder{color:#999}
 .afi-ar{font-family:Tajawal}
-.afs{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:7px;padding:.5rem .8rem;color:var(–text);font-size:.78rem;font-family:Tajawal;cursor:pointer}
-.afs option{background:var(–card)}
+.afs{width:100%;background:#fff;border:2px solid #d4af37;border-radius:7px;padding:.5rem .8rem;color:#111;font-size:.78rem;font-family:Tajawal;cursor:pointer}
+.afs option{background:#fff;color:#111}
 .abtn{width:100%;padding:.65rem;background:var(–gold);color:#060a14;border:none;border-radius:7px;font-size:.85rem;font-weight:900;cursor:pointer;font-family:Tajawal;margin-top:.35rem;transition:all .2s}
 .abtn:hover{background:var(–gold2)}
 .abtn-out{width:100%;padding:.6rem;background:transparent;color:var(–text);border:1px solid var(–border);border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:Tajawal;margin-top:.35rem;transition:all .2s}
@@ -201,8 +203,8 @@ h1.big em{color:var(–gold);font-style:normal}
 .ai-result-box{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:9px;padding:.9rem;margin-top:.7rem;font-size:.77rem;line-height:1.7;color:var(–text);white-space:pre-wrap;direction:rtl}
 .clients-scroll{max-height:480px;overflow-y:auto}
 .login-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center}
-.login-input{width:100%;max-width:280px;background:rgba(255,255,255,0.05);border:1px solid var(–border);border-radius:10px;padding:.8rem 1rem;color:var(–text);font-size:1rem;text-align:center;font-family:‘IBM Plex Mono’,monospace;margin-bottom:.8rem}
-.login-input:focus{outline:none;border-color:var(–gold)}
+.login-input{width:100%;max-width:280px;background:#fff;border:2px solid #d4af37;border-radius:10px;padding:.8rem 1rem;color:#111;font-size:1rem;text-align:center;font-family:‘IBM Plex Mono’,monospace;margin-bottom:.8rem}
+.login-input:focus{outline:none;border-color:#f0d060;box-shadow:0 0 0 3px rgba(212,175,55,0.2);background:#fffdf5}
 .login-err{font-size:.73rem;color:var(–red);margin-top:.3rem;min-height:1rem}
 
 /* GOSI */
@@ -215,7 +217,9 @@ h1.big em{color:var(–gold);font-style:normal}
 
 /* CODE BAR */
 .code-bar{background:var(–gold3);border:1px solid rgba(212,175,55,0.2);border-radius:10px;padding:.75rem 1rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-.code-bar-input{background:rgba(255,255,255,0.06);border:1px solid var(–border);border-radius:7px;padding:.38rem .75rem;color:var(–text);font-family:‘IBM Plex Mono’,monospace;font-size:.82rem;width:155px;direction:ltr;text-transform:uppercase}
+.code-bar-input{background:#fff;border:2px solid #d4af37;border-radius:7px;padding:.38rem .75rem;color:#111;font-family:‘IBM Plex Mono’,monospace;font-size:.82rem;width:155px;direction:ltr;text-transform:uppercase}
+.code-bar-input:focus{outline:none;border-color:#f0d060}
+.code-bar-input::placeholder{color:#aaa}
 .code-bar-btn{background:var(–gold);color:#060a14;border:none;border-radius:7px;padding:.4rem .85rem;font-size:.8rem;font-weight:900;cursor:pointer;font-family:Tajawal;white-space:nowrap}
 
 /* TOAST */
@@ -573,6 +577,7 @@ h1.big em{color:var(–gold);font-style:normal}
               <div class="apanel-t">🔑 توليد كود جديد</div>
               <div class="aform-g"><label class="afl">اختر العميل</label><select class="afs afi-ar" id="code-sel"></select></div>
               <button class="abtn" onclick="genCode()">توليد كود جديد</button>
+              <button class="abtn-out" style="margin-top:.3rem" onclick="exportCodes()">📋 نسخ codes.json للـ GitHub</button>
               <div id="code-result" style="display:none">
                 <div class="code-box"><div class="code-val" id="code-disp">---</div></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem">
@@ -989,13 +994,31 @@ function drawCharts() {
 // ═══════════════════════════════════════════
 // CODE ACTIVATION
 // ═══════════════════════════════════════════
-function getValidCodes() { try{return JSON.parse(localStorage.getItem('rattibni_codes')||'[]')}catch(e){return []} }
+// Codes are stored in GitHub codes.json AND localStorage (admin generated)
+let _cachedCodes = null;
+async function getValidCodes() {
+  // First check localStorage (admin generated on this device)
+  let localCodes = [];
+  try { localCodes = JSON.parse(localStorage.getItem('rattibni_codes')||'[]'); } catch(e){}
+  // Then fetch from GitHub
+  try {
+    const resp = await fetch('https://raw.githubusercontent.com/qahtna0n-art/Rattibni/main/codes.json?t='+Date.now());
+    if(resp.ok) {
+      const gitCodes = await resp.json();
+      // Merge: git codes take precedence, but add local ones not in git
+      const merged = [...gitCodes];
+      localCodes.forEach(lc => { if(!merged.find(c=>c.code===lc.code)) merged.push(lc); });
+      return merged;
+    }
+  } catch(e) {}
+  return localCodes;
+}
 
-function activateCode() {
+async function activateCode() {
   const code = (document.getElementById('code-input').value||'').trim().toUpperCase();
   const msgEl = document.getElementById('code-msg');
   if(!code){msgEl.textContent='❌ أدخل الكود أولاً';msgEl.style.display='block';return}
-  const codes = getValidCodes();
+  const codes = await getValidCodes();
   const found = codes.find(c=>c.code===code&&c.status==='active');
   if(found) {
     P = true;
@@ -1063,7 +1086,7 @@ function genClientCode() {
 }
 
 function saveCode(code, name) {
-  const codes = getValidCodes();
+  const codes = await getValidCodes();
   const f = codes.findIndex(c=>c.code===code);
   if(f>=0) codes[f]={code,name,status:'active',created:new Date().toISOString()};
   else codes.push({code,name,status:'active',created:new Date().toISOString()});
@@ -1117,6 +1140,31 @@ function genCode() {
   showToast('✅ تم توليد الكود');
 }
 function copyCode() { copyText(document.getElementById('code-disp').textContent,'تم نسخ الكود') }
+
+function exportCodes() {
+  let codes = [];
+  try { codes = JSON.parse(localStorage.getItem('rattibni_codes')||'[]'); } catch(e) {}
+  const json = JSON.stringify(codes, null, 2);
+  navigator.clipboard.writeText(json).then(()=>{
+    showToast('✅ تم نسخ codes.json — الصقه في GitHub كملف codes.json');
+  });
+  // Show instructions
+  const div = document.createElement('div');
+  div.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1.5rem';
+  div.innerHTML = '<div style="background:#111827;border:2px solid #d4af37;border-radius:16px;padding:1.8rem;max-width:420px;width:100%">' +
+    '<div style="font-size:1rem;font-weight:900;color:#d4af37;margin-bottom:.8rem">📋 كيف تحدّث الأكواد على GitHub</div>' +
+    '<div style="font-size:.78rem;color:#6b7a8f;line-height:1.8;margin-bottom:1.2rem">' +
+    '1️⃣ تم نسخ محتوى codes.json<br>' +
+    '2️⃣ افتح GitHub ← مشروع Rattibni<br>' +
+    '3️⃣ ابحث عن ملف <b style="color:#d4af37">codes.json</b> أو أنشئه جديداً<br>' +
+    '4️⃣ امسح المحتوى القديم والصق الجديد<br>' +
+    '5️⃣ اضغط Commit — ينتشر خلال دقيقة ✅' +
+    '</div>' +
+    '<div style="background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.2);border-radius:8px;padding:.8rem;font-size:.72rem;color:#d4af37;direction:ltr;text-align:left;max-height:120px;overflow-y:auto;font-family:monospace;margin-bottom:1rem">' + json.replace(/</g,'&lt;').substring(0,500) + (json.length>500?'...':'') + '</div>' +
+    '<button onclick="this.parentElement.parentElement.remove()" style="width:100%;padding:.75rem;background:#d4af37;color:#060a14;border:none;border-radius:8px;font-size:.9rem;font-weight:900;cursor:pointer;font-family:Tajawal">حسناً، فهمت ←</button>' +
+  '</div>';
+  document.body.appendChild(div);
+}
 
 async function genAI() {
   const id=parseInt(document.getElementById('ai-sel').value);
