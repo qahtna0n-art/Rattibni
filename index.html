@@ -622,6 +622,7 @@ h1.big em{color:var(–gold);font-style:normal}
 // ═══════════════════════════════════════════
 // CORE
 // ═══════════════════════════════════════════
+'use strict';
 let P = false, ST = 0, D = {}, chartInst = {};
 const fmt = n => new Intl.NumberFormat('ar-SA').format(Math.round(Math.abs(n)));
 const sim = (init, mo, rate, yrs) => { let v = init, r = rate/100/12, rows = []; for(let y=1;y<=yrs;y++){for(let m=0;m<12;m++)v=v*(1+r)+mo;rows.push({y,v:Math.round(v)})} return rows };
@@ -727,7 +728,7 @@ function cg() {
     ['الفجوة الشهرية',gap>0?fmt(gap)+' ريال':'لا فجوة ✅',gap>0?'r':'g']
   ].map(([l,v,c])=>'<div class="rrow"><span class="rl">'+l+'</span><span class="rv '+c+'">'+v+'</span></div>').join('');
 }
-cg();
+document.addEventListener('DOMContentLoaded', function() { try { cg(); } catch(e) {} });
 
 // ═══════════════════════════════════════════
 // MAIN CALCULATOR
@@ -994,31 +995,15 @@ function drawCharts() {
 // ═══════════════════════════════════════════
 // CODE ACTIVATION
 // ═══════════════════════════════════════════
-// Codes are stored in GitHub codes.json AND localStorage (admin generated)
-let _cachedCodes = null;
-async function getValidCodes() {
-  // First check localStorage (admin generated on this device)
-  let localCodes = [];
-  try { localCodes = JSON.parse(localStorage.getItem('rattibni_codes')||'[]'); } catch(e){}
-  // Then fetch from GitHub
-  try {
-    const resp = await fetch('https://raw.githubusercontent.com/qahtna0n-art/Rattibni/main/codes.json?t='+Date.now());
-    if(resp.ok) {
-      const gitCodes = await resp.json();
-      // Merge: git codes take precedence, but add local ones not in git
-      const merged = [...gitCodes];
-      localCodes.forEach(lc => { if(!merged.find(c=>c.code===lc.code)) merged.push(lc); });
-      return merged;
-    }
-  } catch(e) {}
-  return localCodes;
+function getValidCodes() {
+  try { return JSON.parse(localStorage.getItem('rattibni_codes')||'[]'); } catch(e) { return []; }
 }
 
-async function activateCode() {
+function activateCode() {
   const code = (document.getElementById('code-input').value||'').trim().toUpperCase();
   const msgEl = document.getElementById('code-msg');
   if(!code){msgEl.textContent='❌ أدخل الكود أولاً';msgEl.style.display='block';return}
-  const codes = await getValidCodes();
+  const codes = getValidCodes();
   const found = codes.find(c=>c.code===code&&c.status==='active');
   if(found) {
     P = true;
@@ -1086,7 +1071,7 @@ function genClientCode() {
 }
 
 function saveCode(code, name) {
-  const codes = await getValidCodes();
+  const codes = getValidCodes();
   const f = codes.findIndex(c=>c.code===code);
   if(f>=0) codes[f]={code,name,status:'active',created:new Date().toISOString()};
   else codes.push({code,name,status:'active',created:new Date().toISOString()});
