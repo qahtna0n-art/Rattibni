@@ -9,141 +9,239 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#060a14;--surface:#0c1322;--card:#111827;--card2:#1a2438;--gold:#d4af37;--gold2:#f0d060;--gold3:rgba(212,175,55,0.08);--text:#f0ead8;--muted:#6b7a8f;--border:rgba(212,175,55,0.12);--success:#10b981;--danger:#ef4444;--warn:#f59e0b;--blue:#3b82f6}
+:root{
+  --bg:#060a14;--surface:#0c1322;--card:#111827;--card2:#1a2438;
+  --gold:#d4af37;--gold2:#f0d060;--gold3:rgba(212,175,55,0.08);
+  --text:#f0ead8;--muted:#6b7a8f;--border:rgba(212,175,55,0.12);
+  --green:#10b981;--red:#ef4444;--warn:#f59e0b;--blue:#3b82f6
+}
 body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 .hidden{display:none!important}
+
 /* NAV */
-nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(6,10,20,0.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem}
-.logo{font-size:1.35rem;font-weight:900;color:var(--gold);cursor:pointer;letter-spacing:-0.5px}
-.nav-links{display:flex;gap:.15rem}
-.nb{padding:.3rem .65rem;border-radius:6px;cursor:pointer;font-size:.74rem;font-weight:600;border:none;font-family:'Tajawal',sans-serif;background:transparent;color:var(--muted);transition:all .2s}
-.nb.on{background:var(--gold);color:#060a14}
+nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(6,10,20,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(–border);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 1rem}
+.logo{font-size:1.3rem;font-weight:900;color:var(–gold);cursor:pointer}
+.nav-links{display:flex;gap:.15rem;align-items:center}
+.nb{padding:.3rem .6rem;border-radius:6px;cursor:pointer;font-size:.74rem;font-weight:600;border:none;font-family:‘Tajawal’,sans-serif;background:transparent;color:var(–muted);transition:all .2s}
+.nb.on{background:var(–gold);color:#060a14}
+.nb-admin{color:#ef4444!important;font-size:.72rem}
+
 /* PAGES */
 .page{display:none;padding-top:58px;min-height:100vh}
 .page.on{display:block}
+
+/* OVERLAYS */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:none;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto}
+.overlay.show{display:flex}
+.overlay-box{background:var(–card);border:1px solid var(–border);border-radius:20px;width:100%;max-width:580px;margin:auto;position:relative}
+.overlay-admin-box{background:var(–bg);border-radius:16px;width:100%;max-width:1100px;margin:auto}
+.overlay-close{position:sticky;top:0;display:flex;justify-content:flex-end;padding:.7rem .9rem;background:var(–card);border-radius:20px 20px 0 0;z-index:1}
+.overlay-admin-close{position:sticky;top:0;display:flex;justify-content:flex-end;padding:.5rem .8rem;background:rgba(6,10,20,0.97);z-index:1}
+.overlay-close-btn{background:rgba(255,255,255,0.08);border:1px solid var(–border);color:var(–text);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;font-family:monospace}
+
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:5rem 1.5rem 3rem;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -10%,rgba(212,175,55,0.09),transparent 60%)}
+.hero::before{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at 50% -10%,rgba(212,175,55,0.09),transparent 60%);pointer-events:none}
 .hg{position:absolute;inset:0;background-image:linear-gradient(rgba(212,175,55,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,0.025) 1px,transparent 1px);background-size:70px 70px;pointer-events:none}
 .hi{position:relative;z-index:1;max-width:760px}
-.chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.22);padding:.32rem .9rem;border-radius:100px;font-size:.74rem;color:var(--gold);margin-bottom:1.8rem}
+.chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.22);padding:.32rem .9rem;border-radius:100px;font-size:.74rem;color:var(–gold);margin-bottom:1.8rem}
 h1.big{font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;line-height:1.06;letter-spacing:-2px;margin-bottom:1.4rem}
-h1.big em{color:var(--gold);font-style:normal}
-.sub{font-size:.96rem;color:var(--muted);line-height:1.8;max-width:540px;margin:0 auto 2.2rem}
+h1.big em{color:var(–gold);font-style:normal}
+.sub{font-size:.95rem;color:var(–muted);line-height:1.8;max-width:540px;margin:0 auto 2.2rem}
 .btns{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
-.btn{padding:.78rem 1.7rem;border-radius:8px;font-size:.88rem;font-weight:900;cursor:pointer;font-family:'Tajawal',sans-serif;transition:all .22s;border:none}
-.bg{background:var(--gold);color:#060a14;box-shadow:0 0 36px rgba(212,175,55,0.22)}
-.bg:hover{background:var(--gold2);transform:translateY(-2px)}
-.bo{background:transparent;color:var(--text);border:1px solid var(--border)}
-.bo:hover{border-color:var(--gold);color:var(--gold)}
-.hstats{display:flex;justify-content:center;gap:2.2rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--border);flex-wrap:wrap}
-.sn{font-size:1.7rem;font-weight:900;color:var(--gold);font-family:'IBM Plex Mono',monospace;line-height:1}
-.sl{font-size:.68rem;color:var(--muted);margin-top:.2rem}
+.btn{padding:.78rem 1.7rem;border-radius:8px;font-size:.88rem;font-weight:900;cursor:pointer;font-family:‘Tajawal’,sans-serif;transition:all .22s;border:none;text-decoration:none;display:inline-block}
+.btn-gold{background:var(–gold);color:#060a14;box-shadow:0 0 36px rgba(212,175,55,0.22)}
+.btn-gold:hover{background:var(–gold2);transform:translateY(-2px)}
+.btn-out{background:transparent;color:var(–text);border:1px solid var(–border)}
+.btn-out:hover{border-color:var(–gold);color:var(–gold)}
+.hstats{display:flex;justify-content:center;gap:2rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(–border);flex-wrap:wrap}
+.stat-n{font-size:1.7rem;font-weight:900;color:var(–gold);font-family:‘IBM Plex Mono’,monospace;line-height:1}
+.stat-l{font-size:.68rem;color:var(–muted);margin-top:.2rem}
+
 /* SECTIONS */
-.sec{padding:4.5rem 1.5rem;max-width:1080px;margin:0 auto}
-.sec-tag{font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:2px;text-align:center;margin-bottom:.5rem}
+.sec{padding:4rem 1.5rem;max-width:1080px;margin:0 auto}
+.sec-tag{font-size:.68rem;color:var(–gold);text-transform:uppercase;letter-spacing:2px;text-align:center;margin-bottom:.5rem}
 .sec-h{font-size:1.85rem;font-weight:900;text-align:center;letter-spacing:-1px;margin-bottom:.35rem}
-.sec-s{font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:2.2rem}
+.sec-s{font-size:.82rem;color:var(–muted);text-align:center;margin-bottom:2rem}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;transition:all .3s}
+.card{background:var(–card);border:1px solid var(–border);border-radius:14px;padding:1.4rem;transition:all .3s}
 .card:hover{border-color:rgba(212,175,55,0.28);transform:translateY(-3px)}
+
+/* PRICING */
+.pkg-free{background:var(–card);border:1px solid var(–border);border-radius:18px;padding:1.8rem}
+.pkg-prem{background:linear-gradient(160deg,rgba(212,175,55,0.07),var(–card));border:2px solid var(–gold);border-radius:18px;padding:1.8rem;position:relative}
+.pkg-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(–gold);color:#060a14;padding:.22rem .9rem;border-radius:100px;font-size:.68rem;font-weight:900;white-space:nowrap}
+.pkg-price{font-size:2.6rem;font-weight:900;font-family:‘IBM Plex Mono’,monospace;line-height:1;margin-bottom:.2rem}
+.pf{list-style:none;margin:1rem 0 1.3rem}
+.pf li{font-size:.77rem;color:var(–muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:flex-start;gap:.4rem}
+.pf li:last-child{border-bottom:none}
+.pf li b{color:var(–text)}
+.ck{color:var(–green);flex-shrink:0}
+.xk{color:var(–red);flex-shrink:0}
+
 /* FORM */
 .cw{padding:80px 1.5rem 4rem;max-width:820px;margin:0 auto}
 .snav{display:flex;justify-content:center;gap:.3rem;margin-bottom:1.8rem;flex-wrap:wrap}
-.sn2{padding:.3rem .8rem;border-radius:100px;font-size:.72rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;transition:all .2s;white-space:nowrap}
-.sn2.done{border-color:var(--success);color:var(--success);background:rgba(16,185,129,0.08)}
-.sn2.cur{border-color:var(--gold);color:var(--gold);background:var(--gold3)}
-.fc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.6rem;margin-bottom:1.1rem}
-.fst{font-size:.88rem;font-weight:700;color:var(--gold);margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
-.fg{margin-bottom:.85rem}
-.fl{font-size:.71rem;color:var(--muted);margin-bottom:.26rem;display:block;font-weight:600}
-.fi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:.58rem .95rem;color:var(--text);font-size:.86rem;font-family:'IBM Plex Mono',monospace;transition:all .2s;direction:ltr;text-align:right}
-.fi:focus{outline:none;border-color:var(--gold);background:var(--gold3)}
-.fs{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:.58rem .95rem;color:var(--text);font-size:.81rem;font-family:'Tajawal',sans-serif;cursor:pointer}
-.fs option{background:var(--card)}
-.fg2{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
-.tip{background:var(--gold3);border:1px solid var(--border);border-radius:8px;padding:.65rem;font-size:.7rem;color:var(--muted);margin-top:.45rem;line-height:1.6}
-.cnav{display:flex;gap:.9rem;margin-top:.85rem}
-.bprev{padding:.72rem 1.3rem;background:var(--surface);color:var(--muted);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.83rem}
-.bnext{flex:1;padding:.72rem;background:var(--gold);color:#060a14;border:none;border-radius:8px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:900;font-size:.9rem;transition:all .2s}
-.bnext:hover{background:var(--gold2)}
+.sn2{padding:.28rem .75rem;border-radius:100px;font-size:.72rem;font-weight:700;cursor:pointer;border:1px solid var(–border);background:transparent;color:var(–muted);font-family:‘Tajawal’,sans-serif;transition:all .2s;white-space:nowrap}
+.sn2.done{border-color:var(–green);color:var(–green);background:rgba(16,185,129,0.08)}
+.sn2.cur{border-color:var(–gold);color:var(–gold);background:var(–gold3)}
+.fc{background:var(–card);border:1px solid var(–border);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+.fst{font-size:.86rem;font-weight:700;color:var(–gold);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;padding-bottom:.6rem;border-bottom:1px solid var(–border)}
+.fg{margin-bottom:.8rem}
+.fl{font-size:.7rem;color:var(–muted);margin-bottom:.24rem;display:block;font-weight:600}
+.fi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:8px;padding:.56rem .9rem;color:var(–text);font-size:.85rem;font-family:‘IBM Plex Mono’,monospace;transition:all .2s;direction:ltr;text-align:right}
+.fi:focus{outline:none;border-color:var(–gold);background:var(–gold3)}
+.fs{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:8px;padding:.56rem .9rem;color:var(–text);font-size:.8rem;font-family:‘Tajawal’,sans-serif;cursor:pointer}
+.fs option{background:var(–card)}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.tip{background:var(–gold3);border:1px solid var(–border);border-radius:8px;padding:.65rem;font-size:.7rem;color:var(–muted);margin-top:.45rem;line-height:1.6}
+.cnav{display:flex;gap:.8rem;margin-top:.8rem}
+.bprev{padding:.7rem 1.2rem;background:var(–surface);color:var(–muted);border:1px solid var(–border);border-radius:8px;cursor:pointer;font-family:‘Tajawal’,sans-serif;font-weight:700;font-size:.82rem}
+.bnext{flex:1;padding:.7rem;background:var(–gold);color:#060a14;border:none;border-radius:8px;cursor:pointer;font-family:‘Tajawal’,sans-serif;font-weight:900;font-size:.88rem;transition:all .2s}
+.bnext:hover{background:var(–gold2)}
+
 /* RESULTS */
 .rw{padding:80px 1.5rem 4rem;max-width:1080px;margin:0 auto}
-.panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.4rem;margin-bottom:.9rem}
-.psec{font-size:.76rem;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:.4rem;margin-bottom:.7rem}
+.panel{background:var(–card);border:1px solid var(–border);border-radius:16px;padding:1.4rem;margin-bottom:.9rem}
+.psec{font-size:.75rem;font-weight:700;color:var(–gold);display:flex;align-items:center;gap:.4rem;margin-bottom:.7rem}
 .alert{border-radius:12px;padding:1rem;text-align:center;border:1px solid;margin-bottom:.7rem}
 .ar{background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.25)}
 .ag{background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.25)}
 .aw{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25)}
 .ao{background:rgba(212,175,55,0.08);border-color:rgba(212,175,55,0.25)}
-.al{font-size:.66rem;color:var(--muted);margin-bottom:.18rem;text-transform:uppercase;letter-spacing:.5px}
-.av{font-size:1.6rem;font-weight:900;font-family:'IBM Plex Mono',monospace}
-.av.r{color:var(--danger)}.av.g{color:var(--success)}.av.w{color:var(--warn)}.av.o{color:var(--gold)}
-.ad{font-size:.7rem;color:var(--muted);margin-top:.18rem}
-.rrow{display:flex;justify-content:space-between;align-items:center;padding:.48rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.al{font-size:.66rem;color:var(–muted);margin-bottom:.18rem;text-transform:uppercase;letter-spacing:.5px}
+.av{font-size:1.55rem;font-weight:900;font-family:‘IBM Plex Mono’,monospace}
+.av.r{color:var(–red)}.av.g{color:var(–green)}.av.w{color:var(–warn)}.av.o{color:var(–gold)}
+.ad{font-size:.7rem;color:var(–muted);margin-top:.18rem}
+.rrow{display:flex;justify-content:space-between;align-items:center;padding:.46rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
 .rrow:last-child{border-bottom:none}
-.rl{font-size:.74rem;color:var(--muted)}
-.rv{font-size:.78rem;font-weight:700;font-family:'IBM Plex Mono',monospace}
-.rv.g{color:var(--success)}.rv.r{color:var(--danger)}.rv.w{color:var(--warn)}.rv.o{color:var(--gold)}
+.rl{font-size:.73rem;color:var(–muted)}
+.rv{font-size:.78rem;font-weight:700;font-family:‘IBM Plex Mono’,monospace}
+.rv.g{color:var(–green)}.rv.r{color:var(–red)}.rv.w{color:var(–warn)}.rv.o{color:var(–gold)}
 .score-bar{height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;margin-bottom:.4rem}
-.score-fill{height:100%;border-radius:3px;transition:width .8s ease}
-.tabs{display:flex;gap:.35rem;margin-bottom:1.1rem;flex-wrap:wrap}
-.tab{padding:.4rem 1rem;border-radius:8px;font-size:.76rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;transition:all .2s}
-.tab.on{background:var(--gold);color:#060a14;border-color:var(--gold)}
-.tc{display:none}
-.tc.on{display:block}
-/* CHARTS */
-.chart-wrap{position:relative;height:220px;margin:.8rem 0}
-.chart-wrap-sm{position:relative;height:180px;margin:.6rem 0}
-/* LOCK */
+.score-fill{height:100%;border-radius:3px}
+.tabs{display:flex;gap:.35rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab{padding:.38rem .9rem;border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer;border:1px solid var(–border);background:transparent;color:var(–muted);font-family:‘Tajawal’,sans-serif;transition:all .2s}
+.tab.on{background:var(–gold);color:#060a14;border-color:var(–gold)}
+.tc{display:none}.tc.on{display:block}
 .lw{position:relative;overflow:hidden}
-.lo{position:absolute;bottom:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,transparent,var(--bg) 65%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:1rem}
-.lb{padding:.72rem 1.8rem;background:var(--gold);color:#060a14;border:none;border-radius:8px;font-size:.85rem;font-weight:900;cursor:pointer;font-family:'Tajawal',sans-serif;box-shadow:0 0 36px rgba(212,175,55,0.35)}
-/* ADVICE */
-.advice-card{background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.02));border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:1.1rem;margin-bottom:.8rem}
-.advice-title{font-size:.82rem;font-weight:700;color:#fca5a5;margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
-.advice-body{font-size:.74rem;color:var(--muted);line-height:1.65}
-.advice-card.warn{background:linear-gradient(135deg,rgba(245,158,11,0.06),rgba(245,158,11,0.02));border-color:rgba(245,158,11,0.2)}
-.advice-card.warn .advice-title{color:#fde68a}
-.advice-card.tip{background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(16,185,129,0.02));border-color:rgba(16,185,129,0.2)}
-.advice-card.tip .advice-title{color:#6ee7b7}
-/* PRICING */
-.pkg{background:var(--card);border:2px solid var(--gold);border-radius:18px;padding:2rem;position:relative;background:linear-gradient(160deg,rgba(212,175,55,0.06),var(--card));max-width:460px;margin:0 auto}
-.pbadge{display:inline-block;background:var(--gold);color:#060a14;padding:.25rem 1rem;border-radius:100px;font-size:.7rem;font-weight:900;margin-bottom:.8rem}
-.pprice{font-size:2.8rem;font-weight:900;color:var(--gold);font-family:'IBM Plex Mono',monospace;line-height:1;margin-bottom:.2rem}
-.pprice sub{font-size:.82rem;color:var(--muted);font-family:'Tajawal',sans-serif;font-weight:400}
-.pf{list-style:none;margin:1rem 0 1.4rem}
-.pf li{font-size:.78rem;color:var(--muted);padding:.32rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:flex-start;gap:.4rem}
-.pf li:last-child{border-bottom:none}
-.pf li b{color:var(--text)}
-.ck{color:var(--success);flex-shrink:0}
+.lo{position:absolute;bottom:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,transparent,var(–bg) 65%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:1rem}
+.lb{padding:.72rem 1.8rem;background:var(–gold);color:#060a14;border:none;border-radius:8px;font-size:.85rem;font-weight:900;cursor:pointer;font-family:‘Tajawal’,sans-serif;box-shadow:0 0 36px rgba(212,175,55,0.35)}
+.chart-wrap{position:relative;height:220px;margin:.8rem 0}
+.advice-c{border-radius:12px;padding:1rem;margin-bottom:.75rem;border:1px solid}
+.advice-c.danger{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.2)}
+.advice-c.warn{background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2)}
+.advice-c.tip{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2)}
+.advice-t{font-size:.82rem;font-weight:700;margin-bottom:.35rem}
+.advice-c.danger .advice-t{color:#fca5a5}
+.advice-c.warn .advice-t{color:#fde68a}
+.advice-c.tip .advice-t{color:#6ee7b7}
+.advice-b{font-size:.73rem;color:var(–muted);line-height:1.65}
+.msg{background:var(–surface);border:1px solid var(–border);border-radius:12px;padding:.9rem;margin-bottom:.6rem;position:relative}
+.mw{position:absolute;top:-.65rem;right:.9rem;background:var(–gold);color:#060a14;font-size:.58rem;font-weight:900;padding:.1rem .45rem;border-radius:100px}
+.mt{font-size:.76rem;font-weight:700;color:var(–text);margin-bottom:.25rem}
+.mb{font-size:.71rem;color:var(–muted);line-height:1.6}
+.mb .hl{color:var(–gold);font-family:‘IBM Plex Mono’,monospace;font-weight:700}
+
+/* CHECKOUT OVERLAY */
+.co-plan{background:var(–card2);border:2px solid var(–gold);border-radius:14px;padding:1.2rem;margin-bottom:1.4rem;display:flex;align-items:center;justify-content:space-between}
+.co-price{font-size:1.7rem;font-weight:900;color:var(–gold);font-family:‘IBM Plex Mono’,monospace}
+.co-step{background:var(–card2);border:1px solid var(–border);border-radius:14px;padding:1.2rem;margin-bottom:.9rem}
+.co-step-h{display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem}
+.co-num{width:28px;height:28px;border-radius:50%;background:var(–gold);color:#060a14;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem;flex-shrink:0}
+.iban-box{background:var(–gold3);border:1px solid rgba(212,175,55,0.2);border-radius:10px;padding:.9rem;text-align:center;margin:.7rem 0}
+.iban-num{font-family:‘IBM Plex Mono’,monospace;font-size:.92rem;font-weight:700;color:var(–gold);word-break:break-all;letter-spacing:.5px}
+.copy-btn{background:var(–gold3);border:1px solid var(–border);color:var(–gold);border-radius:6px;padding:.22rem .5rem;font-size:.68rem;cursor:pointer;font-family:Tajawal;transition:all .2s}
+.copy-btn:hover{background:var(–gold);color:#060a14}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.brow:last-child{border-bottom:none}
+.bl{font-size:.71rem;color:var(–muted)}
+.bv{font-size:.82rem;font-weight:700;font-family:‘IBM Plex Mono’,monospace;color:var(–text)}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.9rem;background:#25d366;color:#fff;border:none;border-radius:12px;font-size:.95rem;font-weight:900;cursor:pointer;font-family:Tajawal;transition:all .2s;margin-top:.8rem;text-decoration:none}
+.wa-btn:hover{background:#20bd5a;transform:translateY(-2px)}
+.feat-list{display:flex;flex-direction:column;gap:.45rem;margin-top:.8rem}
+.feat-item{display:flex;align-items:center;gap:.5rem;font-size:.77rem;color:var(–muted)}
+
+/* ADMIN */
+.admin-header{background:rgba(6,10,20,0.98);border-bottom:1px solid var(–border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.admin-logo{font-size:1rem;font-weight:900;color:var(–gold)}
+.admin-body{max-width:1100px;margin:0 auto;padding:16px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat-card{background:var(–card);border:1px solid var(–border);border-radius:10px;padding:.9rem;text-align:center}
+.stat-num{font-size:1.6rem;font-weight:900;font-family:‘IBM Plex Mono’,monospace;color:var(–gold)}
+.stat-lbl{font-size:.65rem;color:var(–muted);margin-top:.15rem}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.apanel{background:var(–card);border:1px solid var(–border);border-radius:14px;padding:1.1rem;margin-bottom:12px}
+.apanel-t{font-size:.83rem;font-weight:700;color:var(–gold);margin-bottom:.9rem;padding-bottom:.6rem;border-bottom:1px solid var(–border)}
+.aform-g{margin-bottom:.7rem}
+.afl{font-size:.68rem;color:var(–muted);margin-bottom:.2rem;display:block;font-weight:600}
+.afi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:7px;padding:.5rem .8rem;color:var(–text);font-size:.82rem;font-family:‘IBM Plex Mono’,monospace;direction:rtl;text-align:right}
+.afi:focus{outline:none;border-color:var(–gold)}
+.afi-ar{font-family:Tajawal}
+.afs{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(–border);border-radius:7px;padding:.5rem .8rem;color:var(–text);font-size:.78rem;font-family:Tajawal;cursor:pointer}
+.afs option{background:var(–card)}
+.abtn{width:100%;padding:.65rem;background:var(–gold);color:#060a14;border:none;border-radius:7px;font-size:.85rem;font-weight:900;cursor:pointer;font-family:Tajawal;margin-top:.35rem;transition:all .2s}
+.abtn:hover{background:var(–gold2)}
+.abtn-out{width:100%;padding:.6rem;background:transparent;color:var(–text);border:1px solid var(–border);border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:Tajawal;margin-top:.35rem;transition:all .2s}
+.abtn-out:hover{border-color:var(–gold);color:var(–gold)}
+.code-box{background:var(–gold3);border:1px solid rgba(212,175,55,0.2);border-radius:9px;padding:.9rem;text-align:center;margin:.7rem 0}
+.code-val{font-family:‘IBM Plex Mono’,monospace;font-size:1.3rem;font-weight:700;color:var(–gold);letter-spacing:2px}
+.client-item{background:rgba(255,255,255,0.02);border:1px solid var(–border);border-radius:9px;padding:.8rem;margin-bottom:.5rem}
+.client-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.client-n{font-size:.84rem;font-weight:700}
+.client-badge{font-size:.6rem;padding:.13rem .4rem;border-radius:4px;font-weight:700}
+.badge-a{background:rgba(16,185,129,0.15);color:var(–green)}
+.badge-p{background:rgba(245,158,11,0.15);color:var(–warn)}
+.client-info{font-size:.7rem;color:var(–muted);line-height:1.5}
+.client-actions{display:flex;gap:.35rem;margin-top:.5rem;flex-wrap:wrap}
+.abtn-sm{padding:.24rem .6rem;border-radius:5px;font-size:.66rem;font-weight:700;cursor:pointer;border:none;font-family:Tajawal;transition:all .2s}
+.abtn-wa{background:#25d366;color:#fff}
+.abtn-approve{background:rgba(16,185,129,0.15);color:var(–green);border:1px solid rgba(16,185,129,0.2)!important;border:none}
+.abtn-del{background:rgba(239,68,68,0.1);color:var(–red);border:1px solid rgba(239,68,68,0.2)}
+.ai-result-box{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:9px;padding:.9rem;margin-top:.7rem;font-size:.77rem;line-height:1.7;color:var(–text);white-space:pre-wrap;direction:rtl}
+.clients-scroll{max-height:480px;overflow-y:auto}
+.login-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center}
+.login-input{width:100%;max-width:280px;background:rgba(255,255,255,0.05);border:1px solid var(–border);border-radius:10px;padding:.8rem 1rem;color:var(–text);font-size:1rem;text-align:center;font-family:‘IBM Plex Mono’,monospace;margin-bottom:.8rem}
+.login-input:focus{outline:none;border-color:var(–gold)}
+.login-err{font-size:.73rem;color:var(–red);margin-top:.3rem;min-height:1rem}
+
 /* GOSI */
-.gbox{background:linear-gradient(135deg,rgba(59,130,246,0.07),rgba(59,130,246,0.02));border:1px solid rgba(59,130,246,0.18);border-radius:14px;padding:1.3rem;margin-bottom:.9rem}
-.gtitle{font-size:.9rem;font-weight:700;color:#60a5fa;margin-bottom:.9rem;display:flex;align-items:center;gap:.4rem}
-.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-.gitem{background:rgba(255,255,255,0.03);border-radius:8px;padding:.65rem;text-align:center}
-.glabel{font-size:.65rem;color:var(--muted);margin-bottom:.2rem}
-.gval{font-size:1.1rem;font-weight:900;font-family:'IBM Plex Mono',monospace;color:#60a5fa}
-.msg{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.9rem;margin-bottom:.6rem;position:relative}
-.mw{position:absolute;top:-.68rem;right:.9rem;background:var(--gold);color:#060a14;font-size:.58rem;font-weight:900;padding:.1rem .45rem;border-radius:100px}
-.mt{font-size:.76rem;font-weight:700;color:var(--text);margin-bottom:.28rem}
-.mb{font-size:.71rem;color:var(--muted);line-height:1.6}
-.mb .hl{color:var(--gold);font-family:'IBM Plex Mono',monospace;font-weight:700}
-@media(max-width:660px){.g2,.g3,.fg2,.ggrid{grid-template-columns:1fr}h1.big{font-size:1.9rem}}
+.gbox{background:linear-gradient(135deg,rgba(59,130,246,0.07),rgba(59,130,246,0.02));border:1px solid rgba(59,130,246,0.18);border-radius:14px;padding:1.2rem;margin-bottom:.8rem}
+.gtitle{font-size:.88rem;font-weight:700;color:#60a5fa;margin-bottom:.8rem}
+.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.gitem{background:rgba(255,255,255,0.03);border-radius:8px;padding:.6rem;text-align:center}
+.glabel{font-size:.63rem;color:var(–muted);margin-bottom:.18rem}
+.gval{font-size:1.05rem;font-weight:900;font-family:‘IBM Plex Mono’,monospace;color:#60a5fa}
+
+/* CODE BAR */
+.code-bar{background:var(–gold3);border:1px solid rgba(212,175,55,0.2);border-radius:10px;padding:.75rem 1rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.code-bar-input{background:rgba(255,255,255,0.06);border:1px solid var(–border);border-radius:7px;padding:.38rem .75rem;color:var(–text);font-family:‘IBM Plex Mono’,monospace;font-size:.82rem;width:155px;direction:ltr;text-transform:uppercase}
+.code-bar-btn{background:var(–gold);color:#060a14;border:none;border-radius:7px;padding:.4rem .85rem;font-size:.8rem;font-weight:900;cursor:pointer;font-family:Tajawal;white-space:nowrap}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(–green);color:#fff;padding:.6rem 1.2rem;border-radius:8px;font-size:.82rem;font-weight:700;font-family:Tajawal;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99999}
+.toast.show{opacity:1}
+.toast.err{background:var(–red)}
+
+@media(max-width:660px){.g2,.fg2,.ggrid,.admin-grid,.stats-grid{grid-template-columns:1fr}h1.big{font-size:1.9rem}.stats-grid{grid-template-columns:1fr 1fr}}
 </style>
+
 </head>
 <body>
+
+<!-- NAV -->
+
 <nav>
   <div class="logo" onclick="pg('land')">رتّبني</div>
   <div class="nav-links">
     <button class="nb on" id="nb-land" onclick="pg('land')">الرئيسية</button>
     <button class="nb" id="nb-gosi" onclick="pg('gosi')">التأمينات</button>
     <button class="nb" id="nb-calc" onclick="pg('calc')">احسب وضعك</button>
+    <button class="nb nb-admin" onclick="showAdmin()">⚙️</button>
   </div>
 </nav>
 
-<!-- LANDING -->
+<!-- ======================== LANDING ======================== -->
 
 <div id="p-land" class="page on">
   <section class="hero">
@@ -151,61 +249,59 @@ h1.big em{color:var(--gold);font-style:normal}
     <div class="hi">
       <div class="chip">🇸🇦 مستشارك المالي السعودي الذكي</div>
       <h1 class="big">وضعك المالي الحقيقي<br><em>يستحق أن تعرفه الآن</em></h1>
-      <p class="sub">94% من الموظفين السعوديين لا يعرفون فجوتهم المالية الحقيقية — حتى يفوت الأوان. أدخل بياناتك مرة واحدة واكتشف الحقيقة الآن.</p>
+      <p class="sub">94% من الموظفين السعوديين لا يعرفون فجوتهم المالية الحقيقية — حتى يفوت الأوان. أدخل بياناتك مرة واحدة واكتشف الحقيقة.</p>
       <div class="btns">
-        <button class="btn bg" onclick="pg('calc')">احسب وضعي مجاناً ←</button>
-        <button class="btn bo" onclick="pg('gosi')">🏛️ حاسبة التأمينات</button>
+        <button class="btn btn-gold" onclick="pg('calc')">احسب وضعي مجاناً ←</button>
+        <button class="btn btn-out" onclick="pg('gosi')">🏛️ حاسبة التأمينات</button>
       </div>
       <div class="hstats">
-        <div><div class="sn">+134</div><div class="sl">مستخدم نشط</div></div>
-        <div><div class="sn">94%</div><div class="sl">وجدوا فجوة لم يعرفوها</div></div>
-        <div><div class="sn">مليون+</div><div class="sl">ريال وُفّرت</div></div>
-        <div><div class="sn">4.9★</div><div class="sl">تقييم المستخدمين</div></div>
+        <div><div class="stat-n">+134</div><div class="stat-l">مستخدم نشط</div></div>
+        <div><div class="stat-n">94%</div><div class="stat-l">وجدوا فجوة لم يعرفوها</div></div>
+        <div><div class="stat-n">مليون+</div><div class="stat-l">ريال وُفّرت</div></div>
+        <div><div class="stat-n">4.9★</div><div class="stat-l">تقييم المستخدمين</div></div>
       </div>
     </div>
   </section>
 
-  <!-- PAIN POINTS -->
+  <!-- PAIN -->
 
   <div class="sec">
     <div class="sec-tag">الواقع المؤلم</div>
     <h2 class="sec-h">ما لا يخبرك به أحد</h2>
     <p class="sec-s">أرقام حقيقية عن الموظف السعودي المتوسط</p>
     <div class="g2">
-      <div class="card"><div style="font-size:1.7rem;margin-bottom:.6rem">🚗</div><div style="font-size:.9rem;font-weight:700;margin-bottom:.35rem">سيارتك تأكل ثروتك</div><div style="font-size:.76rem;color:var(--muted);line-height:1.6">72% من الموظفين يقودون سيارة قيمتها أكثر من سنة راتب — وهذا وحده يعني خسارة مليون ريال</div><div style="font-size:1rem;font-weight:900;color:var(--danger);font-family:'IBM Plex Mono',monospace;margin-top:.5rem">−1,200,000 ريال</div></div>
-      <div class="card"><div style="font-size:1.7rem;margin-bottom:.6rem">📉</div><div style="font-size:.9rem;font-weight:700;margin-bottom:.35rem">المعاش لن يكفيك</div><div style="font-size:.76rem;color:var(--muted);line-height:1.6">الموظف الخاص يحصل على 35% من راتبه كمعاش — راتب 12,000 يصبح 4,200 ريال فقط</div><div style="font-size:1rem;font-weight:900;color:var(--danger);font-family:'IBM Plex Mono',monospace;margin-top:.5rem">فجوة شهرية 4,800 ريال</div></div>
+      <div class="card"><div style="font-size:1.7rem;margin-bottom:.6rem">🚗</div><div style="font-size:.9rem;font-weight:700;margin-bottom:.35rem">سيارتك تأكل ثروتك</div><div style="font-size:.75rem;color:var(--muted);line-height:1.6">72% يقودون سيارة تتجاوز سنة راتب — خسارة تراكمية بالملايين</div><div style="font-size:1rem;font-weight:900;color:var(--red);font-family:'IBM Plex Mono',monospace;margin-top:.5rem">−1,200,000 ريال</div></div>
+      <div class="card"><div style="font-size:1.7rem;margin-bottom:.6rem">📉</div><div style="font-size:.9rem;font-weight:700;margin-bottom:.35rem">المعاش لن يكفيك</div><div style="font-size:.75rem;color:var(--muted);line-height:1.6">القطاع الخاص يعطيك 35% فقط — راتب 12,000 يصبح 4,200 ريال</div><div style="font-size:1rem;font-weight:900;color:var(--red);font-family:'IBM Plex Mono',monospace;margin-top:.5rem">فجوة شهرية 4,800 ريال</div></div>
     </div>
   </div>
 
   <!-- PRICING -->
 
-  <div style="background:var(--surface);padding:4.5rem 1.5rem">
+  <div style="background:var(--surface);padding:4rem 1.5rem">
     <div class="sec" style="padding:0">
       <div class="sec-tag">الباقة</div>
       <h2 class="sec-h">ابدأ مجاناً — اشترك عندما تقتنع</h2>
       <p class="sec-s">لا بطاقة ائتمان مطلوبة للبدء</p>
-      <div class="g2" style="max-width:780px;margin:0 auto">
-        <!-- FREE -->
-        <div class="card" style="border-color:rgba(107,122,143,0.3)">
+      <div class="g2" style="max-width:760px;margin:0 auto">
+        <div class="pkg-free">
           <div style="font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:.6rem">المجانية</div>
-          <div style="font-size:2.2rem;font-weight:900;font-family:'IBM Plex Mono',monospace;color:var(--text);line-height:1;margin-bottom:.8rem">0 <span style="font-size:.75rem;color:var(--muted);font-family:Tajawal">ريال</span></div>
+          <div class="pkg-price" style="color:var(--text)">0 <span style="font-size:.75rem;color:var(--muted);font-family:Tajawal;font-weight:400">ريال</span></div>
           <ul class="pf">
             <li><span class="ck">✓</span> فجوة التقاعد</li>
             <li><span class="ck">✓</span> تقييم السيارة</li>
             <li><span class="ck">✓</span> حاسبة التأمينات</li>
-            <li><span style="color:var(--danger)">✗</span> <span style="opacity:.5">الرسوم البيانية</span></li>
-            <li><span style="color:var(--danger)">✗</span> <span style="opacity:.5">النصائح الذكية</span></li>
-            <li><span style="color:var(--danger)">✗</span> <span style="opacity:.5">خطة 90 يوم</span></li>
-            <li><span style="color:var(--danger)">✗</span> <span style="opacity:.5">رسائل واتساب أسبوعية</span></li>
+            <li><span class="xk">✗</span> <span style="opacity:.45">الرسوم البيانية</span></li>
+            <li><span class="xk">✗</span> <span style="opacity:.45">النصائح الذكية</span></li>
+            <li><span class="xk">✗</span> <span style="opacity:.45">خطة 90 يوم</span></li>
+            <li><span class="xk">✗</span> <span style="opacity:.45">رسائل واتساب أسبوعية</span></li>
           </ul>
-          <button class="btn" style="width:100%;background:transparent;border:1px solid var(--border);color:var(--text);padding:.72rem;font-weight:700;border-radius:8px;cursor:pointer;font-family:Tajawal" onclick="pg('calc')">ابدأ مجاناً</button>
+          <button class="btn btn-out" style="width:100%;padding:.7rem" onclick="pg('calc')">ابدأ مجاناً</button>
         </div>
-        <!-- PREMIUM -->
-        <div class="pkg">
-          <div class="pbadge">⚡ الأكثر طلباً</div>
+        <div class="pkg-prem">
+          <div class="pkg-badge">⚡ الأكثر طلباً</div>
           <div style="font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:.4rem">المميزة</div>
-          <div class="pprice">49<sub> ريال/شهر</sub></div>
-          <div style="font-size:.78rem;color:var(--muted);margin-top:.3rem;margin-bottom:.8rem">دفع بالتحويل البنكي</div>
+          <div class="pkg-price" style="color:var(--gold)">49 <span style="font-size:.75rem;color:var(--muted);font-family:Tajawal;font-weight:400">ريال/شهر</span></div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:.25rem;margin-bottom:.75rem">دفع بالتحويل البنكي</div>
           <ul class="pf">
             <li><span class="ck">✓</span> كل ما في المجانية</li>
             <li><span class="ck">✓</span> <b>الرسوم البيانية الكاملة</b></li>
@@ -215,25 +311,24 @@ h1.big em{color:var(--gold);font-style:normal}
             <li><span class="ck">✓</span> <b>رسائل واتساب أسبوعية</b></li>
             <li><span class="ck">✓</span> <b>تحليل شهري بالذكاء الاصطناعي</b></li>
           </ul>
-          <button class="btn bg" style="width:100%;padding:.82rem;font-size:.92rem" onclick="window.location.href='checkout.html'">اشترك الآن — 49 ريال ←</button>
+          <button class="btn btn-gold" style="width:100%;padding:.82rem" onclick="showCheckout()">اشترك الآن — 49 ريال ←</button>
         </div>
       </div>
     </div>
   </div>
-
-  <footer style="background:var(--surface);border-top:1px solid var(--border);padding:1.8rem 1.5rem;text-align:center">
+  <footer style="background:var(--surface);border-top:1px solid var(--border);padding:1.6rem 1.5rem;text-align:center">
     <div class="logo" style="margin-bottom:.3rem">رتّبني</div>
-    <div style="font-size:.68rem;color:var(--muted)">أداة تثقيف مالي — لا تُعد استشارة مالية مرخصة • rattibni.vercel.app</div>
+    <div style="font-size:.67rem;color:var(--muted)">أداة تثقيف مالي — لا تُعد استشارة مالية مرخصة • rattibni.vercel.app</div>
   </footer>
 </div>
 
-<!-- GOSI -->
+<!-- ======================== GOSI ======================== -->
 
 <div id="p-gosi" class="page">
-  <div class="cw" style="max-width:760px">
+  <div class="cw" style="max-width:740px">
     <div style="text-align:center;margin-bottom:1.8rem">
-      <h1 style="font-size:1.7rem;font-weight:900;letter-spacing:-1px">🏛️ حاسبة التأمينات الاجتماعية</h1>
-      <p style="color:var(--muted);font-size:.81rem;margin-top:.35rem">احسب معاشك التقاعدي المتوقع من GOSI</p>
+      <h1 style="font-size:1.65rem;font-weight:900;letter-spacing:-1px">🏛️ حاسبة التأمينات</h1>
+      <p style="color:var(--muted);font-size:.8rem;margin-top:.35rem">احسب معاشك التقاعدي المتوقع</p>
     </div>
     <div class="fc">
       <div class="fst">📋 بياناتك في التأمينات</div>
@@ -259,25 +354,20 @@ h1.big em{color:var(--gold);font-style:normal}
       </div>
       <div class="alert ag"><div class="al">معاشك التقاعدي الشهري المتوقع</div><div class="av g" id="gp">-</div><div class="ad" id="gpct">-</div></div>
       <div id="grows"></div>
-      <div class="alert aw" style="margin-top:.7rem"><div class="al">ما تحتاجه شهرياً عند التقاعد</div><div class="av w" id="gn">-</div><div class="ad">75% من راتبك الحالي</div></div>
+      <div class="alert aw" style="margin-top:.7rem"><div class="al">ما تحتاجه شهرياً عند التقاعد (75%)</div><div class="av w" id="gn">-</div></div>
       <div id="ggap"></div>
-      <div style="margin-top:1rem">
-        <div style="background:var(--gold3);border:1px solid var(--border);border-radius:10px;padding:.85rem;font-size:.74rem;color:var(--muted);line-height:1.7;margin-bottom:.8rem">
-          <b style="color:var(--gold)">📱 كيف تعرف معاشك الحقيقي؟</b><br>
-          افتح تطبيق التأمينات الاجتماعية ← ملفي ← الاستحقاقات ← المعاش المتوقع. الرقم الذي يظهر هو ما ستحصل عليه فعلياً.
-        </div>
-        <button class="btn bg" style="width:100%" onclick="pg('calc')">احسب خطتك الاستثمارية الكاملة ←</button>
-      </div>
+      <div class="tip" style="margin:.8rem 0">💡 افتح تطبيق التأمينات الاجتماعية ← ملفي ← الاستحقاقات ← المعاش المتوقع</div>
+      <div style="text-align:center"><button class="btn btn-gold" onclick="pg('calc')">احسب خطتك الاستثمارية الكاملة ←</button></div>
     </div>
   </div>
 </div>
 
-<!-- CALC -->
+<!-- ======================== CALC ======================== -->
 
 <div id="p-calc" class="page">
   <div class="cw">
     <div style="text-align:center;margin-bottom:1.8rem">
-      <h1 style="font-size:1.65rem;font-weight:900;letter-spacing:-1px">احسب وضعك المالي الكامل</h1>
+      <h1 style="font-size:1.6rem;font-weight:900;letter-spacing:-1px">احسب وضعك المالي الكامل</h1>
       <p style="color:var(--muted);font-size:.8rem;margin-top:.35rem">5 أقسام — 3 دقائق — تقرير شامل</p>
     </div>
     <div class="snav">
@@ -293,30 +383,30 @@ h1.big em{color:var(--gold);font-style:normal}
       <div class="fg2">
         <div class="fg"><label class="fl">اسمك</label><input class="fi" id="fn" style="font-family:Tajawal;direction:rtl;text-align:right" value="محمد"></div>
         <div class="fg"><label class="fl">عمرك</label><input class="fi" id="fa" type="number" value="35"></div>
-        <div class="fg"><label class="fl">الراتب الشهري (ريال)</label><input class="fi" id="fs" type="number" value="12000"></div>
-        <div class="fg"><label class="fl">سنوات العمل المتبقية</label><input class="fi" id="fy" type="number" value="25"></div>
-        <div class="fg"><label class="fl">نوع الوظيفة</label><select class="fs" id="fj"><option value="private">قطاع خاص</option><option value="gov">حكومي</option><option value="aramco">أرامكو / شبه حكومي</option></select></div>
-        <div class="fg"><label class="fl">عدد الأولاد (0 إذا لا يوجد)</label><input class="fi" id="fk" type="number" value="2" min="0"></div>
-        <div class="fg"><label class="fl">هل ستدفع تعليمهم؟</label><select class="fs" id="fedu"><option value="0">لا — التعليم الحكومي مجاني</option><option value="50000">نعم — جامعة حكومية (~50,000)</option><option value="150000" selected>نعم — جامعة أهلية (~150,000)</option><option value="300000">نعم — جامعة خارجية (~300,000)</option></select></div>
-        <div class="fg"><label class="fl">سنوات الخدمة المنجزة حتى الآن</label><input class="fi" id="fserved" type="number" value="5" min="0" placeholder="عدد السنوات"></div>
-        <div class="fg"><label class="fl">إجمالي الديون (ريال)</label><input class="fi" id="fd" type="number" value="80000"></div>
-        <div class="fg"><label class="fl">القسط الشهري (ريال)</label><input class="fi" id="fi" type="number" value="2000" placeholder="الأقساط الشهرية"></div>
-        <div class="fg"><label class="fl">مدخراتك الحالية (ريال)</label><input class="fi" id="fv" type="number" value="15000"></div>
-        <div class="fg"><label class="fl">مبلغ نهاية الخدمة المتوقع (ريال)</label><input class="fi" id="fgrat" type="number" value="300000" placeholder="اسأل HR أو احسب: الراتب × السنوات"></div>
-        <div class="fg"><label class="fl">معاشك التقاعدي المتوقع من التأمينات (ريال/شهر)</label><input class="fi" id="fpension" type="number" value="4200" placeholder="راجع تطبيق التأمينات الاجتماعية"></div>
-        <div class="fg"><label class="fl">معدل الزيادة السنوية في الراتب</label><select class="fs" id="fsalgrow"><option value="0">0% — بدون زيادة</option><option value="2" selected>2% — زيادة سنوية بسيطة</option><option value="3">3% — زيادة متوسطة</option><option value="5">5% — زيادة جيدة مع ترقيات</option><option value="7">7% — ترقيات متسارعة</option><option value="10">10% — مسار متميز</option></select></div>
-        <div class="fg"><label class="fl">معدل نمو الاستثمار السنوي (مخصص)</label><select class="fs" id="finvrate"><option value="5.5">5.5% — محافظ (أسواق نقد)</option><option value="7">7% — متحفظ (صكوك + أسهم)</option><option value="9" selected>9% — متوازن (أسهم سعودية)</option><option value="12">12% — جريء (نمو مرتفع)</option><option value="15">15% — مضارب (مخاطرة عالية)</option></select></div>
+        <div class="fg"><label class="fl">الراتب الشهري (ريال)</label><input class="fi" id="fsal" type="number" value="12000" oninput="ca()"></div>
+        <div class="fg"><label class="fl">سنوات العمل المتبقية</label><input class="fi" id="fyrs" type="number" value="25"></div>
+        <div class="fg"><label class="fl">نوع الوظيفة</label><select class="fs" id="fjob"><option value="private">قطاع خاص</option><option value="gov">حكومي</option><option value="aramco">أرامكو / شبه حكومي</option></select></div>
+        <div class="fg"><label class="fl">سنوات الخدمة المنجزة</label><input class="fi" id="fserved" type="number" value="5" min="0"></div>
+        <div class="fg"><label class="fl">عدد الأولاد</label><input class="fi" id="fkids" type="number" value="2" min="0"></div>
+        <div class="fg"><label class="fl">تكلفة تعليم كل ولد</label><select class="fs" id="fedu"><option value="0">لا — تعليم حكومي مجاني</option><option value="50000">جامعة حكومية (50,000)</option><option value="150000" selected>جامعة أهلية (150,000)</option><option value="300000">جامعة خارجية (300,000)</option></select></div>
+        <div class="fg"><label class="fl">إجمالي الديون (ريال)</label><input class="fi" id="fdebt" type="number" value="80000"></div>
+        <div class="fg"><label class="fl">القسط الشهري (ريال)</label><input class="fi" id="finst" type="number" value="2000"></div>
+        <div class="fg"><label class="fl">مدخراتك الحالية (ريال)</label><input class="fi" id="fsav" type="number" value="15000"></div>
+        <div class="fg"><label class="fl">نهاية الخدمة المتوقعة (ريال)</label><input class="fi" id="fgrat" type="number" value="300000" placeholder="راتبك الأساسي × سنوات"></div>
+        <div class="fg"><label class="fl">المعاش التقاعدي المتوقع (ريال/شهر)</label><input class="fi" id="fpen" type="number" value="4200" placeholder="من تطبيق التأمينات"></div>
+        <div class="fg"><label class="fl">معدل الزيادة السنوية للراتب</label><select class="fs" id="fsalgrow"><option value="0">0% — بدون زيادة</option><option value="2" selected>2% — بسيطة</option><option value="3">3% — متوسطة</option><option value="5">5% — جيدة مع ترقيات</option><option value="7">7% — ترقيات متسارعة</option><option value="10">10% — مسار متميز</option></select></div>
+        <div class="fg"><label class="fl">معدل نمو الاستثمار السنوي</label><select class="fs" id="finvrate"><option value="5.5">5.5% — محافظ</option><option value="7">7% — متحفظ</option><option value="9" selected>9% — متوازن</option><option value="12">12% — جريء</option><option value="15">15% — مضارب</option></select></div>
       </div>
-      <div class="tip" style="margin:.2rem 0 .8rem">💡 <b>نهاية الخدمة:</b> القانون السعودي = راتبك الأساسي × سنوات الخدمة (شهر لكل سنة). اسأل قسم الموارد البشرية عن رقمك الدقيق.<br>💡 <b>معاش التأمينات:</b> افتح تطبيق التأمينات الاجتماعية → ملفي → المعاش المتوقع.</div>
-      <button class="bnext" onclick="gs(1)">التالي — السيارة ←</button>
+      <div class="tip">💡 <b>نهاية الخدمة:</b> القانون = راتبك الأساسي × سنوات (شهر لكل سنة). اسأل HR عن رقمك الدقيق.</div>
+      <button class="bnext" style="margin-top:.8rem" onclick="gs(1)">التالي — السيارة ←</button>
     </div>
     <!-- STEP 1 -->
     <div id="s1" class="fc hidden">
       <div class="fst">🚗 معلومات السيارة</div>
       <div class="fg2">
-        <div class="fg"><label class="fl">قيمة سيارتك الحالية (ريال)</label><input class="fi" id="fcar" type="number" value="150000" oninput="ca()"></div>
+        <div class="fg"><label class="fl">قيمة سيارتك (ريال)</label><input class="fi" id="fcar" type="number" value="150000" oninput="ca()"></div>
         <div class="fg"><label class="fl">سنة الموديل</label><input class="fi" id="fcyr" type="number" value="2021"></div>
-        <div class="fg"><label class="fl">قسط السيارة الشهري (ريال)</label><input class="fi" id="fcin" type="number" value="0" placeholder="0 إن لا يوجد"></div>
+        <div class="fg"><label class="fl">قسط السيارة الشهري (ريال)</label><input class="fi" id="fcin" type="number" value="0"></div>
       </div>
       <div id="cab"></div>
       <div class="cnav"><button class="bprev" onclick="gs(0)">→ السابق</button><button class="bnext" onclick="gs(2)">التالي — السكن ←</button></div>
@@ -324,20 +414,20 @@ h1.big em{color:var(--gold);font-style:normal}
     <!-- STEP 2 -->
     <div id="s2" class="fc hidden">
       <div class="fst">🏠 السكن والعقار</div>
-      <div class="fg"><label class="fl">وضع السكن</label><select class="fs" id="fh" onchange="th()"><option value="rent">مستأجر</option><option value="own">مالك (بدون قرض)</option><option value="mortgage">مالك (بقرض عقاري)</option></select></div>
-      <div id="rs" class="fg2"><div class="fg"><label class="fl">الإيجار الشهري (ريال)</label><input class="fi" id="fr" type="number" value="2500"></div></div>
-      <div id="ms" class="fg2 hidden"><div class="fg"><label class="fl">القسط الشهري (ريال)</label><input class="fi" id="fm" type="number" value="3000"></div><div class="fg"><label class="fl">المتبقي من القرض (ريال)</label><input class="fi" id="fml" type="number" value="500000"></div></div>
-      <div class="fg" style="margin-top:.7rem"><label class="fl">عدد العقارات المؤجّرة</label><input class="fi" id="fp" type="number" value="0"></div>
+      <div class="fg"><label class="fl">وضع السكن</label><select class="fs" id="fhous" onchange="th()"><option value="rent">مستأجر</option><option value="own">مالك (بدون قرض)</option><option value="mortgage">مالك (بقرض)</option></select></div>
+      <div id="rs" class="fg2"><div class="fg"><label class="fl">الإيجار الشهري (ريال)</label><input class="fi" id="frent" type="number" value="2500"></div></div>
+      <div id="ms" class="fg2 hidden"><div class="fg"><label class="fl">القسط الشهري (ريال)</label><input class="fi" id="fmort" type="number" value="3000"></div><div class="fg"><label class="fl">المتبقي من القرض (ريال)</label><input class="fi" id="fmortl" type="number" value="500000"></div></div>
+      <div class="fg" style="margin-top:.7rem"><label class="fl">عدد العقارات المؤجّرة</label><input class="fi" id="fprops" type="number" value="0"></div>
       <div class="cnav"><button class="bprev" onclick="gs(1)">→ السابق</button><button class="bnext" onclick="gs(3)">التالي — المصاريف ←</button></div>
     </div>
     <!-- STEP 3 -->
     <div id="s3" class="fc hidden">
       <div class="fst">🎯 مصاريف الحياة</div>
       <div class="fg2">
-        <div class="fg"><label class="fl">السياحة السنوية (ريال)</label><input class="fi" id="fto" type="number" value="8000"></div>
-        <div class="fg"><label class="fl">المطاعم شهرياً (ريال)</label><input class="fi" id="fre" type="number" value="1800"></div>
-        <div class="fg"><label class="fl">الاشتراكات الشهرية (ريال)</label><input class="fi" id="fsu" type="number" value="300"></div>
-        <div class="fg"><label class="fl">متفرقات شهرية (ملابس، أدوية، هدايا...)</label><input class="fi" id="fmisc" type="number" value="500" placeholder="المصاريف غير المصنفة"></div>
+        <div class="fg"><label class="fl">السياحة السنوية (ريال)</label><input class="fi" id="ftour" type="number" value="8000"></div>
+        <div class="fg"><label class="fl">المطاعم شهرياً (ريال)</label><input class="fi" id="frest" type="number" value="1800"></div>
+        <div class="fg"><label class="fl">الاشتراكات شهرياً (ريال)</label><input class="fi" id="fsubs" type="number" value="300"></div>
+        <div class="fg"><label class="fl">متفرقات شهرية (ريال)</label><input class="fi" id="fmisc" type="number" value="500"></div>
       </div>
       <div class="cnav"><button class="bprev" onclick="gs(2)">→ السابق</button><button class="bnext" onclick="gs(4)">التالي — الاستثمار ←</button></div>
     </div>
@@ -345,31 +435,29 @@ h1.big em{color:var(--gold);font-style:normal}
     <div id="s4" class="fc hidden">
       <div class="fst">📈 الاستثمار</div>
       <div class="fg2">
-        <div class="fg"><label class="fl">مستوى المخاطرة</label><select class="fs" id="frk"><option value="conservative">محافظ</option><option value="moderate" selected>متوازن</option><option value="aggressive">جريء</option></select></div>
-        <div class="fg"><label class="fl">ما تدخره شهرياً الآن (ريال)</label><input class="fi" id="fiv" type="number" value="0" placeholder="المبلغ الشهري"></div>
+        <div class="fg"><label class="fl">مستوى المخاطرة</label><select class="fs" id="frisk"><option value="c">محافظ</option><option value="m" selected>متوازن</option><option value="a">جريء</option></select></div>
+        <div class="fg"><label class="fl">ما تدخره شهرياً الآن (ريال)</label><input class="fi" id="finv" type="number" value="0"></div>
       </div>
-      <div class="tip">💡 ادخل المبلغ الذي تستطيع تخصيصه كل شهر للاستثمار</div>
+      <div class="tip">💡 ادخل المبلغ الذي تخصصه شهرياً للاستثمار</div>
       <div class="cnav"><button class="bprev" onclick="gs(3)">→ السابق</button><button class="bnext" onclick="rc()">🔍 اعرض تقريري الكامل</button></div>
     </div>
   </div>
 </div>
 
-<!-- RESULTS -->
+<!-- ======================== RESULTS ======================== -->
 
 <div id="p-results" class="page">
   <div class="rw">
-    <div style="text-align:center;margin-bottom:1.4rem">
-      <h1 style="font-size:1.6rem;font-weight:900;letter-spacing:-1px" id="rname">تقريرك المالي</h1>
-      <p style="color:var(--muted);font-size:.76rem;margin-top:.28rem" id="rdate"></p>
+    <div style="text-align:center;margin-bottom:1.3rem">
+      <h1 style="font-size:1.55rem;font-weight:900;letter-spacing:-1px" id="rname">تقريرك المالي</h1>
+      <p style="color:var(--muted);font-size:.75rem;margin-top:.25rem" id="rdate"></p>
     </div>
-    <!-- CODE ENTRY BAR -->
-    <div id="code-bar" style="display:none;background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:.8rem 1rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <div style="font-size:.78rem;font-weight:700;color:var(--gold);flex:1">🔑 عندك كود اشتراك؟</div>
-      <div style="display:flex;gap:.5rem;align-items:center">
-        <input id="code-input" type="text" placeholder="RTB-XXXX-XXXX" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;padding:.4rem .8rem;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:.82rem;width:160px;direction:ltr;text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
-        <button onclick="activateCode()" style="background:var(--gold);color:#060a14;border:none;border-radius:8px;padding:.42rem .9rem;font-size:.8rem;font-weight:900;cursor:pointer;font-family:Tajawal;white-space:nowrap">تفعيل ←</button>
-      </div>
-      <div id="code-msg" style="width:100%;font-size:.7rem;color:var(--danger);display:none"></div>
+    <!-- CODE BAR -->
+    <div class="code-bar" id="code-bar">
+      <div style="font-size:.77rem;font-weight:700;color:var(--gold);flex:1">🔑 عندك كود اشتراك؟</div>
+      <input class="code-bar-input" id="code-input" type="text" placeholder="RTB-XXXX-XXXX" oninput="this.value=this.value.toUpperCase()">
+      <button class="code-bar-btn" onclick="activateCode()">تفعيل ←</button>
+      <div id="code-msg" style="width:100%;font-size:.69rem;color:var(--red);display:none"></div>
     </div>
     <div class="tabs">
       <button class="tab on" onclick="st('ov',this)">📊 نظرة عامة</button>
@@ -387,28 +475,235 @@ h1.big em{color:var(--gold);font-style:normal}
   </div>
 </div>
 
+<!-- ======================== CHECKOUT OVERLAY ======================== -->
+
+<div class="overlay" id="overlay-checkout" onclick="if(event.target===this)closeCheckout()">
+  <div class="overlay-box">
+    <div class="overlay-close">
+      <button class="overlay-close-btn" onclick="closeCheckout()">✕</button>
+    </div>
+    <div style="padding:0 1.4rem 1.8rem">
+      <div style="font-size:1.2rem;font-weight:900;margin-bottom:.3rem">إتمام الاشتراك</div>
+      <div style="font-size:.78rem;color:var(--muted);margin-bottom:1.3rem">خطوتان فقط للوصول للباقة المميزة</div>
+      <!-- PLAN -->
+      <div class="co-plan">
+        <div>
+          <div style="font-size:.95rem;font-weight:700">⚡ الباقة المميزة</div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem">اشتراك شهري — إلغاء في أي وقت</div>
+        </div>
+        <div class="co-price">49 <span style="font-size:.72rem;color:var(--muted);font-family:Tajawal;font-weight:400">ريال/شهر</span></div>
+      </div>
+      <!-- STEP 1 -->
+      <div class="co-step">
+        <div class="co-step-h">
+          <div class="co-num">1</div>
+          <div style="font-size:.88rem;font-weight:700">حوّل 49 ريال على هذا الحساب</div>
+        </div>
+        <div class="iban-box">
+          <div class="iban-num">SA07 8000 0660 6080 1620 0827</div>
+          <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem">بنك الراجحي — نواف برمجه وتطوير</div>
+          <button class="copy-btn" style="margin-top:.5rem;padding:.3rem .8rem" onclick="copyText('SA0780000660608016200827','تم نسخ الآيبان')">نسخ الآيبان</button>
+        </div>
+        <div class="brow"><span class="bl">المبلغ</span><div style="display:flex;gap:.45rem;align-items:center"><span class="bv">49.00 ريال</span><button class="copy-btn" onclick="copyText('49','تم النسخ')">نسخ</button></div></div>
+        <div class="brow"><span class="bl">اسم المستفيد</span><span class="bv" style="font-family:Tajawal">نواف برمجه وتطوير</span></div>
+        <div class="brow"><span class="bl">البنك</span><span class="bv" style="font-family:Tajawal">بنك الراجحي</span></div>
+        <div class="tip" style="margin-top:.7rem">💡 في خانة ملاحظات التحويل اكتب <b>رتّبني</b> حتى نتعرف على دفعتك بسرعة.</div>
+      </div>
+      <!-- STEP 2 -->
+      <div class="co-step">
+        <div class="co-step-h">
+          <div class="co-num">2</div>
+          <div style="font-size:.88rem;font-weight:700">أرسل الإيصال على واتساب</div>
+        </div>
+        <p style="font-size:.77rem;color:var(--muted);line-height:1.6;margin-bottom:.7rem">بعد إتمام التحويل، أرسل صورة الإيصال وسنفعّل حسابك خلال ساعة.</p>
+        <a class="wa-btn" href="https://wa.me/966597760698?text=السلام عليكم، أرسل إيصال اشتراك رتّبني 49 ريال" target="_blank">💬 أرسل الإيصال على واتساب</a>
+        <div class="feat-list">
+          <div class="feat-item"><span class="ck">✓</span> كود الدخول يصلك على واتساب خلال ساعة</div>
+          <div class="feat-item"><span class="ck">✓</span> رسائل واتساب أسبوعية تبدأ فوراً</div>
+          <div class="feat-item"><span class="ck">✓</span> تحليل شهري بالذكاء الاصطناعي</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== ADMIN OVERLAY ======================== -->
+
+<div class="overlay" id="overlay-admin" onclick="if(event.target===this)closeAdmin()">
+  <div class="overlay-admin-box">
+    <div class="overlay-admin-close">
+      <button class="overlay-close-btn" onclick="closeAdmin()">✕</button>
+    </div>
+    <!-- LOGIN -->
+    <div id="admin-login" class="login-box">
+      <div style="font-size:1.4rem;font-weight:900;color:var(--gold);margin-bottom:.3rem">رتّبني</div>
+      <div style="font-size:.77rem;color:var(--muted);margin-bottom:1.5rem">لوحة إدارة المشتركين</div>
+      <input type="password" class="login-input" id="admin-pw" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')adminLogin()">
+      <button class="btn btn-gold" style="width:100%;max-width:280px;padding:.8rem" onclick="adminLogin()">دخول</button>
+      <div class="login-err" id="admin-err"></div>
+    </div>
+    <!-- DASHBOARD -->
+    <div id="admin-dash" style="display:none">
+      <div class="admin-header">
+        <div class="admin-logo">رتّبني — لوحة الإدارة</div>
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <span id="admin-stats-hdr" style="font-size:.7rem;color:var(--muted)"></span>
+          <button onclick="adminLogout()" style="font-size:.7rem;color:var(--muted);background:none;border:1px solid var(--border);padding:.22rem .6rem;border-radius:5px;cursor:pointer;font-family:Tajawal">خروج</button>
+        </div>
+      </div>
+      <div class="admin-body">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-num" id="as-total">0</div><div class="stat-lbl">إجمالي العملاء</div></div>
+          <div class="stat-card"><div class="stat-num" id="as-active" style="color:var(--green)">0</div><div class="stat-lbl">نشطون</div></div>
+          <div class="stat-card"><div class="stat-num" id="as-pend" style="color:var(--warn)">0</div><div class="stat-lbl">ينتظرون</div></div>
+          <div class="stat-card"><div class="stat-num" id="as-rev" style="color:var(--gold)">0</div><div class="stat-lbl">ريال / شهر</div></div>
+        </div>
+        <div class="admin-grid">
+          <!-- LEFT -->
+          <div>
+            <div class="apanel">
+              <div class="apanel-t">➕ إضافة عميل جديد</div>
+              <div class="aform-g"><label class="afl">الاسم</label><input class="afi afi-ar" id="c-name" placeholder="اسم العميل"></div>
+              <div class="aform-g"><label class="afl">رقم الواتساب</label><input class="afi" id="c-phone" placeholder="05XXXXXXXX"></div>
+              <div class="aform-g"><label class="afl">الراتب (لتخصيص الرسائل)</label><input class="afi" id="c-sal" type="number" placeholder="12000"></div>
+              <div class="aform-g"><label class="afl">ملاحظات</label><input class="afi afi-ar" id="c-notes" placeholder="أي ملاحظات"></div>
+              <button class="abtn" onclick="addClient()">✅ إضافة وتوليد كود</button>
+            </div>
+            <div class="apanel">
+              <div class="apanel-t">🔑 توليد كود جديد</div>
+              <div class="aform-g"><label class="afl">اختر العميل</label><select class="afs afi-ar" id="code-sel"></select></div>
+              <button class="abtn" onclick="genCode()">توليد كود جديد</button>
+              <div id="code-result" style="display:none">
+                <div class="code-box"><div class="code-val" id="code-disp">---</div></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem">
+                  <button class="abtn-out" onclick="copyCode()">نسخ الكود</button>
+                  <a id="wa-code-link" href="#" target="_blank" class="abtn abtn-sm abtn-wa" style="display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:7px;padding:.62rem">إرسال واتساب 💬</a>
+                </div>
+              </div>
+            </div>
+            <div class="apanel">
+              <div class="apanel-t">🤖 رسالة بالذكاء الاصطناعي</div>
+              <div class="aform-g"><label class="afl">اختر العميل</label><select class="afs afi-ar" id="ai-sel"></select></div>
+              <div class="aform-g"><label class="afl">نوع الرسالة</label><select class="afs afi-ar" id="ai-type"><option value="weekly">أسبوعية تحفيزية</option><option value="monthly">شهرية تحليلية</option><option value="welcome">ترحيب بالمشترك</option><option value="reminder">تذكير بالادخار</option></select></div>
+              <button class="abtn" onclick="genAI()">⚡ توليد بالذكاء الاصطناعي</button>
+              <div id="ai-result"></div>
+            </div>
+          </div>
+          <!-- RIGHT -->
+          <div>
+            <div class="apanel">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem">
+                <div class="apanel-t" style="margin:0;border:none;padding:0">👥 العملاء</div>
+                <div style="display:flex;gap:.3rem">
+                  <button onclick="filterC('all')" class="abtn-sm" style="background:var(--gold3);color:var(--gold);border:1px solid rgba(212,175,55,0.2);padding:.2rem .5rem;border-radius:4px;font-size:.64rem;cursor:pointer;font-family:Tajawal">الكل</button>
+                  <button onclick="filterC('pending')" class="abtn-sm" style="background:rgba(245,158,11,0.1);color:var(--warn);border:1px solid rgba(245,158,11,0.2);padding:.2rem .5rem;border-radius:4px;font-size:.64rem;cursor:pointer;font-family:Tajawal">الانتظار</button>
+                  <button onclick="filterC('active')" class="abtn-sm" style="background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.2);padding:.2rem .5rem;border-radius:4px;font-size:.64rem;cursor:pointer;font-family:Tajawal">النشطون</button>
+                </div>
+              </div>
+              <div class="clients-scroll" id="clients-list"><div style="text-align:center;padding:2rem;color:var(--muted);font-size:.78rem">لا يوجد عملاء بعد 👆</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
 <script>
-let P=false,ST=0,D={};
-// Check subscription
-try{const s=JSON.parse(localStorage.getItem('rattibni_subscription')||'null');if(s&&new Date(s.expiresAt)>new Date())P=true;}catch(e){}
+// ═══════════════════════════════════════════
+// CORE
+// ═══════════════════════════════════════════
+let P = false, ST = 0, D = {}, chartInst = {};
+const fmt = n => new Intl.NumberFormat('ar-SA').format(Math.round(Math.abs(n)));
+const sim = (init, mo, rate, yrs) => { let v = init, r = rate/100/12, rows = []; for(let y=1;y<=yrs;y++){for(let m=0;m<12;m++)v=v*(1+r)+mo;rows.push({y,v:Math.round(v)})} return rows };
 
-const fmt=n=>new Intl.NumberFormat('ar-SA').format(Math.round(Math.abs(n)));
-const sim=(init,mo,rate,yrs)=>{let v=init;const r=rate/100/12,rows=[];for(let y=1;y<=yrs;y++){for(let m=0;m<12;m++)v=v*(1+r)+mo;rows.push({y,v:Math.round(v)})}return rows};
+// Check subscription on load
+try { const s = JSON.parse(localStorage.getItem('rattibni_sub')||'null'); if(s && new Date(s.exp)>new Date()) P=true; } catch(e){}
 
-function pg(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');const nb=document.getElementById('nb-'+id);if(nb)nb.classList.add('on');window.scrollTo(0,0)}
-function st(id,el){document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('t-'+id).classList.add('on');el.classList.add('on');if(id==='charts'&&P)setTimeout(drawCharts,80)}
-function gs(n){document.getElementById('s'+ST).classList.add('hidden');document.getElementById('sn'+ST).classList.remove('cur','done');document.getElementById('sn'+ST).classList.add('done');ST=n;document.getElementById('s'+n).classList.remove('hidden');document.getElementById('sn'+n).classList.remove('done');document.getElementById('sn'+n).classList.add('cur');window.scrollTo(0,0)}
-function th(){const v=document.getElementById('fh').value;document.getElementById('rs').classList.toggle('hidden',v!=='rent');document.getElementById('ms').classList.toggle('hidden',v!=='mortgage')}
-function ca(){const car=+document.getElementById('fcar').value||0,sal=+document.getElementById('fs').value||1,coeff=car/(sal*12),ideal=sal<10000?70000:sal<15000?100000:sal<20000?150000:200000,box=document.getElementById('cab');if(!car){box.innerHTML='';return}let col,icon,msg;if(coeff>=1){col='#ef4444';icon='🚨';msg=`سيارتك خطر — معاملك ${coeff.toFixed(2)}x. المثالية: حتى ${fmt(ideal)} ريال`}else if(coeff>=0.6){col='#f59e0b';icon='⚠️';msg=`سيارتك مكلفة — معاملك ${coeff.toFixed(2)}x`}else{col='#10b981';icon='✅';msg=`سيارتك مناسبة — معاملك ${coeff.toFixed(2)}x`}box.innerHTML=`<div style="border-radius:10px;padding:.8rem;margin-top:.7rem;border:1px solid;background:${col}14;border-color:${col}40;color:${col};font-size:.76rem">${icon} ${msg}</div>`}
-document.addEventListener('DOMContentLoaded',()=>document.getElementById('fs')&&document.getElementById('fs').addEventListener('input',ca));
+function pg(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  const nb = document.getElementById('nb-'+id);
+  if(nb) nb.classList.add('on');
+  window.scrollTo(0,0);
+}
 
-// GOSI
-function cg(){
-  const age=+document.getElementById('g-age').value||38,join=+document.getElementById('g-join').value||2010,sal=+document.getElementById('g-sal').value||8000,allow=+document.getElementById('g-allow').value||0,ret=+document.getElementById('g-ret').value||60,sys=document.getElementById('g-sys').value;
-  const base=sal+allow,curr=new Date().getFullYear(),served=curr-join,remain=ret-age,total=served+remain;
-  const contrib=base*0.09,rate=sys==='old'?0.025:0.02;
-  let pension=Math.min(base*rate*total,base*0.8);pension=Math.max(pension,1716);
-  const needed=sal*0.75,gap=Math.max(0,needed-pension);
+function st(id, el) {
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('t-'+id).classList.add('on');
+  el.classList.add('on');
+  if(id==='charts' && P) setTimeout(drawCharts, 80);
+}
+
+function gs(n) {
+  document.getElementById('s'+ST).classList.add('hidden');
+  document.getElementById('sn'+ST).classList.remove('cur','done');
+  document.getElementById('sn'+ST).classList.add('done');
+  ST = n;
+  document.getElementById('s'+n).classList.remove('hidden');
+  document.getElementById('sn'+n).classList.remove('done');
+  document.getElementById('sn'+n).classList.add('cur');
+  window.scrollTo(0,0);
+}
+
+function th() {
+  const v = document.getElementById('fhous').value;
+  document.getElementById('rs').classList.toggle('hidden', v!=='rent');
+  document.getElementById('ms').classList.toggle('hidden', v!=='mortgage');
+}
+
+function ca() {
+  const car = +document.getElementById('fcar').value||0;
+  const sal = +document.getElementById('fsal').value||1;
+  const c = car/(sal*12), ic = sal<10000?70000:sal<15000?100000:sal<20000?150000:200000;
+  const box = document.getElementById('cab');
+  if(!car){box.innerHTML='';return}
+  const col = c>=1?'#ef4444':c>=0.6?'#f59e0b':'#10b981';
+  const icon = c>=1?'🚨':c>=0.6?'⚠️':'✅';
+  const msg = c>=1?'سيارتك خطر على مستقبلك — معاملك '+c.toFixed(2)+'x':c>=0.6?'سيارتك مكلفة — معاملك '+c.toFixed(2)+'x':'سيارتك مناسبة — معاملك '+c.toFixed(2)+'x';
+  box.innerHTML = '<div style="border-radius:9px;padding:.75rem;margin-top:.65rem;border:1px solid;background:'+col+'14;border-color:'+col+'40;color:'+col+';font-size:.75rem">'+icon+' '+msg+'</div>';
+}
+
+function showToast(msg, err) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (err?' err':'');
+  setTimeout(() => t.className='toast', 2400);
+}
+
+function copyText(text, msg) {
+  navigator.clipboard.writeText(text).then(() => showToast('✅ '+(msg||'تم النسخ')));
+}
+
+// ═══════════════════════════════════════════
+// CHECKOUT OVERLAY
+// ═══════════════════════════════════════════
+function showCheckout() {
+  document.getElementById('overlay-checkout').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('overlay-checkout').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ═══════════════════════════════════════════
+// GOSI CALCULATOR
+// ═══════════════════════════════════════════
+function cg() {
+  const age=+document.getElementById('g-age').value||38, join=+document.getElementById('g-join').value||2010;
+  const sal=+document.getElementById('g-sal').value||8000, allow=+document.getElementById('g-allow').value||0;
+  const ret=+document.getElementById('g-ret').value||60, sys=document.getElementById('g-sys').value;
+  const base=sal+allow, curr=new Date().getFullYear(), served=curr-join, remain=ret-age, total=served+remain;
+  const contrib=base*0.09, rate=sys==='old'?0.025:0.02;
+  let pension=Math.min(base*rate*total, base*0.8); pension=Math.max(pension,1716);
+  const needed=sal*0.75, gap=Math.max(0,needed-pension);
   document.getElementById('gy').textContent=total+' سنة';
   document.getElementById('gb').textContent=fmt(base)+' ريال';
   document.getElementById('gc').textContent=fmt(contrib)+' ريال';
@@ -416,277 +711,470 @@ function cg(){
   document.getElementById('gp').textContent=fmt(pension)+' ريال';
   document.getElementById('gpct').textContent=Math.round(pension/sal*100)+'% من راتبك';
   document.getElementById('gn').textContent=fmt(needed)+' ريال';
-  document.getElementById('grows').innerHTML=[['سنوات الخدمة',total+' سنة','o'],['نسبة المعاش',Math.round(pension/sal*100)+'%',pension/sal>=0.7?'g':pension/sal>=0.5?'w':'r'],['الحد الأقصى (80%)',fmt(base*0.8)+' ريال','g']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('');
-  document.getElementById('ggap').innerHTML=[['معاشك',fmt(pension)+' ريال',pension>=needed?'g':'r'],['تحتاجه',fmt(needed)+' ريال','w'],['الفجوة الشهرية',gap>0?fmt(gap)+' ريال':'لا فجوة ✅',gap>0?'r':'g']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')
+  document.getElementById('grows').innerHTML=[
+    ['سنوات الخدمة',total+' سنة','o'],
+    ['نسبة المعاش',Math.round(pension/sal*100)+'%',pension/sal>=0.7?'g':pension/sal>=0.5?'w':'r'],
+    ['الحد الأقصى (80%)',fmt(base*0.8)+' ريال','g']
+  ].map(([l,v,c])=>'<div class="rrow"><span class="rl">'+l+'</span><span class="rv '+c+'">'+v+'</span></div>').join('');
+  document.getElementById('ggap').innerHTML=[
+    ['معاشك',fmt(pension)+' ريال',pension>=needed?'g':'r'],
+    ['تحتاجه',fmt(needed)+' ريال','w'],
+    ['الفجوة الشهرية',gap>0?fmt(gap)+' ريال':'لا فجوة ✅',gap>0?'r':'g']
+  ].map(([l,v,c])=>'<div class="rrow"><span class="rl">'+l+'</span><span class="rv '+c+'">'+v+'</span></div>').join('');
 }
 cg();
 
-// MAIN CALC
-function rc(){
-  D={name:document.getElementById('fn').value||'عزيزي',age:+document.getElementById('fa').value||35,sal:+document.getElementById('fs').value||12000,yrs:+document.getElementById('fy').value||25,job:document.getElementById('fj').value,kids:+document.getElementById('fk').value||0,eduPerChild:+document.getElementById('fedu').value||0,served:+document.getElementById('fserved').value||0,fgrat:+document.getElementById('fgrat').value||0,fpension:+document.getElementById('fpension').value||0,salgrow:+document.getElementById('fsalgrow').value||0,invrate:+document.getElementById('finvrate').value||9,debt:+document.getElementById('fd').value||0,inst:+document.getElementById('fi').value||0,sav:+document.getElementById('fv').value||0,car:+document.getElementById('fcar').value||0,caryr:+document.getElementById('fcyr').value||2021,carinst:+document.getElementById('fcin').value||0,hous:document.getElementById('fh').value,rent:+document.getElementById('fr').value||0,mort:+document.getElementById('fm').value||0,mortl:+document.getElementById('fml').value||0,props:+document.getElementById('fp').value||0,tour:+document.getElementById('fto').value||0,rest:+document.getElementById('fre').value||0,subs:+document.getElementById('fsu').value||0,misc:+document.getElementById('fmisc').value||0,risk:document.getElementById('frk').value,inv:+document.getElementById('fiv').value||0};
-  const salGrowthRate=D.salgrow/100,projSal=D.sal*Math.pow(1+salGrowthRate,D.yrs),
-  pr=D.job==='gov'?0.8:D.job==='aramco'?0.65:0.35,
-  pen=D.fpension||Math.round(projSal*pr),need=Math.round(projSal*0.75),grat=D.fgrat||0,edu=D.kids*D.eduPerChild,gap=Math.max(0,need-pen)*12*20,rb=D.hous==='rent'?D.rent*12*10:0,tgap=gap+edu-D.sav-grat+rb,mon=Math.max(200,tgap/(D.yrs*12)),netw=D.sav-D.debt+(D.hous!=='rent'?400000:0),rate=D.invrate||9,rows=sim(D.sav+D.inv*12,D.inv,rate,20),cc=D.car/(D.sal*12),ic=D.sal<10000?70000:D.sal<15000?100000:D.sal<20000?150000:200000,cs=Math.max(0,D.car-ic),cg=cs*Math.pow(1+rate/100,10),rw=Math.max(0,D.rest-D.sal*0.15),sw=Math.max(0,D.subs-200),tw=Math.max(0,D.tour-D.sal*0.5)/12,totw=rw+sw+tw;
-  // Delay cost - same base, consistent comparison
-  const delayBase=D.sav+D.inv*12;
-  const delayMo=D.inv;
-  const d0=sim(delayBase,delayMo,rate,20)[19]?.v||0;
-  const d1=sim(delayBase,delayMo,rate,19)[18]?.v||0;
-  const d3=sim(delayBase,delayMo,rate,17)[16]?.v||0;
-  const d5=sim(delayBase,delayMo,rate,15)[14]?.v||0;
-  // What if saved from day 1
-  const missedRows500=sim(0,500,rate,D.served);
-  const missedRows1000=sim(0,1000,rate,D.served);
-  const missedRows1500=sim(0,1500,rate,D.served);
-  const missedRows2000=sim(0,2000,rate,D.served);
-  const missed500=missedRows500[D.served-1]?.v||0;
-  const missed1000=missedRows1000[D.served-1]?.v||0;
-  const missed1500=missedRows1500[D.served-1]?.v||0;
-  const missed2000=missedRows2000[D.served-1]?.v||0;
-  const sc={sav:Math.min(100,D.sav/(D.sal*6)*100),car:Math.max(0,100-(cc-0.3)*100),inv:Math.min(100,D.inv/(D.sal)*50),ret:Math.min(100,Math.max(0,(1-tgap/(D.sal*12*20*1.5))*100)),debt:Math.max(0,100-(D.inst/D.sal)*200)};
-  const hs=Math.round(Object.values(sc).reduce((a,b)=>a+b)/5);
-  D.C={pen,need,grat,edu,tgap,mon,netw,rate,rows,cc,ic,cs,cg,rw,sw,tw,totw,sc,hs,pr,d0,d1,d3,d5,missed500,missed1000,missed1500,missed2000,projSal};
-  build();pg('results');document.getElementById('nb-calc').classList.add('on')
+// ═══════════════════════════════════════════
+// MAIN CALCULATOR
+// ═══════════════════════════════════════════
+function rc() {
+  const g = id => document.getElementById(id);
+  D = {
+    name: g('fn').value||'عزيزي', age: +g('fa').value||35,
+    sal: +g('fsal').value||12000, yrs: +g('fyrs').value||25,
+    job: g('fjob').value, served: +g('fserved').value||0,
+    kids: +g('fkids').value||0, edu: +g('fedu').value||0,
+    debt: +g('fdebt').value||0, inst: +g('finst').value||0,
+    sav: +g('fsav').value||0, grat: +g('fgrat').value||0,
+    pen: +g('fpen').value||0, salgrow: +g('fsalgrow').value||0,
+    invrate: +g('finvrate').value||9,
+    car: +g('fcar').value||0, caryr: +g('fcyr').value||2021,
+    carinst: +g('fcin').value||0,
+    hous: g('fhous').value, rent: +g('frent').value||0,
+    mort: +g('fmort').value||0, mortl: +g('fmortl').value||0,
+    props: +g('fprops').value||0,
+    tour: +g('ftour').value||0, rest: +g('frest').value||0,
+    subs: +g('fsubs').value||0, misc: +g('fmisc').value||0,
+    risk: g('frisk').value, inv: +g('finv').value||0
+  };
+
+  const rate = D.invrate;
+  const projSal = Math.round(D.sal * Math.pow(1+D.salgrow/100, D.yrs));
+  const pen = D.pen || Math.round(projSal * (D.job==='gov'?0.8:D.job==='aramco'?0.65:0.35));
+  const need = Math.round(projSal * 0.75);
+  const grat = D.grat;
+  const edu = D.kids * D.edu;
+  const gap = Math.max(0, need-pen) * 12 * 20;
+  const rb = D.hous==='rent' ? D.rent*12*10 : 0;
+  const tgap = gap + edu - D.sav - grat + rb;
+  const mon = Math.max(200, tgap/(D.yrs*12));
+  const netw = D.sav - D.debt + (D.hous!=='rent'?400000:0);
+  const rows = sim(D.sav+D.inv*12, D.inv, rate, 20);
+  const cc = D.car/(D.sal*12);
+  const ic = D.sal<10000?70000:D.sal<15000?100000:D.sal<20000?150000:200000;
+  const cs = Math.max(0, D.car-ic);
+  const cg = cs * Math.pow(1+rate/100, 10);
+  const rw = Math.max(0, D.rest-D.sal*0.15);
+  const sw = Math.max(0, D.subs-200);
+
+  // Delay cost
+  const db = D.sav+D.inv*12, dm = D.inv;
+  const d0=sim(db,dm,rate,20)[19]?.v||0;
+  const d1=sim(db,dm,rate,19)[18]?.v||0;
+  const d3=sim(db,dm,rate,17)[16]?.v||0;
+  const d5=sim(db,dm,rate,15)[14]?.v||0;
+
+  // Missed savings
+  const miss = mo => D.served>0 ? (sim(0,mo,rate,D.served)[D.served-1]?.v||0) : 0;
+  const m500=miss(500), m1000=miss(1000), m1500=miss(1500), m2000=miss(2000);
+
+  // Scores
+  const sc = {
+    sav: Math.min(100, D.sav/(D.sal*6)*100),
+    car: Math.max(0, 100-(cc-0.3)*100),
+    inv: Math.min(100, D.inv/D.sal*50),
+    ret: Math.min(100, Math.max(0,(1-tgap/(D.sal*12*20*1.5))*100)),
+    debt: Math.max(0, 100-(D.inst/D.sal)*200)
+  };
+  const hs = Math.round(Object.values(sc).reduce((a,b)=>a+b)/5);
+
+  D.C = {pen,need,grat,edu,tgap,mon,netw,rate,rows,cc,ic,cs,cg,rw,sw,sc,hs,projSal,d0,d1,d3,d5,m500,m1000,m1500,m2000};
+  build();
+  pg('results');
+  document.getElementById('nb-calc').classList.add('on');
 }
 
-let chartInstances={};
-function destroyChart(id){if(chartInstances[id]){chartInstances[id].destroy();delete chartInstances[id]}}
+// ═══════════════════════════════════════════
+// BUILD RESULTS
+// ═══════════════════════════════════════════
+function build() {
+  const C = D.C;
+  const now = new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('rname').textContent = 'تقريرك المالي — '+D.name;
+  document.getElementById('rdate').textContent = 'مبني على بياناتك الحقيقية • '+now;
+  document.getElementById('code-bar').style.display = P?'none':'flex';
 
-function build(){
-  const C=D.C,now=new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'}),yr=n=>new Date().getFullYear()+n;
-  document.getElementById('rname').textContent=`تقريرك المالي — ${D.name}`;
-  document.getElementById('rdate').textContent=`مبني على بياناتك الحقيقية • ${now}`;
-  const sc=C.hs>=70?'#10b981':C.hs>=50?'#f59e0b':'#ef4444';
+  const sc = C.hs>=70?'#10b981':C.hs>=50?'#f59e0b':'#ef4444';
+  const hsLabel = C.hs<30?'🚨 وضعك في خطر':C.hs<50?'⚠️ يحتاج إنقاذ عاجل':C.hs<70?'📊 مقبول — يمكن التحسين':C.hs<85?'✅ جيد — استمر':'⭐ ممتاز';
 
-  // ===== TAB: OVERVIEW =====
-  document.getElementById('t-ov').innerHTML=`
-  <div class="g2">
-    <div class="panel">
-      <div class="psec">💰 نقاط صحتك المالية</div>
-      <div style="width:110px;height:110px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto .5rem;border:5px solid ${sc};color:${sc};box-shadow:0 0 28px ${sc}28;transition:all .6s">
-        <div style="font-size:2rem;font-weight:900;font-family:'IBM Plex Mono',monospace">${C.hs}</div>
-        <div style="font-size:.56rem;color:var(--muted)">/ 100</div>
-      </div>
-      <div style="text-align:center;margin-bottom:.8rem">
-        <div style="font-size:.9rem;font-weight:900;color:${sc};margin-bottom:.2rem">${C.hs<30?'🚨 وضعك في خطر':C.hs<50?'⚠️ يحتاج إنقاذ عاجل':C.hs<70?'📊 مقبول — يمكن التحسين':C.hs<85?'✅ جيد — استمر':' ممتاز — أنت نموذج'}</div>
-        <div style="font-size:.7rem;color:var(--muted)">${C.hs<50?'معظم الناس في وضعك لا يتخذون خطوة — أنت هنا لأنك مختلف':'نقاط صحتك المالية أعلى من '+Math.round(C.hs)+'% من أقرانك'}</div>
-        ${C.hs<50?'<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:.5rem .8rem;margin-top:.5rem;font-size:.72rem;color:#fca5a5;font-weight:700">🆘 تحتاج خطة إنقاذ مالية — الباقة المميزة مصممة لحالتك</div>':''}
-      </div>
-      ${[['المدخرات',C.sc.sav,'#10b981'],['السيارة',Math.max(0,C.sc.car),'#d4af37'],['الاستثمار',C.sc.inv,'#3b82f6'],['التقاعد',Math.max(0,C.sc.ret),'#f59e0b'],['الديون',Math.max(0,C.sc.debt),'#10b981']].map(([l,v,c])=>`<div style="margin-bottom:.45rem"><div style="display:flex;justify-content:space-between;font-size:.71rem;margin-bottom:.18rem"><span style="color:var(--muted)">${l}</span><span style="font-family:'IBM Plex Mono',monospace;color:${c}">${Math.round(v)}%</span></div><div class="score-bar"><div class="score-fill" style="width:${Math.min(100,v)}%;background:${c}"></div></div></div>`).join('')}
-    </div>
-    <div class="panel">
-      <div class="psec">📊 فجوة التقاعد</div>
-      <div class="alert ${C.tgap>0?'ar':'ag'}">
-        <div class="al">الفجوة الإجمالية</div>
-        <div class="av ${C.tgap>0?'r':'g'}">${C.tgap>0?fmt(C.tgap)+' ريال':'✅ على المسار'}</div>
-        <div class="ad">${C.tgap>0?`ادخر ${fmt(C.mon)} ريال/شهر لإغلاقها`:'وضعك ممتاز!'}</div>
-      </div>
-      ${[['المعاش المتوقع/شهر',fmt(C.pen)+' ريال',C.pen>=C.need?'g':'r'],['ما تحتاجه/شهر',fmt(C.need)+' ريال','w'],['راتبك عند التقاعد',fmt(C.projSal)+' ريال','g'],
-        ['نمو الراتب خلال '+D.yrs+' سنة','+'+fmt(C.projSal-D.sal)+' ريال','o'],
-        ['نهاية الخدمة',fmt(C.grat)+' ريال',C.grat>0?'g':'r'],['تعليم الأولاد',D.kids>0&&D.eduPerChild>0?fmt(C.edu)+' ريال':'مجاني ✅',D.kids>0&&D.eduPerChild>0?'r':'g'],['صافي الثروة',(C.netw>=0?'+':'')+fmt(C.netw)+' ريال',C.netw>=0?'g':'r'],['قسطك الشهري',fmt(D.inst)+' ريال',D.inst/D.sal>0.35?'r':'g']].map(([l,v,c])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${c}">${v}</span></div>`).join('')}
-    </div>
-    <div class="panel">
-      <div class="psec">📊 مقارنتك بالمتوسط السعودي</div>
-      ${[['المدخرات',D.sav,8200,D.sav>=8200],['قيمة السيارة',D.car,95000,D.car<=95000],['ادخار شهري',D.inv,Math.round(D.sal*0.1),D.inv>=D.sal*0.1],['مصاريف المطاعم',D.rest,Math.round(D.sal*0.15),D.rest<=D.sal*0.15]].map(([l,y,a,g])=>`<div class="rrow"><span class="rl">${l}</span><div style="display:flex;gap:.7rem;align-items:center"><span style="font-size:.76rem;font-family:'IBM Plex Mono',monospace;font-weight:700;color:${g?'#10b981':'#ef4444'}">${fmt(y)}</span><span style="font-size:.7rem;color:var(--muted)">متوسط: ${fmt(a)}</span></div></div>`).join('')}
-    </div>
-        <div class="panel">
-      <div class="psec">⏰ ثمن التأجيل</div>
-      ${[['ابدأ اليوم',C.d0,true],['انتظرت سنة',C.d1,false],['انتظرت 3 سنوات',C.d3,false],['انتظرت 5 سنوات',C.d5,false]].map(([l,v,g])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv ${g?'g':'r'}">${fmt(v)} ريال</span></div>`).join('')}
-      <div class="tip" style="margin-top:.65rem">كل سنة تأجيل تكلفك <b style="color:#ef4444">${fmt(C.d0-C.d1)} ريال</b> من مستقبلك</div>
-    </div>
-    <div class="panel">
-      <div class="psec">📈 مسيرتك المهنية — نمو الراتب المتوقع</div>
-      <div class="tip" style="margin-bottom:.7rem">بمعدل زيادة <b style="color:var(--gold)">${D.salgrow}%</b> سنوياً — هذا مسار راتبك</div>
-      ${[5,10,15,D.yrs].filter(y=>y<=D.yrs&&y>0).map(y=>{const ps=Math.round(D.sal*Math.pow(1+D.salgrow/100,y));return '<div class="rrow"><span class="rl">بعد '+y+' سنوات</span><div style="display:flex;align-items:center;gap:.6rem"><span class="rv g">'+fmt(ps)+' ريال</span><span style="font-size:.66rem;color:var(--muted)">+'+Math.round((ps/D.sal-1)*100)+'%</span></div></div>';}).join('')}
-      <div class="rrow" style="border-top:1px solid rgba(212,175,55,0.2);margin-top:.2rem;padding-top:.6rem"><span class="rl" style="color:var(--gold);font-weight:700">راتبك عند التقاعد</span><span class="rv o">${fmt(C.projSal)} ريال/شهر</span></div>
-      <div class="tip" style="margin-top:.6rem;background:rgba(16,185,129,0.05);border-color:rgba(16,185,129,0.15)">معاشك المتوقع عند التقاعد (${Math.round(D.job==='gov'?80:D.job==='aramco'?65:35)}% من الراتب النهائي): <b style="color:var(--success)">${fmt(C.pen)} ريال/شهر</b></div>
-    </div>
-    <div class="panel">
-      <div class="psec">😔 لو ادخرت من أول شهر عمل</div>
-      <div class="tip" style="margin-bottom:.7rem">بناءً على <b style="color:var(--gold)">${D.served} سنة</b> خدمة — هذا ما كنت تملكه الآن</div>
-      ${[['500 ريال/شهر',C.missed500],['1,000 ريال/شهر',C.missed1000],['1,500 ريال/شهر',C.missed1500],['2,000 ريال/شهر',C.missed2000]].map(([l,v])=>`<div class="rrow"><span class="rl">${l}</span><span class="rv o">${fmt(v)} ريال</span></div>`).join('')}
-      <div class="tip" style="margin-top:.65rem;background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.15)">لو ادخرت 1,000 ريال/شهر من بداية مسيرتك — كنت تملك <b style="color:#ef4444">${fmt(C.missed1000)} ريال</b> الآن. ابدأ اليوم.</div>
-    </div>
-  </div>`;
+  // ── OVERVIEW ──
+  document.getElementById('t-ov').innerHTML =
+  '<div class="g2">' +
+  '<div class="panel">' +
+    '<div class="psec">💰 نقاط صحتك المالية</div>' +
+    '<div style="width:108px;height:108px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto .5rem;border:5px solid '+sc+';color:'+sc+';box-shadow:0 0 24px '+sc+'28">' +
+      '<div style="font-size:2rem;font-weight:900;font-family:IBM Plex Mono,monospace">'+C.hs+'</div>' +
+      '<div style="font-size:.55rem;color:var(--muted)">/ 100</div>' +
+    '</div>' +
+    '<div style="text-align:center;margin-bottom:.8rem">' +
+      '<div style="font-size:.88rem;font-weight:900;color:'+sc+'">'+hsLabel+'</div>' +
+      (C.hs<50?'<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:7px;padding:.4rem .7rem;margin-top:.4rem;font-size:.7rem;color:#fca5a5;font-weight:700">🆘 تحتاج خطة إنقاذ مالية — الباقة المميزة مصممة لحالتك</div>':'') +
+    '</div>' +
+    [['المدخرات',C.sc.sav,'#10b981'],['السيارة',Math.max(0,C.sc.car),'#d4af37'],['الاستثمار',C.sc.inv,'#3b82f6'],['التقاعد',Math.max(0,C.sc.ret),'#f59e0b'],['الديون',Math.max(0,C.sc.debt),'#10b981']].map(([l,v,c])=>
+      '<div style="margin-bottom:.45rem"><div style="display:flex;justify-content:space-between;font-size:.71rem;margin-bottom:.18rem"><span style="color:var(--muted)">'+l+'</span><span style="font-family:IBM Plex Mono,monospace;color:'+c+'">'+Math.round(v)+'%</span></div><div class="score-bar"><div class="score-fill" style="width:'+Math.min(100,v)+'%;background:'+c+'"></div></div></div>'
+    ).join('') +
+  '</div>' +
+  '<div class="panel">' +
+    '<div class="psec">📊 فجوة التقاعد</div>' +
+    '<div class="alert '+( C.tgap>0?'ar':'ag')+'">' +
+      '<div class="al">الفجوة الإجمالية</div>' +
+      '<div class="av '+(C.tgap>0?'r':'g')+'">'+(C.tgap>0?fmt(C.tgap)+' ريال':'✅ على المسار')+'</div>' +
+      '<div class="ad">'+(C.tgap>0?'ادخر '+fmt(C.mon)+' ريال/شهر لإغلاقها':'وضعك ممتاز!')+'</div>' +
+    '</div>' +
+    [['الراتب عند التقاعد',fmt(C.projSal)+' ريال','o'],
+     ['المعاش المتوقع/شهر',fmt(C.pen)+' ريال',C.pen>=C.need?'g':'r'],
+     ['ما تحتاجه/شهر',fmt(C.need)+' ريال','w'],
+     ['نهاية الخدمة',fmt(C.grat)+' ريال',C.grat>0?'g':'r'],
+     ['تعليم الأولاد',D.kids>0&&D.edu>0?fmt(C.edu)+' ريال':'مجاني ✅',D.kids>0&&D.edu>0?'r':'g'],
+     ['صافي الثروة',(C.netw>=0?'+':'')+fmt(C.netw)+' ريال',C.netw>=0?'g':'r'],
+     ['القسط الشهري',fmt(D.inst)+' ريال',D.inst/D.sal>0.35?'r':'g']
+    ].map(([l,v,c])=>'<div class="rrow"><span class="rl">'+l+'</span><span class="rv '+c+'">'+v+'</span></div>').join('') +
+  '</div>' +
+  '<div class="panel">' +
+    '<div class="psec">📈 مسيرة راتبك ('+D.salgrow+'%/سنة)</div>' +
+    [5,10,15,D.yrs].filter((y,i,a)=>y<=D.yrs&&a.indexOf(y)===i).map(y=>{
+      const ps = Math.round(D.sal*Math.pow(1+D.salgrow/100,y));
+      return '<div class="rrow"><span class="rl">بعد '+y+' سنوات</span><div style="display:flex;align-items:center;gap:.5rem"><span class="rv g">'+fmt(ps)+' ريال</span><span style="font-size:.64rem;color:var(--muted)">+'+Math.round((ps/D.sal-1)*100)+'%</span></div></div>';
+    }).join('') +
+  '</div>' +
+  '<div class="panel">' +
+    '<div class="psec">⏰ ثمن التأجيل</div>' +
+    [['ابدأ اليوم',C.d0,true],['انتظرت سنة',C.d1,false],['انتظرت 3 سنوات',C.d3,false],['انتظرت 5 سنوات',C.d5,false]].map(([l,v,g])=>
+      '<div class="rrow"><span class="rl">'+l+'</span><span class="rv '+(g?'g':'r')+'">'+fmt(v)+' ريال</span></div>'
+    ).join('') +
+    '<div class="tip" style="margin-top:.6rem">كل سنة تأجيل تكلفك <b style="color:#ef4444">'+fmt(C.d0-C.d1)+' ريال</b></div>' +
+  '</div>' +
+  (D.served>0?
+  '<div class="panel">' +
+    '<div class="psec">😔 لو ادخرت من أول شهر عمل ('+D.served+' سنة)</div>' +
+    [['500 ريال/شهر',C.m500],['1,000 ريال/شهر',C.m1000],['1,500 ريال/شهر',C.m1500],['2,000 ريال/شهر',C.m2000]].map(([l,v])=>
+      '<div class="rrow"><span class="rl">'+l+'</span><span class="rv o">'+fmt(v)+' ريال</span></div>'
+    ).join('') +
+    '<div class="tip" style="margin-top:.6rem;background:rgba(239,68,68,0.05);border-color:rgba(239,68,68,0.15)">لو ادخرت 1,000 ريال/شهر من يوم أول — كنت تملك <b style="color:#ef4444">'+fmt(C.m1000)+' ريال</b> الآن. ابدأ اليوم.</div>' +
+  '</div>':'') +
+  '</div>';
 
-  // ===== TAB: CHARTS =====
-  document.getElementById('t-charts').innerHTML=`
-  <div class="g2">
-    <div class="panel ${!P?'lw':''}">
-      <div class="psec">📈 نمو مدخراتك خلال 20 سنة</div>
-      <div class="${!P?'blur':''}">
-        <div class="chart-wrap"><canvas id="chartLine"></canvas></div>
-      </div>
-      ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة لرؤية الرسوم</button></div>`:''}
-    </div>
-    <div class="panel ${!P?'lw':''}">
-      <div class="psec">🥧 توزيع مصاريفك الشهرية</div>
-      <div class="${!P?'blur':''}">
-        <div class="chart-wrap"><canvas id="chartPie"></canvas></div>
-      </div>
-      ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة</button></div>`:''}
-    </div>
-    <div class="panel ${!P?'lw':''}">
-      <div class="psec">📊 مقارنتك بالمتوسط السعودي</div>
-      <div class="${!P?'blur':''}">
-        <div class="chart-wrap"><canvas id="chartBar"></canvas></div>
-      </div>
-      ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة</button></div>`:''}
-    </div>
-    <div class="panel">
-      <div class="psec">📅 محاكاة الاستثمار</div>
-      <div class="alert ao"><div class="al">بعد 20 سنة</div><div class="av o">${fmt(C.rows[19]?.v||0)} ريال</div><div class="ad">مقابل ${fmt(D.inv*12*20)} ريال تودعها</div></div>
-      ${[1,5,10,20].map(y=>{const r=C.rows[y-1];return r?`<div class="rrow"><span class="rl">بعد ${y} ${y===1?'سنة':'سنوات'}</span><span class="rv g">${fmt(r.v)} ريال</span></div>`:''}).join('')}
-      <div class="tip" style="margin-top:.6rem">الادخار الشهري: <b style="color:var(--gold)">${fmt(D.inv)} ريال/شهر</b></div>
-    </div>
-  </div>`;
+  // ── CHARTS ──
+  document.getElementById('t-charts').innerHTML =
+  '<div class="g2">' +
+  '<div class="panel '+(P?'':'lw')+'">' +
+    '<div class="psec">📈 نمو مدخراتك خلال 20 سنة</div>' +
+    '<div class="'+(P?'':'')+'">' +
+      '<div class="chart-wrap"><canvas id="cLine"></canvas></div>' +
+    '</div>' +
+    (P?'':'<div class="lo"><button class="lb" onclick="showCheckout()">🔓 فعّل المميزة لرؤية الرسوم</button></div>') +
+  '</div>' +
+  '<div class="panel '+(P?'':'lw')+'">' +
+    '<div class="psec">🥧 توزيع مصاريفك الشهرية</div>' +
+    '<div class="chart-wrap"><canvas id="cPie"></canvas></div>' +
+    (P?'':'<div class="lo"><button class="lb" onclick="showCheckout()">🔓 فعّل المميزة</button></div>') +
+  '</div>' +
+  '<div class="panel '+(P?'':'lw')+'">' +
+    '<div class="psec">📊 مقارنتك بالمتوسط السعودي</div>' +
+    '<div class="chart-wrap"><canvas id="cBar"></canvas></div>' +
+    (P?'':'<div class="lo"><button class="lb" onclick="showCheckout()">🔓 فعّل المميزة</button></div>') +
+  '</div>' +
+  '<div class="panel">' +
+    '<div class="psec">📅 جدول محاكاة الاستثمار</div>' +
+    '<div class="alert ao"><div class="al">بعد 20 سنة</div><div class="av o">'+fmt(C.rows[19]?.v||0)+' ريال</div><div class="ad">مقابل '+fmt(D.inv*12*20)+' ريال تودعها</div></div>' +
+    [1,5,10,15,20].map(y=>{const r=C.rows[y-1];return r?'<div class="rrow"><span class="rl">بعد '+y+' سنة</span><span class="rv g">'+fmt(r.v)+' ريال</span></div>':''}).join('') +
+    '<div class="tip" style="margin-top:.6rem">الادخار الشهري: <b style="color:var(--gold)">'+fmt(D.inv)+' ريال</b> بمعدل <b style="color:var(--gold)">'+D.invrate+'%</b>/سنة</div>' +
+  '</div>' +
+  '</div>';
 
-  // ===== TAB: ADVICE =====
-  const advices=[];
-  if(C.cc>=1)advices.push({type:'danger',icon:'🚨',title:'سيارتك تدمر مستقبلك المالي',body:`سيارتك بـ ${fmt(D.car)} ريال تمثل ${Math.round(C.cc*100)}% من دخلك السنوي. المعيار الآمن هو 50%. لو باعتها وأخذت بـ ${fmt(C.ic)} ريال، الفرق ${fmt(C.cs)} ريال بعد 10 سنوات يصبح ${fmt(C.cg)} ريال.`});
-  else if(C.cc>=0.6)advices.push({type:'warn',icon:'⚠️',title:'سيارتك مكلفة نسبياً',body:`معامل سيارتك ${C.cc.toFixed(2)}x — يُنصح بأن لا يتجاوز 0.5x. فكّر في تغييرها عند أول فرصة.`});
-  if(D.inst/D.sal>0.35)advices.push({type:'danger',icon:'🔴',title:'أقساطك الشهرية خطيرة',body:`أقساطك ${fmt(D.inst)} ريال شهرياً تمثل ${Math.round(D.inst/D.sal*100)}% من راتبك. الحد الآمن 30%. هذا يعني ضغطاً مالياً حاداً — أولويتك الأولى إغلاق هذه الديون.`});
-  const totalExp=D.inst+(D.hous==='rent'?D.rent:D.mort)+D.rest+D.subs+D.tour/12+(D.misc||0);const expRatio=totalExp/D.sal;if(expRatio>0.75)advices.push({type:'danger',icon:'💸',title:'مصاريفك تلتهم راتبك',body:`إجمالي مصاريفك الثابتة ${fmt(totalExp)} ريال/شهر = ${Math.round(expRatio*100)}% من راتبك. لا يتبقى شيء للادخار. يجب إعادة الهيكلة فوراً.`});
-  if(D.rest>D.sal*0.2)advices.push({type:'warn',icon:'🍽️',title:'مصاريف المطاعم مرتفعة',body:`تصرف ${fmt(D.rest)} ريال شهرياً في المطاعم (${Math.round(D.rest/D.sal*100)}% من راتبك). تخفيضها 50% يوفر ${fmt(D.rest*0.5)} ريال/شهر = ${fmt(D.rest*0.5*12)} ريال/سنة.`});
-  if(D.inv===0)advices.push({type:'warn',icon:'📉',title:'لا تستثمر شيئاً الآن',body:`الاستثمار ليس رفاهية — هو ضرورة. حتى ${fmt(D.sal*0.05)} ريال شهرياً (5% من راتبك) تصبح ${fmt(sim(0,D.sal*0.05,9,20)[19]?.v||0)} ريال بعد 20 سنة.`});
-  if(D.sav<D.sal*3)advices.push({type:'warn',icon:'🏦',title:'احتياطيك الطارئ غير كافٍ',body:`مدخراتك ${fmt(D.sav)} ريال تغطي أقل من 3 أشهر من مصاريفك. المعيار الموصى به 6 أشهر. ابدأ بتكوين صندوق طوارئ قبل أي استثمار آخر.`});
-  if(C.tgap>D.sal*100)advices.push({type:'danger',icon:'🎯',title:'فجوة التقاعد كبيرة جداً',body:`تحتاج ${fmt(C.tgap)} ريال إضافية للتقاعد المريح. الحل: ادخر ${fmt(C.mon)} ريال شهرياً الآن. كل سنة تأجيل تزيد الفجوة.`});
-  // positive advice
-  if(C.cc<0.5)advices.push({type:'tip',icon:'✅',title:'سيارتك مثالية',body:`معامل سيارتك ${C.cc.toFixed(2)}x — ممتاز. وفّرت على نفسك ضغطاً مالياً كبيراً. ركّز هذا الوفر في الاستثمار.`});
-  if(D.inv>=D.sal*0.1)advices.push({type:'tip',icon:'🌟',title:'عادة الاستثمار الشهري رائعة',body:`تدخر ${fmt(D.inv)} ريال شهرياً — ${Math.round(D.inv/D.sal*100)}% من راتبك. هذا أفضل من 80% من الموظفين السعوديين. استمر وزد تدريجياً.`});
+  // ── ADVICE ──
+  const advices = [];
+  if(C.cc>=1) advices.push({t:'danger',i:'🚨',h:'سيارتك تدمر مستقبلك',b:'سيارتك '+fmt(D.car)+' ريال = '+Math.round(C.cc*100)+'% من دخلك السنوي. السيارة المثالية لراتبك: '+fmt(C.ic)+' ريال. الفرق بعد 10 سنوات: '+fmt(C.cg)+' ريال.'});
+  else if(C.cc>=0.6) advices.push({t:'warn',i:'⚠️',h:'سيارتك مكلفة نسبياً',b:'معامل سيارتك '+C.cc.toFixed(2)+'x — الحد الآمن 0.5x. فكّر في تغييرها عند أول فرصة.'});
+  if(D.inst/D.sal>0.35) advices.push({t:'danger',i:'🔴',h:'أقساطك الشهرية خطيرة',b:'أقساطك '+fmt(D.inst)+' ريال = '+Math.round(D.inst/D.sal*100)+'% من راتبك. الحد الآمن 30%. أولويتك إغلاق هذه الديون.'});
+  const totalExp = D.inst+(D.hous==='rent'?D.rent:D.mort)+D.rest+D.subs+D.tour/12+D.misc;
+  if(totalExp/D.sal>0.75) advices.push({t:'danger',i:'💸',h:'مصاريفك تلتهم راتبك',b:'إجمالي مصاريفك '+fmt(totalExp)+' ريال = '+Math.round(totalExp/D.sal*100)+'% من راتبك. لا يتبقى شيء للادخار.'});
+  if(D.rest>D.sal*0.2) advices.push({t:'warn',i:'🍽️',h:'مصاريف المطاعم مرتفعة',b:'تصرف '+fmt(D.rest)+' ريال/شهر على المطاعم. تخفيضها 50% يوفر '+fmt(D.rest*0.5)+' ريال/شهر = '+fmt(D.rest*0.5*12)+' ريال/سنة.'});
+  if(D.inv===0) advices.push({t:'warn',i:'📉',h:'لا تستثمر شيئاً الآن',b:'حتى '+fmt(D.sal*0.05)+' ريال/شهر (5%) تصبح '+fmt(sim(0,D.sal*0.05,9,20)[19]?.v||0)+' ريال بعد 20 سنة.'});
+  if(D.sav<D.sal*3) advices.push({t:'warn',i:'🏦',h:'احتياطيك الطارئ غير كافٍ',b:'مدخراتك '+fmt(D.sav)+' ريال — أقل من 3 أشهر مصاريف. المعيار الموصى به 6 أشهر.'});
+  if(C.cc<0.5) advices.push({t:'tip',i:'✅',h:'سيارتك مثالية',b:'معامل سيارتك '+C.cc.toFixed(2)+'x — ممتاز. وفّرت ضغطاً مالياً كبيراً. ركّز هذا الوفر في الاستثمار.'});
+  if(D.inv>=D.sal*0.1) advices.push({t:'tip',i:'🌟',h:'عادة الاستثمار الشهري رائعة',b:'تدخر '+fmt(D.inv)+' ريال/شهر = '+Math.round(D.inv/D.sal*100)+'% من راتبك. أفضل من 80% من الموظفين السعوديين.'});
+  document.getElementById('t-advice').innerHTML =
+  '<div class="panel">' +
+    '<div class="psec">💡 نصائح مخصصة — '+advices.length+' نصيحة</div>' +
+    advices.map(a=>'<div class="advice-c '+a.t+'"><div class="advice-t">'+a.i+' '+a.h+'</div><div class="advice-b">'+a.b+'</div></div>').join('') +
+    (!P?'<div style="background:var(--gold3);border:1px solid var(--border);border-radius:11px;padding:1.1rem;text-align:center;margin-top:.8rem"><div style="font-size:.88rem;font-weight:700;margin-bottom:.35rem">🔓 نصائح أعمق بالذكاء الاصطناعي</div><div style="font-size:.74rem;color:var(--muted);margin-bottom:.9rem">الباقة المميزة تتضمن تحليلاً شهرياً مخصصاً لوضعك</div><button class="btn btn-gold" onclick="showCheckout()">اشترك بـ 49 ريال/شهر ←</button></div>':'') +
+  '</div>';
 
-  document.getElementById('t-advice').innerHTML=`
-  <div class="panel">
-    <div class="psec">💡 نصائح مخصصة لوضعك — ${advices.length} نصيحة</div>
-    ${advices.map(a=>`<div class="advice-card ${a.type==='warn'?'warn':a.type==='tip'?'tip':''}"><div class="advice-title">${a.icon} ${a.title}</div><div class="advice-body">${a.body}</div></div>`).join('')}
-    ${!P?`<div style="background:var(--gold3);border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;margin-top:.8rem"><div style="font-size:.9rem;font-weight:700;margin-bottom:.4rem">🔓 احصل على نصائح أعمق</div><div style="font-size:.74rem;color:var(--muted);margin-bottom:.9rem">الباقة المميزة تتضمن تحليلاً شهرياً بالذكاء الاصطناعي مخصصاً لوضعك</div><button class="btn bg" onclick="ul()">اشترك بـ 49 ريال/شهر ←</button></div>`:''}
-  </div>`;
+  // ── PLAN ──
+  const plan9 = [
+    {d:'يوم 1',t:'ابدأ صندوق الطوارئ',x:'احتفظ بـ '+fmt(D.sal*6)+' ريال في حساب منفصل قبل أي استثمار'},
+    {d:'يوم 7',t:'راجع أقساطك',x:D.inst>0?'أقساطك '+fmt(D.inst)+' ريال/شهر — ضع خطة لإغلاق الديون الأصغر أولاً':'لا ديون — ممتاز! وجّه طاقتك للاستثمار'},
+    {d:'يوم 14',t:'افتح حساب استثمار',x:'افتح تطبيق الراجحي المالية وحوّل '+fmt(Math.max(D.inv,Math.round(D.sal*0.05)))+' ريال'},
+    {d:'يوم 30',t:'راجع مصاريف المطاعم',x:'مصاريفك '+fmt(D.rest)+' ريال — خفّضها 30% = '+fmt(D.rest*0.3)+' ريال توفير شهري'},
+    {d:'يوم 60',t:'راجع سيارتك',x:C.cc>=0.8?'سيارتك '+fmt(D.car)+' ريال تحتاج إعادة نظر — ابحث عن بديل بـ '+fmt(C.ic)+' ريال':'سيارتك مناسبة — لا تغيّرها الآن'},
+    {d:'يوم 90',t:'قيّم تقدمك',x:'ارجع لرتّبني وحدّث بياناتك — هل تحسّنت نقاطك؟'}
+  ];
+  document.getElementById('t-plan').innerHTML =
+  '<div class="panel '+(P?'':'lw')+'">' +
+    '<div class="psec">📅 خطة الـ 90 يوم المخصصة لك</div>' +
+    plan9.map(p=>'<div style="display:flex;gap:.75rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);align-items:flex-start"><div style="width:42px;height:42px;border-radius:8px;background:var(--gold3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:900;color:var(--gold);flex-shrink:0;text-align:center;line-height:1.2">'+p.d+'</div><div><div style="font-size:.78rem;font-weight:700;color:var(--text)">'+p.t+'</div><div style="font-size:.7rem;color:var(--muted);margin-top:.1rem;line-height:1.4">'+p.x+'</div></div></div>').join('') +
+    (P?'':'<div class="lo"><button class="lb" onclick="showCheckout()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>') +
+  '</div>';
 
-  // ===== TAB: PLAN =====
-  const p9=[{d:'يوم 1',t:'ابدأ صندوق الطوارئ',x:`احتفظ بـ ${fmt(D.sal*6)} ريال في حساب منفصل قبل أي استثمار`},{d:'يوم 7',t:'راجع أقساطك',x:D.inst>0?`أقساطك ${fmt(D.inst)} ريال/شهر — ضع خطة لإغلاق الديون الأصغر أولاً`:'لا ديون — ممتاز! وجّه طاقتك للاستثمار'},{d:'يوم 14',t:'افتح حساب استثمار',x:`افتح تطبيق الراجحي المالية وحوّل ${fmt(Math.max(D.inv,D.sal*0.05))} ريال — الخطوة الأولى هي الأصعب`},{d:'يوم 30',t:'راجع مصاريف المطاعم',x:`مصاريفك ${fmt(D.rest)} ريال — خفّضها 30% = ${fmt(D.rest*0.3)} ريال توفير شهري`},{d:'يوم 60',t:'راجع سيارتك',x:C.cc>=0.8?`سيارتك ${fmt(D.car)} ريال تحتاج إعادة نظر — ابحث عن بديل بـ ${fmt(C.ic)} ريال`:'سيارتك مناسبة — لا تغيّرها الآن'},{d:'يوم 90',t:'قيّم تقدمك',x:`بعد 90 يوم ارجع لرتّبني وحدّث بياناتك — هل تحسّنت نقاطك؟`}];
-  document.getElementById('t-plan').innerHTML=`
-  <div class="panel ${!P?'lw':''}">
-    <div class="psec">📅 خطة الـ 90 يوم المخصصة لك</div>
-    <div class="${!P?'blur':''}">
-      ${p9.map(p=>`<div style="display:flex;gap:.8rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,0.05);align-items:flex-start"><div style="width:44px;height:44px;border-radius:9px;background:var(--gold3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:900;color:var(--gold);flex-shrink:0;text-align:center;line-height:1.2;padding:.2rem">${p.d}</div><div><div style="font-size:.78rem;font-weight:700;color:var(--text)">${p.t}</div><div style="font-size:.7rem;color:var(--muted);margin-top:.1rem;line-height:1.4">${p.x}</div></div></div>`).join('')}
-    </div>
-    ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 فعّل المميزة — 49 ريال/شهر</button></div>`:''}
-  </div>`;
+  // ── MESSAGES ──
+  const msgs = [
+    {w:'الأسبوع 1',t:'مرحباً '+D.name+' — رحلتك بدأت',b:'فجوتك المالية: <span class="hl">'+fmt(C.tgap)+' ريال</span>\n\nخطوتك الأولى:\n→ ادخر <span class="hl">'+fmt(D.inv||Math.round(D.sal*0.05))+' ريال</span> هذا الشهر\n\nكل يوم تأجيل يكلفك <span class="hl">'+fmt((C.d0-C.d1)/365)+' ريال</span>'},
+    {w:'الأسبوع 4',t:'شهر مضى — هل التزمت؟',b:'لو التزمت:\n✅ وفّرت <span class="hl">'+fmt(D.inv||0)+' ريال</span>\n\nبعد 10 سنوات: <span class="hl">'+fmt(C.rows[9]?.v||0)+' ريال</span>'},
+    {w:'الأسبوع 12',t:'السوق نزل — لا تبع!',b:'السوق ينزل أحياناً 📉\n\n• من صبر ربح\n• من باع خسر مرتين\n\n🔒 لا تفعل شيئاً — خطتك صحيحة.'},
+    {w:'الأسبوع 52',t:'سنة مضت يا '+D.name+' 🎉',b:'ما وفّرته: <span class="hl">'+fmt((D.inv||0)*12)+' ريال</span>\nمحفظتك: <span class="hl">'+fmt(C.rows[0]?.v||0)+' ريال</span>\n\nأنت في أفضل 15% من الموظفين السعوديين.'}
+  ];
+  document.getElementById('t-msgs').innerHTML =
+  '<div class="panel '+(P?'':'lw')+'">' +
+    '<div class="psec">💬 رسائل واتساب الأسبوعية</div>' +
+    msgs.map(m=>'<div class="msg"><div class="mw">'+m.w+'</div><div class="mt">'+m.t+'</div><div class="mb">'+m.b.replace(/\n/g,'<br>')+'</div></div>').join('') +
+    (P?'':'<div class="lo"><button class="lb" onclick="showCheckout()">🔓 اشترك للحصول على 52 رسالة/سنة</button></div>') +
+  '</div>';
 
-  // ===== TAB: MSGS =====
-  const ms=[{w:'الأسبوع 1',t:`مرحباً ${D.name} — رحلتك بدأت`,b:`فجوتك المالية: <span class="hl">${fmt(C.tgap)} ريال</span>\n\nخطوتك الأولى:\n→ ادخر <span class="hl">${fmt(D.inv||Math.round(D.sal*0.05))} ريال</span> هذا الشهر\n\nكل يوم تأجيل يكلفك <span class="hl">${fmt((D.inv||D.sal*0.05)*1.2/30)} ريال</span>`},{w:'الأسبوع 4',t:'شهر مضى — هل التزمت؟',b:`لو وفّرت هذا الشهر:\n✅ وفّرت <span class="hl">${fmt(D.inv||D.sal*0.05)} ريال</span>\n\nبعد 10 سنوات بالمعدل الحالي:\n<span class="hl">${fmt(C.rows[9]?.v||0)} ريال</span>`},{w:'الأسبوع 12',t:'تحذير: السوق نزل — لا تبع!',b:`السوق ينزل أحياناً 📉\n\n• من صبر سنة ربح\n• من باع خسر مرتين\n\n🔒 لا تفعل شيئاً — خطتك صحيحة.`},{w:'الأسبوع 52',t:`سنة مضت يا ${D.name} 🎉`,b:`ما وفّرته: <span class="hl">${fmt((D.inv||0)*12)} ريال</span>\nمحفظتك الآن: <span class="hl">${fmt(C.rows[0]?.v||0)} ريال</span>\n\nأنت في أفضل 15% من الموظفين السعوديين.`}];
-  document.getElementById('t-msgs').innerHTML=`
-  <div class="panel ${!P?'lw':''}">
-    <div class="psec">💬 رسائل واتساب الأسبوعية — مخصصة لوضعك</div>
-    <div class="${!P?'blur':''}">
-      ${ms.map(m=>`<div class="msg"><div class="mw">${m.w}</div><div class="mt">${m.t}</div><div class="mb">${m.b.replace(/\n/g,'<br>')}</div></div>`).join('')}
-    </div>
-    ${!P?`<div class="lo"><button class="lb" onclick="ul()">🔓 اشترك للحصول على 52 رسالة/سنة</button></div>`:''}
-  </div>`;
+  // ── UPSELL ──
+  const urgMsg = C.hs<50?'وضعك يحتاج تدخلاً عاجلاً — كل شهر تأجيل يكلفك '+fmt(C.mon)+' ريال':C.hs<70?'وضعك مقبول لكن يمكن أن يكون أفضل بكثير':'وضعك جيد — المميزة ستجعله استثنائياً';
+  document.getElementById('ups').innerHTML = !P?
+  '<div style="background:linear-gradient(135deg,rgba(212,175,55,0.09),rgba(212,175,55,0.02));border:2px solid rgba(212,175,55,0.28);border-radius:18px;padding:1.8rem;text-align:center;margin-top:.9rem;position:relative;overflow:hidden">' +
+    '<div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#060a14;font-size:.67rem;font-weight:900;padding:.22rem 1.1rem;border-radius:100px">الأذكياء يبدأون الآن</div>' +
+    '<div style="font-size:1.2rem;font-weight:900;margin:.5rem 0 .35rem">خطتك الكاملة في انتظارك</div>' +
+    '<div style="font-size:.79rem;color:#fca5a5;font-weight:700;margin-bottom:.9rem">'+urgMsg+'</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:1.1rem;text-align:right">' +
+      [['📊 رسوم بيانية تفاعلية','ترى وضعك بصرياً'],['💡 نصائح ذكاء اصطناعي','مبنية على أرقامك'],['📅 خطة إنقاذ 90 يوم','خطوات عملية فورية'],['💬 52 رسالة واتساب','متابعة أسبوعية لا تتوقف']].map(([t,d])=>
+        '<div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:9px;padding:.6rem .75rem"><div style="font-size:.75rem;font-weight:700;margin-bottom:.18rem">'+t+'</div><div style="font-size:.67rem;color:var(--muted)">'+d+'</div></div>'
+      ).join('') +
+    '</div>' +
+    '<button class="btn btn-gold" style="width:100%;padding:.88rem;font-size:.94rem" onclick="showCheckout()">ابدأ خطة الإنقاذ — 49 ريال/شهر ←</button>' +
+    '<div style="display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:.6rem;font-size:.67rem;color:var(--muted)">' +
+      '<span>🔒 دفع آمن</span><span>📱 واتساب فوري</span><span>↩️ إلغاء في أي وقت</span>' +
+    '</div>' +
+  '</div>' : '';
 
-  // UPS SELL
-  const urgMsg = C.hs<50?'وضعك يحتاج تدخلاً عاجلاً — كل شهر تأخير يكلفك '+fmt(C.mon)+' ريال':C.hs<70?'وضعك مقبول لكن يمكن أن يكون أفضل بكثير':'وضعك جيد — المميزة ستجعله استثنائياً';
-  document.getElementById('ups').innerHTML=!P?`
-  <div style="background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:2px solid rgba(212,175,55,0.3);border-radius:20px;padding:2rem;text-align:center;margin-top:1rem;position:relative;overflow:hidden">
-    <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);background:var(--gold);color:#060a14;font-size:.68rem;font-weight:900;padding:.25rem 1.2rem;border-radius:100px">الأذكياء يبدأون الآن</div>
-    <div style="font-size:1.3rem;font-weight:900;margin-bottom:.4rem;margin-top:.3rem">خطتك الكاملة في انتظارك</div>
-    <div style="font-size:.8rem;color:#fca5a5;font-weight:700;margin-bottom:.8rem">${urgMsg}</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.2rem;text-align:right">
-      ${[['📊 رسوم بيانية تفاعلية','ترى وضعك المالي بصرياً'],['💡 نصائح مخصصة بالذكاء الاصطناعي','مبنية على أرقامك الحقيقية'],['📅 خطة إنقاذ 90 يوم','خطوات عملية تبدأ غداً'],['💬 رسائل واتساب أسبوعية','52 رسالة سنوياً لا تتوقف']].map(([t,d])=>'<div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:.65rem .8rem"><div style="font-size:.76rem;font-weight:700;margin-bottom:.2rem">'+t+'</div><div style="font-size:.68rem;color:var(--muted)">'+d+'</div></div>').join('')}
-    </div>
-    <button class="btn bg" style="width:100%;padding:.9rem;font-size:.96rem" onclick="ul()">ابدأ خطة الإنقاذ — 49 ريال/شهر ←</button>
-    <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:.7rem;font-size:.68rem;color:var(--muted)">
-      <span>🔒 دفع آمن</span>
-      <span>📱 واتساب فوري</span>
-      <span>↩️ إلغاء في أي وقت</span>
-    </div>
-  </div>`:'';
-
-  // Show code bar if not premium
-  const codeBar = document.getElementById('code-bar');
-  if(codeBar) codeBar.style.display = P ? 'none' : 'flex';
-  // Draw charts if premium
-  if(P) setTimeout(drawCharts,100);
+  if(P) setTimeout(drawCharts, 100);
 }
 
-function drawCharts(){
-  const C=D.C;
-  // Line chart
-  destroyChart('line');
-  const ctxL=document.getElementById('chartLine');
-  if(ctxL){
-    const labels=['الآن','5 سنوات','10 سنوات','15 سنوات','20 سنوات'];
-    const vals=[D.sav,C.rows[4]?.v||0,C.rows[9]?.v||0,C.rows[14]?.v||0,C.rows[19]?.v||0];
-    chartInstances['line']=new Chart(ctxL,{type:'line',data:{labels,datasets:[{label:'قيمة المحفظة',data:vals,borderColor:'#d4af37',backgroundColor:'rgba(212,175,55,0.08)',tension:.4,pointBackgroundColor:'#d4af37',pointRadius:4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7a8f',font:{family:'Tajawal',size:11}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:'#6b7a8f',font:{family:'IBM Plex Mono',size:10},callback:v=>(v/1000)+'K'},grid:{color:'rgba(255,255,255,0.04)'}}}}})}
+// ═══════════════════════════════════════════
+// CHARTS
+// ═══════════════════════════════════════════
+function destroyChart(id) { if(chartInst[id]){chartInst[id].destroy();delete chartInst[id]} }
 
-  // Pie chart
-  destroyChart('pie');
-  const ctxP=document.getElementById('chartPie');
-  if(ctxP){
-    const housing=D.hous==='rent'?D.rent:D.mort;
-    const pieData=[D.inst,housing,D.rest,D.subs,D.tour/12,D.misc||0,Math.max(0,D.sal-D.inst-housing-D.rest-D.subs-D.tour/12-(D.misc||0)-D.inv)];
-    const pieLabels=['الأقساط','السكن','المطاعم','الاشتراكات','السياحة','متفرقات','باقي'];
-    const colors=['#ef4444','#3b82f6','#f59e0b','#8b5cf6','#10b981','#ec4899','#6b7a8f'];
-    chartInstances['pie']=new Chart(ctxP,{type:'doughnut',data:{labels:pieLabels,datasets:[{data:pieData.map(v=>Math.max(0,v)),backgroundColor:colors,borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#6b7a8f',font:{family:'Tajawal',size:10},boxWidth:10,padding:8}}}}})}
-
-  // Bar chart
-  destroyChart('bar');
-  const ctxB=document.getElementById('chartBar');
-  if(ctxB){
-    chartInstances['bar']=new Chart(ctxB,{type:'bar',data:{labels:['مدخراتك','سيارتك','ادخار شهري','مطاعم'],datasets:[{label:'أنت',data:[D.sav,D.car,D.inv,D.rest],backgroundColor:'rgba(212,175,55,0.7)',borderRadius:6},{label:'المتوسط',data:[8200,95000,Math.round(D.sal*0.1),Math.round(D.sal*0.15)],backgroundColor:'rgba(59,130,246,0.4)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#6b7a8f',font:{family:'Tajawal',size:10},boxWidth:10}}},scales:{x:{ticks:{color:'#6b7a8f',font:{family:'Tajawal',size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:'#6b7a8f',font:{family:'IBM Plex Mono',size:9},callback:v=>v>=1000?(v/1000)+'K':v},grid:{color:'rgba(255,255,255,0.04)'}}}}})}
+function drawCharts() {
+  const C = D.C;
+  // Line
+  destroyChart('l');
+  const cl = document.getElementById('cLine');
+  if(cl) chartInst['l'] = new Chart(cl, {type:'line', data:{labels:['الآن','5 سنوات','10 سنوات','15 سنوات','20 سنوات'], datasets:[{label:'المحفظة',data:[D.sav,C.rows[4]?.v||0,C.rows[9]?.v||0,C.rows[14]?.v||0,C.rows[19]?.v||0],borderColor:'#d4af37',backgroundColor:'rgba(212,175,55,0.07)',tension:.4,pointBackgroundColor:'#d4af37',pointRadius:4,fill:true}]}, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7a8f',font:{family:'Tajawal',size:11}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:'#6b7a8f',font:{family:'IBM Plex Mono',size:10},callback:v=>v>=1000?(v/1000)+'K':v},grid:{color:'rgba(255,255,255,0.04)'}}}}});
+  // Pie
+  destroyChart('p');
+  const cp = document.getElementById('cPie');
+  if(cp){
+    const housing = D.hous==='rent'?D.rent:D.mort;
+    chartInst['p'] = new Chart(cp, {type:'doughnut', data:{labels:['الأقساط','السكن','المطاعم','الاشتراكات','السياحة','متفرقات','باقي'], datasets:[{data:[D.inst,housing,D.rest,D.subs,D.tour/12,D.misc,Math.max(0,D.sal-D.inst-housing-D.rest-D.subs-D.tour/12-D.misc-D.inv)].map(v=>Math.max(0,v)),backgroundColor:['#ef4444','#3b82f6','#f59e0b','#8b5cf6','#10b981','#ec4899','#6b7a8f'],borderWidth:0}]}, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#6b7a8f',font:{family:'Tajawal',size:10},boxWidth:10,padding:7}}}}});
+  }
+  // Bar
+  destroyChart('b');
+  const cb = document.getElementById('cBar');
+  if(cb) chartInst['b'] = new Chart(cb, {type:'bar', data:{labels:['مدخراتك','سيارتك','ادخار شهري','مطاعم'], datasets:[{label:'أنت',data:[D.sav,D.car,D.inv,D.rest],backgroundColor:'rgba(212,175,55,0.7)',borderRadius:5},{label:'المتوسط',data:[8200,95000,Math.round(D.sal*0.1),Math.round(D.sal*0.15)],backgroundColor:'rgba(59,130,246,0.4)',borderRadius:5}]}, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#6b7a8f',font:{family:'Tajawal',size:10},boxWidth:10}}},scales:{x:{ticks:{color:'#6b7a8f',font:{family:'Tajawal',size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:'#6b7a8f',font:{family:'IBM Plex Mono',size:9},callback:v=>v>=1000?(v/1000)+'K':v},grid:{color:'rgba(255,255,255,0.04)'}}}}});
 }
 
-function ul(){window.location.href='checkout.html'}
+// ═══════════════════════════════════════════
+// CODE ACTIVATION
+// ═══════════════════════════════════════════
+function getValidCodes() { try{return JSON.parse(localStorage.getItem('rattibni_codes')||'[]')}catch(e){return []} }
 
-// Valid codes - stored locally, admin adds them via admin.html
-function getValidCodes(){
-  try{return JSON.parse(localStorage.getItem('rattibni_valid_codes')||'[]');}catch(e){return [];}
-}
-
-function activateCode(){
+function activateCode() {
   const code = (document.getElementById('code-input').value||'').trim().toUpperCase();
   const msgEl = document.getElementById('code-msg');
-  if(!code){msgEl.textContent='❌ أدخل الكود أولاً';msgEl.style.display='block';return;}
-  
-  const validCodes = getValidCodes();
-  const found = validCodes.find(c=>c.code===code&&c.status==='active');
-  
-  if(found){
-    // Activate subscription
+  if(!code){msgEl.textContent='❌ أدخل الكود أولاً';msgEl.style.display='block';return}
+  const codes = getValidCodes();
+  const found = codes.find(c=>c.code===code&&c.status==='active');
+  if(found) {
     P = true;
-    const sub = {
-      plan:'premium',
-      planName:'الباقة المميزة',
-      code:code,
-      activatedAt:new Date().toISOString(),
-      expiresAt:new Date(Date.now()+31*24*60*60*1000).toISOString()
-    };
-    localStorage.setItem('rattibni_subscription', JSON.stringify(sub));
-    // Mark code as used
-    found.status='used';
-    localStorage.setItem('rattibni_valid_codes', JSON.stringify(validCodes));
-    
+    found.status = 'used';
+    localStorage.setItem('rattibni_codes', JSON.stringify(codes));
+    localStorage.setItem('rattibni_sub', JSON.stringify({plan:'premium',code,exp:new Date(Date.now()+31*24*60*60*1000).toISOString()}));
     msgEl.style.display='none';
     document.getElementById('code-bar').style.display='none';
-    
-    // Show success
-    showActivationSuccess();
+    showActivationModal();
     build();
-    setTimeout(drawCharts,200);
-  } else if(validCodes.find(c=>c.code===code)){
-    msgEl.textContent='❌ هذا الكود مستخدم مسبقاً';
-    msgEl.style.display='block';
+    setTimeout(drawCharts, 200);
+  } else if(codes.find(c=>c.code===code)) {
+    msgEl.textContent='❌ هذا الكود مستخدم مسبقاً';msgEl.style.display='block';
   } else {
-    msgEl.textContent='❌ الكود غير صحيح — تحقق من الكود الذي وصلك على واتساب';
-    msgEl.style.display='block';
+    msgEl.textContent='❌ الكود غير صحيح — تحقق من الكود الذي وصلك على واتساب';msgEl.style.display='block';
   }
 }
 
-function showActivationSuccess(){
-  const div=document.createElement('div');
-  div.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1.5rem';
-  div.innerHTML='<div style="background:#111827;border:2px solid #d4af37;border-radius:20px;padding:2rem;max-width:360px;width:100%;text-align:center"><div style="font-size:3rem;margin-bottom:.8rem">🎉</div><div style="font-size:1.3rem;font-weight:900;color:#d4af37;margin-bottom:.4rem">مرحباً بك في رتّبني!</div><div style="font-size:.82rem;color:#6b7a8f;margin-bottom:1.4rem;line-height:1.6">تم تفعيل الباقة المميزة — جميع المميزات متاحة الآن بما فيها الرسوم البيانية والخطط والرسائل</div><button onclick="this.parentElement.parentElement.remove()" style="width:100%;padding:.85rem;background:#d4af37;color:#060a14;border:none;border-radius:10px;font-size:1rem;font-weight:900;cursor:pointer;font-family:Tajawal">ابدأ الاستكشاف ←</button></div>';
+function showActivationModal() {
+  const div = document.createElement('div');
+  div.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1.5rem';
+  div.innerHTML = '<div style="background:#111827;border:2px solid #d4af37;border-radius:20px;padding:2rem;max-width:360px;width:100%;text-align:center"><div style="font-size:3rem;margin-bottom:.7rem">🎉</div><div style="font-size:1.25rem;font-weight:900;color:#d4af37;margin-bottom:.4rem">مرحباً بك في رتّبني!</div><div style="font-size:.8rem;color:#6b7a8f;margin-bottom:1.3rem;line-height:1.6">تم تفعيل الباقة المميزة — جميع المميزات متاحة الآن</div><button onclick="this.parentElement.parentElement.remove()" style="width:100%;padding:.85rem;background:#d4af37;color:#060a14;border:none;border-radius:10px;font-size:1rem;font-weight:900;cursor:pointer;font-family:Tajawal">ابدأ الاستكشاف ←</button></div>';
   document.body.appendChild(div);
+}
+
+// ═══════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════
+const ADMIN_PW = 'rattibni@admin2026';
+let clients = [], clientFilter = 'all';
+
+function saveClients() { localStorage.setItem('rattibni_clients', JSON.stringify(clients)) }
+function loadClients() { try{clients=JSON.parse(localStorage.getItem('rattibni_clients')||'[]')}catch(e){clients=[]} }
+
+function showAdmin() {
+  document.getElementById('overlay-admin').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  loadClients();
+}
+function closeAdmin() {
+  document.getElementById('overlay-admin').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function adminLogin() {
+  const pw = document.getElementById('admin-pw').value;
+  if(pw===ADMIN_PW) {
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-dash').style.display='block';
+    renderClients(); updateSelects(); updateStats();
+  } else {
+    document.getElementById('admin-err').textContent='❌ كلمة المرور غلط';
+  }
+}
+function adminLogout() {
+  document.getElementById('admin-login').style.display='flex';
+  document.getElementById('admin-dash').style.display='none';
+  document.getElementById('admin-pw').value='';
+  document.getElementById('admin-err').textContent='';
+}
+
+function genClientCode() {
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return 'RTB-'+Array(4).fill(0).map(()=>chars[Math.floor(Math.random()*chars.length)]).join('')+'-'+Array(4).fill(0).map(()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+}
+
+function saveCode(code, name) {
+  const codes = getValidCodes();
+  const f = codes.findIndex(c=>c.code===code);
+  if(f>=0) codes[f]={code,name,status:'active',created:new Date().toISOString()};
+  else codes.push({code,name,status:'active',created:new Date().toISOString()});
+  localStorage.setItem('rattibni_codes', JSON.stringify(codes));
+}
+
+function addClient() {
+  const name=document.getElementById('c-name').value.trim();
+  const phone=document.getElementById('c-phone').value.trim();
+  const sal=document.getElementById('c-sal').value||'0';
+  const notes=document.getElementById('c-notes').value.trim();
+  if(!name||!phone){showToast('أدخل الاسم ورقم الواتساب',true);return}
+  const code=genClientCode();
+  const client={id:Date.now(),name,phone,sal:parseInt(sal),notes,code,status:'pending',joinDate:new Date().toLocaleDateString('ar-SA'),msgs:[]};
+  clients.unshift(client);
+  saveClients(); saveCode(code,name);
+  renderClients(); updateSelects(); updateStats();
+  ['c-name','c-phone','c-sal','c-notes'].forEach(id=>document.getElementById(id).value='');
+  showToast('✅ تم إضافة العميل وتوليد الكود');
+}
+
+function approveClient(id) {
+  const c=clients.find(x=>x.id===id); if(!c) return;
+  c.status='active';
+  c.renewDate=new Date(Date.now()+30*24*60*60*1000).toLocaleDateString('ar-SA');
+  saveClients(); saveCode(c.code,c.name);
+  renderClients(); updateStats();
+  const msg=encodeURIComponent('السلام عليكم '+c.name+' 👋\n\nتم تفعيل اشتراكك في رتّبني ✅\n\n🔑 كود الدخول: *'+c.code+'*\n\nافتح الموقع وأدخل الكود:\nhttps://rattibni.vercel.app\n\nمرحباً بك! 🎉');
+  window.open('https://wa.me/966'+c.phone.replace(/^0/,'')+'?text='+msg,'_blank');
+  showToast('✅ تم القبول — واتساب مفتوح');
+}
+
+function deleteClient(id) {
+  if(!confirm('حذف هذا العميل؟')) return;
+  const c=clients.find(x=>x.id===id);
+  if(c){const codes=getValidCodes();const f=codes.find(x=>x.code===c.code);if(f)f.status='inactive';localStorage.setItem('rattibni_codes',JSON.stringify(codes));}
+  clients=clients.filter(x=>x.id!==id);
+  saveClients(); renderClients(); updateSelects(); updateStats();
+  showToast('تم الحذف');
+}
+
+function genCode() {
+  const id=parseInt(document.getElementById('code-sel').value);
+  if(!id){showToast('اختر عميلاً',true);return}
+  const c=clients.find(x=>x.id===id); if(!c) return;
+  c.code=genClientCode(); saveClients(); saveCode(c.code,c.name);
+  document.getElementById('code-result').style.display='block';
+  document.getElementById('code-disp').textContent=c.code;
+  const msg=encodeURIComponent('مرحباً '+c.name+' 👋\n\nكودك الجديد لرتّبني:\n🔑 *'+c.code+'*\n\nhttps://rattibni.vercel.app');
+  document.getElementById('wa-code-link').href='https://wa.me/966'+c.phone.replace(/^0/,'')+'?text='+msg;
+  showToast('✅ تم توليد الكود');
+}
+function copyCode() { copyText(document.getElementById('code-disp').textContent,'تم نسخ الكود') }
+
+async function genAI() {
+  const id=parseInt(document.getElementById('ai-sel').value);
+  const type=document.getElementById('ai-type').value;
+  if(!id){showToast('اختر عميلاً',true);return}
+  const c=clients.find(x=>x.id===id); if(!c) return;
+  const res=document.getElementById('ai-result');
+  res.innerHTML='<div style="text-align:center;padding:1rem;color:var(--muted);font-size:.8rem">⏳ جارٍ التوليد...</div>';
+  const types={weekly:'أسبوعية تحفيزية',monthly:'شهرية تحليلية',welcome:'ترحيب بالمشترك',reminder:'تذكير بالادخار'};
+  const prompt='أنت مستشار مالي سعودي في رتّبني. اكتب رسالة واتساب '+types[type]+' للعميل:\nالاسم: '+c.name+'\nالراتب: '+(c.sal||'غير محدد')+' ريال\nملاحظات: '+(c.notes||'لا يوجد')+'\n\nالمتطلبات:\n- عربية محلية سعودية\n- أقل من 150 كلمة\n- تبدأ بالسلام\n- تتضمن نصيحة مالية عملية\n- إيموجي باعتدال\n- نبرة دافئة ومشجعة\n\nاكتب الرسالة فقط بدون مقدمة.';
+  try {
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+    const data=await resp.json();
+    const msg=data.content?.[0]?.text||'حدث خطأ';
+    const enc=encodeURIComponent(msg);
+    const wa='https://wa.me/966'+c.phone.replace(/^0/,'')+'?text='+enc;
+    res.innerHTML='<div class="ai-result-box">'+msg+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.45rem"><button class="abtn-out" onclick="copyText(\''+msg.replace(/'/g,"\\'").replace(/\n/g,'\\n')+'\',\'تم نسخ الرسالة\')">نسخ الرسالة</button><a href="'+wa+'" target="_blank" class="abtn abtn-sm abtn-wa" style="display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:7px;padding:.62rem;font-size:.82rem">واتساب 💬</a></div>';
+    showToast('✅ تم توليد الرسالة');
+  } catch(e) {
+    res.innerHTML='<div style="color:var(--red);font-size:.78rem;padding:.7rem">❌ خطأ: '+e.message+'</div>';
+    showToast('❌ فشل التوليد',true);
+  }
+}
+
+function filterC(f) { clientFilter=f; renderClients() }
+
+function renderClients() {
+  const list=document.getElementById('clients-list');
+  if(!list) return;
+  const filtered=clientFilter==='all'?clients:clients.filter(c=>c.status===clientFilter);
+  if(!filtered.length){list.innerHTML='<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.77rem">'+(clientFilter==='all'?'لا يوجد عملاء بعد 👆':'لا يوجد في هذه الفئة')+'</div>';return}
+  list.innerHTML=filtered.map(c=>{
+    const badgeClass=c.status==='active'?'badge-a':'badge-p';
+    const badgeText=c.status==='active'?'نشط':'ينتظر';
+    const waMsg=encodeURIComponent('مرحباً '+c.name);
+    return '<div class="client-item"><div class="client-h"><div class="client-n">'+c.name+'</div><span class="client-badge '+badgeClass+'">'+badgeText+'</span></div><div class="client-info">📱 '+c.phone+(c.sal?' • 💰 '+c.sal.toLocaleString('ar-SA')+' ريال':'')+'<br>🔑 '+c.code+' • 📅 '+c.joinDate+(c.renewDate?' • تجديد: '+c.renewDate:'')+(c.notes?'<br>📝 '+c.notes:'')+'</div><div class="client-actions">'+
+      (c.status==='pending'?'<button class="abtn-sm abtn-approve" onclick="approveClient('+c.id+')">✅ قبول وإرسال</button>':'')+
+      '<a href="https://wa.me/966'+c.phone.replace(/^0/,'')+'?text='+waMsg+'" target="_blank" class="abtn-sm abtn-wa">واتساب 💬</a>'+
+      '<button class="abtn-sm abtn-del" onclick="deleteClient('+c.id+')">حذف 🗑️</button>'+
+    '</div></div>';
+  }).join('');
+}
+
+function updateSelects() {
+  const opts='<option value="">اختر عميلاً...</option>'+clients.map(c=>'<option value="'+c.id+'">'+c.name+' — '+c.phone+'</option>').join('');
+  ['code-sel','ai-sel'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts});
+}
+
+function updateStats() {
+  const active=clients.filter(c=>c.status==='active').length;
+  const pend=clients.filter(c=>c.status==='pending').length;
+  const setEl=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  setEl('as-total',clients.length);
+  setEl('as-active',active);
+  setEl('as-pend',pend);
+  setEl('as-rev',(active*49).toLocaleString('ar-SA'));
+  const hdr=document.getElementById('admin-stats-hdr');
+  if(hdr) hdr.textContent=active+' نشط • '+pend+' انتظار';
 }
 </script>
 
