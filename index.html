@@ -1151,27 +1151,36 @@ function exportCodes() {
   document.body.appendChild(div);
 }
 
-async function genAI() {
+function genAI() {
   const id=parseInt(document.getElementById('ai-sel').value);
   const type=document.getElementById('ai-type').value;
   if(!id){showToast('اختر عميلاً',true);return}
   const c=clients.find(x=>x.id===id); if(!c) return;
   const res=document.getElementById('ai-result');
-  res.innerHTML='<div style="text-align:center;padding:1rem;color:var(--muted);font-size:.8rem">⏳ جارٍ التوليد...</div>';
-  const types={weekly:'أسبوعية تحفيزية',monthly:'شهرية تحليلية',welcome:'ترحيب بالمشترك',reminder:'تذكير بالادخار'};
-  const prompt='أنت مستشار مالي سعودي في رتّبني. اكتب رسالة واتساب '+types[type]+' للعميل:\nالاسم: '+c.name+'\nالراتب: '+(c.sal||'غير محدد')+' ريال\nملاحظات: '+(c.notes||'لا يوجد')+'\n\nالمتطلبات:\n- عربية محلية سعودية\n- أقل من 150 كلمة\n- تبدأ بالسلام\n- تتضمن نصيحة مالية عملية\n- إيموجي باعتدال\n- نبرة دافئة ومشجعة\n\nاكتب الرسالة فقط بدون مقدمة.';
-  try {
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
-    const data=await resp.json();
-    const msg=data.content?.[0]?.text||'حدث خطأ';
-    const enc=encodeURIComponent(msg);
-    const wa='https://wa.me/966'+c.phone.replace(/^0/,'')+'?text='+enc;
-    res.innerHTML='<div class="ai-result-box">'+msg+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.45rem"><button class="abtn-out" onclick="copyText(\''+msg.replace(/'/g,"\\'").replace(/\n/g,'\\n')+'\',\'تم نسخ الرسالة\')">نسخ الرسالة</button><a href="'+wa+'" target="_blank" class="abtn abtn-sm abtn-wa" style="display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:7px;padding:.62rem;font-size:.82rem">واتساب 💬</a></div>';
-    showToast('✅ تم توليد الرسالة');
-  } catch(e) {
-    res.innerHTML='<div style="color:var(--red);font-size:.78rem;padding:.7rem">❌ خطأ: '+e.message+'</div>';
-    showToast('❌ فشل التوليد',true);
-  }
+  
+  const sal = c.sal || 10000;
+  const savTip = sal < 10000 ? '500 ريال' : sal < 15000 ? '800 ريال' : sal < 20000 ? '1,200 ريال' : '2,000 ريال';
+  const pen = Math.round(sal * 0.35);
+  const need = Math.round(sal * 0.75);
+  const gap = need - pen;
+
+  const msgs = {
+    weekly: 'السلام عليكم ' + c.name + ' 👋\n\nتذكيرك الأسبوعي من رتّبني 📊\n\n💡 نصيحة هذا الأسبوع:\nمعاشك التقاعدي المتوقع: ' + pen.toLocaleString('ar-SA') + ' ريال فقط\nما تحتاجه: ' + need.toLocaleString('ar-SA') + ' ريال\nالفجوة: ' + gap.toLocaleString('ar-SA') + ' ريال/شهر\n\n🎯 خطوة هذا الأسبوع:\nادخر ' + savTip + ' هذا الأسبوع — ضعها في حساب استثماري الآن، لا غداً.\n\nكل ريال تدخره اليوم = 3 ريال في المستقبل 💰\n\nرتّبني معك 🤝',
+    monthly: 'السلام عليكم ' + c.name + ' 👋\n\nتقريرك الشهري من رتّبني 📈\n\n📊 ملخص شهرك المالي:\n✅ هل ادخرت ' + savTip + ' هذا الشهر؟\n✅ هل راجعت مصاريف المطاعم؟\n✅ هل أقساطك تحت 30% من راتبك؟\n\n💡 تذكر:\nبعد 20 سنة من الادخار المنتظم — ثروتك ستكون أضعاف ما تتخيل.\n\nاستمر، أنت على الطريق الصحيح 🚀\n\nرتّبني — مستشارك المالي',
+    welcome: 'أهلاً وسهلاً ' + c.name + ' 🎉\n\nمرحباً بك في رتّبني — مستشارك المالي السعودي الذكي!\n\n✅ اشتراكك فعّال الآن\n\n🗓️ ستصلك رسالة أسبوعية كل أسبوع مخصصة لوضعك المالي.\n\n🚀 خطوتك الأولى الآن:\nافتح الموقع وادخل بياناتك الكاملة:\nhttps://rattibni.vercel.app\n\nأي سؤال؟ نحن هنا 💬',
+    reminder: 'السلام عليكم ' + c.name + ' 👋\n\nتذكير مهم من رتّبني ⏰\n\n📌 هل ادخرت هذا الشهر؟\n\nكثير منا ننسى الادخار وسط الانشغال — لكن:' + '\n\n💰 ' + savTip + ' شهرياً × 20 سنة = ثروة حقيقية\n\nخصص المبلغ الآن قبل أي مصروف آخر.\nالادخار التلقائي أول الشهر = النجاح المضمون.\n\nرتّبني معك 💪'
+  };
+
+  const msg = msgs[type] || msgs.weekly;
+  const enc = encodeURIComponent(msg);
+  const wa = 'https://wa.me/966'+c.phone.replace(/^0/,'')+'?text='+enc;
+  
+  res.innerHTML = '<div class="ai-result-box">'+msg.replace(/\n/g,'<br>')+'</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.45rem">' +
+    '<button class="abtn-out" onclick="navigator.clipboard.writeText(document.querySelector(\'.ai-result-box\').innerText);showToast(\'✅ تم نسخ الرسالة\')">نسخ الرسالة</button>' +
+    '<a href="'+wa+'" target="_blank" class="abtn abtn-sm abtn-wa" style="display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:7px;padding:.62rem;font-size:.82rem">واتساب 💬</a>' +
+    '</div>';
+  showToast('✅ تم توليد الرسالة');
 }
 
 function filterC(f) { clientFilter=f; renderClients() }
